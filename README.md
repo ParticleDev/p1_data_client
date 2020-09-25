@@ -49,7 +49,7 @@ client.get_payload('00158d049d149197f67115a6cc3224e956e5c9e9')
 ## Jupyter notebook
 
 Full function list can be found in
-[jupyter notebook](python_client/notebooks/p1_data_client_example.ipynb)
+[jupyter notebook](notebooks/p1_data_client_example.ipynb)
 
 ## Tests
 
