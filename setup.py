@@ -12,8 +12,8 @@ try:
 except ImportError:
     from distutils.core import setup
 
-INSTALL_REQUIRES = ["pandas>=1.1.1", "requests>=2.24.0"]
-TEST_REQUIRES = ["pytest>=6.0.1", "pytest-xdist>=2.1.0"]
+INSTALL_REQUIRES = ["pandas>=1.0.0", "requests>=2.18.0"]
+TEST_REQUIRES = ["pytest>=5.0.0"]
 PACKAGES = [
     "p1_data_client_python",
 ]
@@ -23,9 +23,9 @@ setup(
     name="p1_data_client_python",
     description="Package for P1 Data API access",
     keywords=["p1_data_client_python", "API", "data", "financial", "economic"],
-    version="0.0.1",
-    author="p1_data_client_python",
-    author_email="",
+    version="1.0.0",
+    author="GP Saggese, Paul Smith",
+    author_email="gp@particle.one, paul@particle.one",
     maintainer="",
     maintainer_email="",
     url="https://github.com/ParticleDev/p1_data_client_python",
