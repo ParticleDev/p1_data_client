@@ -1,11 +1,11 @@
 """
 The core of P1 Data REST API wrapper
 
-Copyright 2020 by <author name>, 2020 Particle.One Inc.
+Copyright 2020 by Particle.One Inc.
 All rights reserved.
-This file is part of the <Project name> (<Project abbreviation>),
-and is released under the "MIT". Please see the license.txt
-file that should have been included as part of this package.
+This file is part of the ParticleOne and is released under the "MIT". Please
+see the license.txt file that should have been included as part of this
+package.
 
 
 Import as
@@ -22,7 +22,7 @@ import requests
 import requests.adapters as rq_adapt
 import requests.packages.urllib3.util.retry as rq_retry
 
-DEFAULT_BASE_URL = "https://data.particle.one/"
+DEFAULT_BASE_URL = "https://data.particle.one"
 
 
 class Client:
