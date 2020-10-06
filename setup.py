@@ -29,7 +29,7 @@ setup(
     keywords=["p1_data_client_python", "API",
               "data", "financial", "economic",
               "particle", "particleone", "particle.one"],
-    version="1.0.0",
+    version="1.0.1",
     author="GP Saggese, Paul Smith",
     author_email="gp@particle.one, paul@particle.one",
     maintainer="",
