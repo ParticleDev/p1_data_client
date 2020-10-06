@@ -18,11 +18,17 @@ PACKAGES = [
     "p1_data_client_python",
 ]
 
-# TODO: (GP): Please add info to the: author_email, maintainer, maintainer_email
+project_urls = {
+  'Site': 'https://particle.one/',
+  'API registration': 'https://particle.one/api'
+}
+
 setup(
     name="p1_data_client_python",
     description="Package for P1 Data API access",
-    keywords=["p1_data_client_python", "API", "data", "financial", "economic"],
+    keywords=["p1_data_client_python", "API",
+              "data", "financial", "economic",
+              "particle", "particleone", "particle.one"],
     version="1.0.0",
     author="GP Saggese, Paul Smith",
     author_email="gp@particle.one, paul@particle.one",
@@ -42,4 +48,5 @@ setup(
     python_requires=">= 3.7",
     test_suite="pytest",
     packages=PACKAGES,
+    project_urls=project_urls
 )
