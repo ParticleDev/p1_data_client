@@ -18,10 +18,7 @@ class TestEdgarClient(hut.TestCase):
                                           )
         self.assertIsInstance(payload, pd.DataFrame)
 
-    def test__fill_cik_gvkey_mapping(self):
-        self.client._fill_cik_gvkey_mapping()
+    def test_get_cik(self) -> None:
+        cik = self.client.get_cik(gvkey=808, gvkey_date='2020-01-01')
         pass
-
-    def test_get_cik_by_gvkey(self):
-        cik = self.client.get_cik_by_gvkey('1800')
 

@@ -41,12 +41,12 @@ class EdgarClient(p1_abs.AbstractClient):
     def _api_routes(self) -> Dict[str, str]:
         return {
             "PAYLOAD": "/data",
-            "CIK_GVKEY": "/metadata/cik-gvkey"
+            "CIK": "/metadata/cik"
         }
 
     def get_payload(self,
                     form_name: str,
-                    cik: int,
+                    cik: Union[int, str],
                     start_date: str = None,
                     end_date: str = None,
                     items: List[str] = None
@@ -62,12 +62,10 @@ class EdgarClient(p1_abs.AbstractClient):
         """
 
         params = {}
-        if items:
-            params['items'] = ','.join(items)
-        if start_date and self.validate_date(start_date):
-            params['start_date'] = start_date
-        if end_date and self.validate_date(end_date):
-            params['end_date'] = end_date
+        params = self._set_optional_params(params,
+                                           start_date=start_date,
+                                           end_date=end_date,
+                                           items=items)
         url = f'{self.base_url}{self._api_routes["PAYLOAD"]}' \
               f'/{form_name}/{cik}'
         response = self._make_request(
@@ -88,64 +86,48 @@ class EdgarClient(p1_abs.AbstractClient):
             ) from e
         return payload_dataframe
 
-    def _fill_cik_gvkey_mapping(self):
-        url = f'{self.base_url}{self._api_routes["CIK_GVKEY"]}'
+    def get_cik(self, gvkey: Optional[Union[str, int]] = None,
+                gvkey_date: Optional[str] = None,
+                ticker: Optional[str] = None,
+                cusip: Optional[str] = None,
+                company: Optional[str] = None
+                ) -> Optional[Union[str, List[str]]]:
+        """
+        Obtain Company Identification Key (cik) by given parameters.
+
+        :param gvkey: Global Company Key(gvkey)
+        :param gvkey_date: Date of gvkey, if missed then
+        more than one cik may be to be returned.
+        :param ticker: Company ticker.
+        :param cusip: Committee on Uniform Securities
+        Identification Procedures number.
+        :param company: Company name.
+        :return: One or list of cik.
+        """
+        params = {}
+        params = self._set_optional_params(params,
+                                           gvkey=gvkey,
+                                           gvkey_date=gvkey_date,
+                                           ticker=ticker,
+                                           cusip=cusip,
+                                           company=company)
+        url = f'{self.base_url}{self._api_routes["CIK"]}'
         response = self._make_request(
             "GET",
             url,
-            headers=self.headers
+            headers=self.headers,
+            params=params
         )
         if response.status_code != 200:
             raise p1_exc.ParseResponseException(
                 f"Got next response, from the server: {response.text}"
             )
-        try:
-            cik_gvkey_dataframe = pd.DataFrame(response.json()['data'])
-        except (KeyError, json.JSONDecodeError) as e:
-            raise p1_exc.ParseResponseException(
-                "Can't transform server response to a pandas Dataframe"
-            ) from e
-        self.cik_gvkey_mapping = cik_gvkey_dataframe
-
-    def get_cik_by_gvkey(self, gvkey: Union[str, int], as_of_date: Optional[str]):
-        if not self.cik_gvkey_mapping:
-            self._fill_cik_gvkey_mapping()
-        gvkey = str(gvkey).zfill(6)
-        gvkey_indexed = self.cik_gvkey_mapping.set_index("gvkey")
-        # Assert if no mapping is found.
-        if gvkey not in gvkey_indexed.index:
-            pass
-            # if not raise_exception:
-            #     return None
-            # raise UnmappedException("CIK not found for GVKEY='%s'" % gvkey)
-        # Select the mapping df subset applicable to the input GVKEY.
-        gvkey_df = gvkey_indexed.loc[gvkey]
-        if isinstance(gvkey_df, pd.Series):
-            gvkey_df = pd.DataFrame(gvkey_df).transpose()
-        #
-        if as_of_date is None:
-            # Return all the possible mappings.
-            return list(gvkey_df["cik"].unique())
-        cik = ""
-        as_of_date = pd.Timestamp(as_of_date)
-        # Iterate over the potential mapping candidates.
-        for _, row in gvkey_df.iterrows():
-            if as_of_date >= pd.Timestamp(row["effdate"]) and (
-                row["thrudate"].startswith("9999")
-                or as_of_date <= pd.Timestamp(row["thrudate"])
-            ):
-                # Check whether the mapping applies to the input date.
-                cik = row["cik"]
-                break
-        # Assert if no mapping is found for the input date.
-        if not cik:
-            return None
-            # if not raise_exception:
-            #     return None
-            # raise UnmappedException(
-            #     "CIK not found for GVKEY='%s', date='%s'" % (gvkey, as_of_date)
-            # )
+        cik = response.json()['data']
         return cik
+
+
+
+
 
 
 

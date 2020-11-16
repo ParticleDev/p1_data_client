@@ -5,7 +5,7 @@ Import as
 import p1_data_client_python.abstract_client as p1_abs
 """
 
-from typing import Dict
+from typing import Dict, Any
 import datetime as dt
 import abc
 import requests
@@ -49,6 +49,18 @@ class AbstractClient:
         except ValueError:
             raise ValueError("Incorrect data format, should be YYYY-MM-DD")
         return True
+
+    def _set_optional_params(self, params, **kwargs) -> Dict[str, Any]:
+        for param, value in \
+                [(k, v) for k, v in kwargs.items() if v]:
+            if param.endswith('date'):
+                self.validate_date(kwargs[param])
+            if isinstance(value, list):
+                params[param] = ','.join(value)
+            else:
+                params[param] = value
+
+        return params
 
     def __init__(
         self,
