@@ -56,6 +56,16 @@ class CikGoodResponseMock:
         }
 
 
+class ItemGoodResponseMock:
+    status_code = 200
+
+    @staticmethod
+    def json() -> dict:
+        return {
+            'data': ['ITEM_CODE']
+        }
+
+
 class MessyResponseMock:
     status_code = 200
 
@@ -91,5 +101,15 @@ class TestEdgarPythonClientMock(hut.TestCase):
         self.assertIsInstance(self.client.get_cik(gvkey='123',
                                                   gvkey_date='2020-01-01'), str)
 
-
-
+    @mock.patch("requests.Session.request")
+    def test_get_item(self, mock_request) -> None:
+        # test on UnauthorizedException
+        mock_request.return_value = mock.Mock(status_code=401)
+        with self.assertRaises(p1_exc.UnauthorizedException):
+            self.client.get_item(description='qwe')
+        # test on good response
+        mock_request.return_value = ItemGoodResponseMock()
+        self.assertIsInstance(self.client.
+                              get_item(description='Some item description',
+                                       keywords=['Computers', 'Hardware']),
+                              list)

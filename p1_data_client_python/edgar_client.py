@@ -41,7 +41,8 @@ class EdgarClient(p1_abs.AbstractClient):
     def _api_routes(self) -> Dict[str, str]:
         return {
             "PAYLOAD": "/data",
-            "CIK": "/metadata/cik"
+            "CIK": "/metadata/cik",
+            "ITEM": "/metadata/item"
         }
 
     def get_payload(self,
@@ -124,6 +125,33 @@ class EdgarClient(p1_abs.AbstractClient):
             )
         cik = response.json()['data']
         return cik
+
+    def get_item(self, description: Optional[str] = None, keywords: Optional[List[str]] = None) -> str:
+        """
+        Obtain item by given parameters.
+
+        :param description: Description of the item as string.
+        :param keywords: List of keywords.
+        :return: Item code.
+        """
+
+        params = {}
+        params = self._set_optional_params(params,
+                                           cusip=description,
+                                           company=keywords)
+        url = f'{self.base_url}{self._api_routes["ITEM"]}'
+        response = self._make_request(
+            "GET",
+            url,
+            headers=self.headers,
+            params=params
+        )
+        if response.status_code != 200:
+            raise p1_exc.ParseResponseException(
+                f"Got next response, from the server: {response.text}"
+            )
+        item = response.json()['data']
+        return item
 
 
 
