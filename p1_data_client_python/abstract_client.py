@@ -1,0 +1,107 @@
+"""
+An abstract client class for all types of API
+
+Import as
+import p1_data_client_python.abstract_client as p1_abs
+"""
+
+from typing import Dict
+import datetime as dt
+import abc
+import requests
+import requests.adapters as rq_adapt
+import requests.packages.urllib3.util.retry as rq_retry
+
+import p1_data_client_python.exceptions as p1_exc
+
+
+class AbstractClient:
+    """
+    Base abstract class
+    """
+
+    @property
+    @abc.abstractmethod
+    def _api_routes(self) -> Dict[str, str]:
+        """
+        Abstract property for a dict API routes
+
+        :return: Dict of API routes like "<ROUTE_NAME>": "ROUTE_PATH"
+            Example: "SEARCH": "/data-api/v1/search/"
+        """
+
+    @property
+    @abc.abstractmethod
+    def _default_base_url(self) -> str:
+        """
+        Abstract property that return base url.
+
+        :return: Default base server url.
+        """
+
+    @classmethod
+    def validate_date(cls, date_text: str) -> bool:
+        """
+        Validate string date
+        """
+        try:
+            dt.datetime.strptime(date_text, '%Y-%m-%d')
+        except ValueError:
+            raise ValueError("Incorrect data format, should be YYYY-MM-DD")
+        return True
+
+    def __init__(
+        self,
+        token: str,
+        base_url: str = None,
+        use_retries: bool = True,
+        retries_number: int = 5,
+        backoff_factor: float = 0.3,
+    ):
+        """
+        Pass arguments and gets authenticated in the system.
+        :param base_url: REST API Server url.
+        :param token: Your token for access to the system.
+        """
+        self.base_url = base_url or self._default_base_url
+        self.base_url = self.base_url.rstrip("//")
+        self.token = token
+        self.use_retries = use_retries
+        self.retries_number = retries_number
+        self.backoff_factor = backoff_factor
+        self._scroll_id = ""
+        self.status_forcelist = (500, 502, 504)
+        self._last_search_parameters = None
+        self.session = self._get_session()
+        self.headers = {
+            "Authorization": "Token " + self.token,
+            "Content-Type": "application/json",
+        }
+
+    def _get_session(self) -> requests.Session:
+        """
+        Initialize and return a session allows make retry
+        when some errors will raised.
+        """
+        session = requests.Session()
+        retry = rq_retry.Retry(
+            total=self.retries_number,
+            read=self.retries_number,
+            connect=self.retries_number,
+            backoff_factor=self.backoff_factor,
+            status_forcelist=self.status_forcelist,
+        )
+        adapter = rq_adapt.HTTPAdapter(max_retries=retry)
+        session.mount("https://", adapter)
+        return session
+
+    def _make_request(self, *args, **kwargs) -> requests.Response:
+        """
+        Single entry point for any request to the REST API.
+        :return: requests Response.
+        """
+        response = self.session.request(*args, **kwargs)
+        # Throw exception, if token is not valid.
+        if response.status_code == 401:
+            raise p1_exc.UnauthorizedException(response.text)
+        return response

@@ -15,28 +15,20 @@ import p1_data_client_python.client as p1_data
 
 import json
 from typing import Any, Dict, List
-
-import p1_data_client_python.exceptions as p1_exc
 import pandas as pd
 import requests
-import requests.adapters as rq_adapt
-import requests.packages.urllib3.util.retry as rq_retry
 
-DEFAULT_BASE_URL = "https://data.particle.one"
+import p1_data_client_python.exceptions as p1_exc
+import p1_data_client_python.abstract_client as p1_abs
 
 
-class Client:
+class Client(p1_abs.AbstractClient):
     """
-    Base class for p1 data REST API operating.
+    Class for p1 data REST API operating.
     """
 
     SEARCH_CHUNK_SIZE = 1000
-    API_ROUTES = {
-        "AUTH": "/auth-token/",
-        "SEARCH": "/data-api/v1/search/",
-        "SEARCH_SCROLL": "/data-api/v1/search-scroll/",
-        "PAYLOAD": "/data-api/v1/payload/",
-    }
+
     METADATA_ROUTES = {
         "COMMODITIES": "/data-api/v1/commodities/",
         "BUSINESS-CATEGORIES": "/data-api/v1/business-categories/",
@@ -44,60 +36,18 @@ class Client:
         "FREQUENCIES": "/data-api/v1/frequencies/",
     }
 
-    def __init__(
-        self,
-        token: str,
-        base_url: str = DEFAULT_BASE_URL,
-        use_retries: bool = True,
-        retries_number: int = 5,
-        backoff_factor: float = 0.3,
-    ):
-        """
-        Pass arguments and gets authenticated in the system.
-        :param base_url: REST API Server url.
-        :param token: Your token for access to the system.
-        """
-        self.base_url = base_url.rstrip("//")
-        self.token = token
-        self.use_retries = use_retries
-        self.retries_number = retries_number
-        self.backoff_factor = backoff_factor
-        self._scroll_id = ""
-        self.status_forcelist = (500, 502, 504)
-        self._last_search_parameters = None
-        self.session = self._get_session()
-        self.headers = {
-            "Authorization": "Token " + self.token,
-            "Content-Type": "application/json",
+    @property
+    def _default_base_url(self) -> str:
+        return "https://data.particle.one"
+
+    @property
+    def __api_routes(self) -> Dict[str, str]:
+        return {
+            "AUTH": "/auth-token/",
+            "SEARCH": "/data-api/v1/search/",
+            "SEARCH_SCROLL": "/data-api/v1/search-scroll/",
+            "PAYLOAD": "/data-api/v1/payload/",
         }
-
-    def _get_session(self) -> requests.Session:
-        """
-        Initialize and return a session allows make retry
-        when some errors will raised.
-        """
-        session = requests.Session()
-        retry = rq_retry.Retry(
-            total=self.retries_number,
-            read=self.retries_number,
-            connect=self.retries_number,
-            backoff_factor=self.backoff_factor,
-            status_forcelist=self.status_forcelist,
-        )
-        adapter = rq_adapt.HTTPAdapter(max_retries=retry)
-        session.mount("https://", adapter)
-        return session
-
-    def _make_request(self, *args, **kwargs) -> requests.Response:
-        """
-        Single entry point for any request to the REST API.
-        :return: requests Response.
-        """
-        response = self.session.request(*args, **kwargs)
-        # Throw exception, if token is not valid.
-        if response.status_code == 401:
-            raise p1_exc.UnauthorizedException(response.text)
-        return response
 
     @property
     def list_of_metadata(self) -> List[str]:
@@ -132,7 +82,7 @@ class Client:
         """
         response = self._make_request(
             "GET",
-            self.base_url + self.API_ROUTES["SEARCH_SCROLL"],
+            self.base_url + self._api_routes["SEARCH_SCROLL"],
             headers=self.headers,
             params={"scroll_id": self._scroll_id},
         )
@@ -172,7 +122,7 @@ class Client:
         self._last_search_parameters = search_payload
         response = self._make_request(
             "POST",
-            self.base_url + self.API_ROUTES["SEARCH"],
+            self.base_url + self._api_routes["SEARCH"],
             headers=self.headers,
             data=json.dumps(self._last_search_parameters),
         )
@@ -200,7 +150,7 @@ class Client:
         """
         response = self._make_request(
             "GET",
-            self.base_url + self.API_ROUTES["PAYLOAD"],
+            self.base_url + self._api_routes["PAYLOAD"],
             headers=self.headers,
             params={"payload_id": payload_id},
         )
