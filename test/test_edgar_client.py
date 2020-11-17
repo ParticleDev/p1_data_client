@@ -12,18 +12,18 @@ class TestEdgarClient(hut.TestCase):
     def test_get_payload(self) -> None:
         payload = self.client.get_payload(form_name='8-K',
                                           cik=1002910,
-                                          start_date='2020-01-01',
-                                          end_date='2019-01-01',
-                                          items=['OIBDPQ', 'NIQ', 'ASDF']
+                                          start_date='2021-11-04',
+                                          end_date='2020-11-04',
+                                          items=['OIBDPQ', 'NIQ']
                                           )
         self.assertIsInstance(payload, pd.DataFrame)
 
     def test_get_cik(self) -> None:
         cik = self.client.get_cik(gvkey='004083', gvkey_date='2007-01-18')
-        pass
+        self.assertIsInstance(cik, pd.DataFrame)
 
     def test_get_item(self) -> None:
-        item = self.client.get_item(description='Current Assets - Other - Total')
         item = self.client.get_item(keywords=['short-term', 'short term'])
-        pass
+        self.assertIsInstance(item, pd.DataFrame)
+
 

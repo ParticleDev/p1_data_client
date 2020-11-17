@@ -21,8 +21,8 @@ class PayloadGoodResponseMock:
     status_code = 200
 
     @staticmethod
-    def json() -> list:
-        return [
+    def json() -> dict:
+        return {'data': [
             {
                 "url": "https://www.sec.gov/Archives/edgar/data/1002910/000162828020015521/000162828020015521/0001628280-20-015521-index.html",
                 "cik": 1002910,
@@ -43,7 +43,7 @@ class PayloadGoodResponseMock:
                 "extracted_value": 2.0,
                 "period": "2020-11-04T00:00:00"
             }
-        ]
+        ]}
 
 
 class CikGoodResponseMock:
@@ -52,7 +52,7 @@ class CikGoodResponseMock:
     @staticmethod
     def json() -> dict:
         return {
-            'data': '123'
+            'data': ['123']
         }
 
 
@@ -99,17 +99,17 @@ class TestEdgarPythonClientMock(hut.TestCase):
         # test on good response
         mock_request.return_value = CikGoodResponseMock()
         self.assertIsInstance(self.client.get_cik(gvkey='123',
-                                                  gvkey_date='2020-01-01'), str)
+                                                  gvkey_date='2020-01-01'),
+                              pd.DataFrame)
 
     @mock.patch("requests.Session.request")
     def test_get_item(self, mock_request) -> None:
         # test on UnauthorizedException
         mock_request.return_value = mock.Mock(status_code=401)
         with self.assertRaises(p1_exc.UnauthorizedException):
-            self.client.get_item(description='qwe')
+            self.client.get_item(keywords=['Some keyword'])
         # test on good response
         mock_request.return_value = ItemGoodResponseMock()
         self.assertIsInstance(self.client.
-                              get_item(description='Some item description',
-                                       keywords=['Computers', 'Hardware']),
-                              list)
+                              get_item(keywords=['Some keyword']),
+                              pd.DataFrame)

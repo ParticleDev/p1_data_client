@@ -80,7 +80,7 @@ class EdgarClient(p1_abs.AbstractClient):
                 f"Got next response, from the server: {response.text}"
             )
         try:
-            payload_dataframe = pd.DataFrame(response.json())
+            payload_dataframe = pd.DataFrame(response.json()['data'])
         except (KeyError, json.JSONDecodeError) as e:
             raise p1_exc.ParseResponseException(
                 "Can't transform server response to a pandas Dataframe"
@@ -92,7 +92,7 @@ class EdgarClient(p1_abs.AbstractClient):
                 ticker: Optional[str] = None,
                 cusip: Optional[str] = None,
                 company: Optional[str] = None
-                ) -> Optional[Union[str, List[str]]]:
+                ) -> pd.DataFrame:
         """
         Obtain Company Identification Key (cik) by given parameters.
 
@@ -123,22 +123,25 @@ class EdgarClient(p1_abs.AbstractClient):
             raise p1_exc.ParseResponseException(
                 f"Got next response, from the server: {response.text}"
             )
-        cik = response.json()['data']
-        return cik
+        try:
+            cik_dataframe = pd.DataFrame(response.json()['data'])
+        except (KeyError, json.JSONDecodeError) as e:
+            raise p1_exc.ParseResponseException(
+                "Can't transform server response to a pandas Dataframe"
+            ) from e
+        return cik_dataframe
 
-    def get_item(self, description: Optional[str] = None, keywords: Optional[List[str]] = None) -> str:
+    def get_item(self, keywords: Optional[List[str]] = None) -> pd.DataFrame:
         """
         Obtain item by given parameters.
 
-        :param description: Description of the item as string.
         :param keywords: List of keywords.
         :return: Item code.
         """
 
         params = {}
         params = self._set_optional_params(params,
-                                           cusip=description,
-                                           company=keywords)
+                                           keywords=keywords)
         url = f'{self.base_url}{self._api_routes["ITEM"]}'
         response = self._make_request(
             "GET",
@@ -150,16 +153,10 @@ class EdgarClient(p1_abs.AbstractClient):
             raise p1_exc.ParseResponseException(
                 f"Got next response, from the server: {response.text}"
             )
-        item = response.json()['data']
-        return item
-
-
-
-
-
-
-
-
-
-
-
+        try:
+            item_dataframe = pd.DataFrame(response.json()['data'])
+        except (KeyError, json.JSONDecodeError) as e:
+            raise p1_exc.ParseResponseException(
+                "Can't transform server response to a pandas Dataframe"
+            ) from e
+        return item_dataframe
