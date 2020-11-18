@@ -13,10 +13,58 @@ import p1_data_client_python.client as p1_edg
 
 from typing import List, Dict, Optional, Union
 import json
+import sys
 import pandas as pd
 
 import p1_data_client_python.exceptions as p1_exc
 import p1_data_client_python.abstract_client as p1_abs
+
+PAYLOAD_BLOCK_SIZE = 100
+P1_CIK = Union[str, int]
+P1_GVKEY = Union[str, int]
+
+
+class GvkeyCikMapper(p1_abs.AbstractClient):
+    """
+    Handler for GVKey <-> Cik transformation
+    """
+    @property
+    def _api_routes(self) -> Dict[str, str]:
+        return {
+            "GVKEY": "/metadata/gvkey"
+        }
+
+    @property
+    def _default_base_url(self) -> str:
+        return "http://etl.p1:5001"
+
+    def get_gvkey_from_cik(self,
+                           cik: P1_CIK,
+                           as_of_date: Optional[str]) -> pd.DataFrame:
+        """
+        :param cik: Company Identification Key as integer.
+        :param as_of_date: Date of gvkey. Date format is "YYYY-MM-DD".
+        """
+
+        params = {'cik': cik}
+        url = f'{self.base_url}{self._api_routes["GVKEY"]}'
+        response = self._make_request(
+            "GET",
+            url,
+            headers=self.headers,
+            params=params
+        )
+        if response.status_code != 200:
+            raise p1_exc.ParseResponseException(
+                f"Got next response, from the server: {response.text}"
+            )
+        try:
+            gvkey_dataframe = pd.DataFrame(response.json()['data'])
+        except (KeyError, json.JSONDecodeError) as e:
+            raise p1_exc.ParseResponseException(
+                "Can't transform server response to a pandas Dataframe"
+            ) from e
+        return gvkey_dataframe
 
 
 class EdgarClient(p1_abs.AbstractClient):
@@ -45,21 +93,43 @@ class EdgarClient(p1_abs.AbstractClient):
             "ITEM": "/metadata/item"
         }
 
+    def _payload_generator(self, *args, **kwargs):
+        current_offset = 0
+        count_lines = sys.maxsize
+        while current_offset < count_lines:
+            kwargs['params']['offset'] = current_offset
+            response = self._make_request(*args, **kwargs)
+            if response.status_code != 200:
+                raise p1_exc.ParseResponseException(
+                    f"Got next response, from the server: {response.text}"
+                )
+            try:
+                payload_dataframe = pd.DataFrame(response.json()['data'])
+            except (KeyError, json.JSONDecodeError) as e:
+                raise p1_exc.ParseResponseException(
+                    "Can't transform server response to a pandas Dataframe"
+                ) from e
+            count_lines = response.json()['count']
+            yield payload_dataframe
+            current_offset += PAYLOAD_BLOCK_SIZE
+
     def get_payload(self,
                     form_name: str,
                     cik: Union[int, str],
                     start_date: str = None,
                     end_date: str = None,
-                    items: List[str] = None
+                    items: List[str] = None,
                     ) -> pd.DataFrame:
         """
         Get payload data for a form, and a company
 
-        :form_name: Form name.
-        :cik: Company Identification Key as integer.
-        :start_date: Get a data where filing date greater or equal start_date
-        :end_date: Get a data where filing date greater or equal end_date
-        :items: List of items for searching.
+        :param form_name: Form name.
+        :param cik: Company Identification Key as integer.
+        :param start_date: Get a data where filing date greater or equal start_date
+        :param end_date: Get a data where filing date greater or equal end_date
+        :param items: List of items for searching.
+        :param max_lines: Maximum count of line for fetching.
+        :return: Pandas dataframe with payload data.
         """
 
         params = {}
@@ -69,29 +139,19 @@ class EdgarClient(p1_abs.AbstractClient):
                                            items=items)
         url = f'{self.base_url}{self._api_routes["PAYLOAD"]}' \
               f'/{form_name}/{cik}'
-        response = self._make_request(
-            "GET",
-            url,
-            headers=self.headers,
-            params=params
-        )
-        if response.status_code != 200:
-            raise p1_exc.ParseResponseException(
-                f"Got next response, from the server: {response.text}"
-            )
-        try:
-            payload_dataframe = pd.DataFrame(response.json()['data'])
-        except (KeyError, json.JSONDecodeError) as e:
-            raise p1_exc.ParseResponseException(
-                "Can't transform server response to a pandas Dataframe"
-            ) from e
+        payload_dataframe = pd.DataFrame()
+        for df in self._payload_generator("GET",
+                                          url,
+                                          headers=self.headers,
+                                          params=params):
+            payload_dataframe = payload_dataframe.append(df, ignore_index=True)
         return payload_dataframe
 
     def get_cik(self, gvkey: Optional[Union[str, int]] = None,
                 gvkey_date: Optional[str] = None,
                 ticker: Optional[str] = None,
                 cusip: Optional[str] = None,
-                company: Optional[str] = None
+                company: Optional[str] = None,
                 ) -> pd.DataFrame:
         """
         Obtain Company Identification Key (cik) by given parameters.
@@ -103,7 +163,7 @@ class EdgarClient(p1_abs.AbstractClient):
         :param cusip: Committee on Uniform Securities
         Identification Procedures number.
         :param company: Company name.
-        :return: One or list of cik.
+        :return: Pandas dataframe with cik information.
         """
         params = {}
         params = self._set_optional_params(params,
