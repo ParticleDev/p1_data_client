@@ -53,13 +53,7 @@ class CompustatItemMapper(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        try:
-            mapping_dataframe = pd.DataFrame(response.json()['data'])
-        except (KeyError, json.JSONDecodeError) as e:
-            raise p1_exc.ParseResponseException(
-                "Can't transform server response to a pandas Dataframe"
-            ) from e
-        return mapping_dataframe
+        return self._get_dataframe_from_response(response)
 
     def get_item_from_keywords(self, keywords) -> pd.DataFrame:
         """
@@ -79,13 +73,7 @@ class CompustatItemMapper(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        try:
-            item_dataframe = pd.DataFrame(response.json()['data'])
-        except (KeyError, json.JSONDecodeError) as e:
-            raise p1_exc.ParseResponseException(
-                "Can't transform server response to a pandas Dataframe"
-            ) from e
-        return item_dataframe
+        return self._get_dataframe_from_response(response)
 
 
 class GvkeyCikMapper(p1_abs.AbstractClient):
@@ -121,13 +109,7 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        try:
-            gvkey_dataframe = pd.DataFrame(response.json()['data'])
-        except (KeyError, json.JSONDecodeError) as e:
-            raise p1_exc.ParseResponseException(
-                "Can't transform server response to a pandas Dataframe"
-            ) from e
-        return gvkey_dataframe
+        return self._get_dataframe_from_response(response)
 
     def get_cik_from_gvkey(self,
                            gvkey: P1_GVKEY,
@@ -151,13 +133,7 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        try:
-            cik_dataframe = pd.DataFrame(response.json()['data'])
-        except (KeyError, json.JSONDecodeError) as e:
-            raise p1_exc.ParseResponseException(
-                "Can't transform server response to a pandas Dataframe"
-            ) from e
-        return cik_dataframe
+        return self._get_dataframe_from_response(response)
 
 
 class EdgarClient(p1_abs.AbstractClient):
@@ -269,13 +245,7 @@ class EdgarClient(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        try:
-            cik_dataframe = pd.DataFrame(response.json()['data'])
-        except (KeyError, json.JSONDecodeError) as e:
-            raise p1_exc.ParseResponseException(
-                "Can't transform server response to a pandas Dataframe"
-            ) from e
-        return cik_dataframe
+        return self._get_dataframe_from_response(response)
 
     def get_item(self, keywords: Optional[List[str]] = None) -> pd.DataFrame:
         """
@@ -295,10 +265,5 @@ class EdgarClient(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        try:
-            item_dataframe = pd.DataFrame(response.json()['data'])
-        except (KeyError, json.JSONDecodeError) as e:
-            raise p1_exc.ParseResponseException(
-                "Can't transform server response to a pandas Dataframe"
-            ) from e
-        return item_dataframe
+        return self._get_dataframe_from_response(response)
+

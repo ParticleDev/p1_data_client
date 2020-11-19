@@ -7,6 +7,8 @@ import p1_data_client_python.abstract_client as p1_abs
 
 from typing import Dict, Any
 import datetime as dt
+import pandas as pd
+import json
 import abc
 import requests
 import requests.adapters as rq_adapt
@@ -49,6 +51,23 @@ class AbstractClient:
         except ValueError:
             raise ValueError("Incorrect data format, should be YYYY-MM-DD")
         return True
+
+    @classmethod
+    def _get_dataframe_from_response(cls, response: requests.Response)\
+            -> pd.DataFrame:
+        """
+        Retrieve tha dataframe from the json part of a response.
+
+        :param response: Response from a request.
+        :return: Dataframe from json.
+        """
+        try:
+            data = pd.DataFrame(response.json()['data'])
+        except (KeyError, json.JSONDecodeError) as e:
+            raise p1_exc.ParseResponseException(
+                "Can't transform server response to a pandas Dataframe"
+            ) from e
+        return data
 
     def _set_optional_params(self, params, **kwargs) -> Dict[str, Any]:
         for param, value in \
