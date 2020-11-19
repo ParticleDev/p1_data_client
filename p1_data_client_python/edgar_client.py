@@ -38,7 +38,7 @@ class CompustatItemMapper(p1_abs.AbstractClient):
 
     @property
     def _default_base_url(self) -> str:
-        return "http://etl.p1:5001"
+        return "https://data.particle.one/edgar/v1/"
 
     def get_mapping(self):
         """
