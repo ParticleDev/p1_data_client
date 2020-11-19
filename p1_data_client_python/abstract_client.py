@@ -116,4 +116,8 @@ class AbstractClient:
         # Throw exception, if token is not valid.
         if response.status_code == 401:
             raise p1_exc.UnauthorizedException(response.text)
+        if response.status_code != 200:
+            raise p1_exc.ParseResponseException(
+                f"Got next response, from the server: {response.text}"
+            )
         return response

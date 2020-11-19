@@ -41,7 +41,7 @@ class Client(p1_abs.AbstractClient):
         return "https://data.particle.one"
 
     @property
-    def __api_routes(self) -> Dict[str, str]:
+    def _api_routes(self) -> Dict[str, str]:
         return {
             "AUTH": "/auth-token/",
             "SEARCH": "/data-api/v1/search/",

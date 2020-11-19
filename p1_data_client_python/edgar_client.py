@@ -53,10 +53,6 @@ class CompustatItemMapper(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        if response.status_code != 200:
-            raise p1_exc.ParseResponseException(
-                f"Got next response, from the server: {response.text}"
-            )
         try:
             mapping_dataframe = pd.DataFrame(response.json()['data'])
         except (KeyError, json.JSONDecodeError) as e:
@@ -83,10 +79,6 @@ class CompustatItemMapper(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        if response.status_code != 200:
-            raise p1_exc.ParseResponseException(
-                f"Got next response, from the server: {response.text}"
-            )
         try:
             item_dataframe = pd.DataFrame(response.json()['data'])
         except (KeyError, json.JSONDecodeError) as e:
@@ -129,10 +121,6 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        if response.status_code != 200:
-            raise p1_exc.ParseResponseException(
-                f"Got next response, from the server: {response.text}"
-            )
         try:
             gvkey_dataframe = pd.DataFrame(response.json()['data'])
         except (KeyError, json.JSONDecodeError) as e:
@@ -163,10 +151,6 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        if response.status_code != 200:
-            raise p1_exc.ParseResponseException(
-                f"Got next response, from the server: {response.text}"
-            )
         try:
             cik_dataframe = pd.DataFrame(response.json()['data'])
         except (KeyError, json.JSONDecodeError) as e:
@@ -208,10 +192,6 @@ class EdgarClient(p1_abs.AbstractClient):
         while current_offset < count_lines:
             kwargs['params']['offset'] = current_offset
             response = self._make_request(*args, **kwargs)
-            if response.status_code != 200:
-                raise p1_exc.ParseResponseException(
-                    f"Got next response, from the server: {response.text}"
-                )
             try:
                 payload_dataframe = pd.DataFrame(response.json()['data'])
             except (KeyError, json.JSONDecodeError) as e:
@@ -289,10 +269,6 @@ class EdgarClient(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        if response.status_code != 200:
-            raise p1_exc.ParseResponseException(
-                f"Got next response, from the server: {response.text}"
-            )
         try:
             cik_dataframe = pd.DataFrame(response.json()['data'])
         except (KeyError, json.JSONDecodeError) as e:
@@ -319,10 +295,6 @@ class EdgarClient(p1_abs.AbstractClient):
             headers=self.headers,
             params=params
         )
-        if response.status_code != 200:
-            raise p1_exc.ParseResponseException(
-                f"Got next response, from the server: {response.text}"
-            )
         try:
             item_dataframe = pd.DataFrame(response.json()['data'])
         except (KeyError, json.JSONDecodeError) as e:
