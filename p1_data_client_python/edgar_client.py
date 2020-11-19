@@ -234,10 +234,10 @@ class EdgarClient(p1_abs.AbstractClient):
 
         :param form_name: Form name.
         :param cik: Company Identification Key as integer.
-        :param start_date: Get a data where filing date
+        :param start_date: Get a data where filing date is
         greater or equal start_date. Date format is "YYYY-MM-DD".
-        :param end_date: Get a data where filing date
-        greater or equal end_date. Date format is "YYYY-MM-DD".
+        :param end_date: Get a data where filing date is
+        less or equal end_date. Date format is "YYYY-MM-DD".
         :param items: List of items for searching.
         :return: Pandas dataframe with payload data.
         """

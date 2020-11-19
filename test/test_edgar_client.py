@@ -2,12 +2,14 @@ import pandas as pd
 import helpers.unit_test as hut
 import p1_data_client_python.edgar_client as p1_edg
 
+TEST_BASE_URL = 'http://etl.p1:5001/edgar/v1/'
+
 
 class TestEdgarClient(hut.TestCase):
 
     def setUp(self) -> None:
         self.client = p1_edg.EdgarClient(token="1234567890",
-                                         base_url='http://etl.p1:5001')
+                                         base_url=TEST_BASE_URL)
         super().setUp()
 
     def test_get_payload_precise_sampling(self) -> None:
@@ -37,7 +39,7 @@ class TestEdgarClient(hut.TestCase):
 class TestGvkeyCikMapper(hut.TestCase):
     def setUp(self) -> None:
         self.gvkey_mapper = p1_edg.GvkeyCikMapper(token="1234567890",
-                                                  base_url='http://etl.p1:5001')
+                                                  base_url=TEST_BASE_URL)
         super().setUp()
 
     def test_get_gvkey_from_cik(self):
@@ -55,7 +57,7 @@ class TestCompustatItemMapper(hut.TestCase):
     def setUp(self) -> None:
         self.item_mapper = \
             p1_edg.CompustatItemMapper(token="1234567890",
-                                       base_url='http://etl.p1:5001')
+                                       base_url=TEST_BASE_URL)
         super().setUp()
 
     def test_get_item(self) -> None:
