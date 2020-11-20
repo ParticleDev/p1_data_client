@@ -17,8 +17,8 @@
 ## Description
 
 This package contains:
-- A Python module `p1_data_client_python` wrapping the P1 Data REST API into a
-  pandas-friendly interface
+- A Python module `p1_data_client_python` wrapping the P1 Data REST API 
+and P1 Edgar Data REST API to a pandas-friendly interface
 - An example notebook on how to use the Python module
   `notebook/p1_data_client_example.ipynb`
 
@@ -54,6 +54,8 @@ This package contains:
 
 ## Quick Start
 
+### Data API
+
 ```python
 import p1_data_client_python.client as p1_data
 
@@ -68,6 +70,31 @@ client.search(text='Price', commodity=['Coal'], country=['Belize', 'Brazil'])
 
 client.get_payload('00158d049d149197f67115a6cc3224e956e5c9e9')
 ```
+
+### Edgar Data API
+
+```python
+
+import p1_data_client_python.edgar_client as p1_edg
+
+TOKEN = '<Put your token here>'
+
+client = p1_edg.EdgarClient(token=TOKEN)
+client.get_payload(form_name='8-K',
+                   cik=1002910,
+                   start_date='2021-11-04',
+                   end_date='2020-11-04',
+                   items=['OIBDPQ', 'NIQ']
+                   )
+
+gvkey_mapper = p1_edg.GvkeyCikMapper(token=TOKEN)
+gvkey_mapper.get_gvkey_from_cik(cik='0000940800', as_of_date='2007-01-18')
+gvkey_mapper.get_cik_from_gvkey(gvkey='061411', as_of_date='2007-01-18')
+
+item_mapper = p1_edg.CompustatItemMapper(token="1234567890")
+item_mapper.get_item_from_keywords(keywords=['short-term', 'short term'])
+item_mapper.get_mapping()
+``` 
 
 ## Run tests
 
