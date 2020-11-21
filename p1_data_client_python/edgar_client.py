@@ -89,7 +89,7 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
 
     @property
     def _default_base_url(self) -> str:
-        return "http://etl.p1:5001"
+        return "https://data.particle.one/edgar/v1/"
 
     def get_gvkey_from_cik(self,
                            cik: P1_CIK,
@@ -99,8 +99,10 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
 
         :param cik: Company Identification Key as integer.
         :param as_of_date: Date of gvkey. Date format is "YYYY-MM-DD".
+        Not implemented for now.
         """
 
+        # TODO(Greg,Vlad): Implement as_of_date.
         params = {'cik': cik}
         url = f'{self.base_url}{self._api_routes["GVKEY"]}'
         response = self._make_request(
@@ -143,16 +145,11 @@ class EdgarClient(p1_abs.AbstractClient):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # TODO:(Vlad) Drop it when Greg will rework headers.
-        self.headers = {
-            "accept": "application/json",
-            "api_key": "1234567890"
-        }
         self.cik_gvkey_mapping = None
 
     @property
     def _default_base_url(self) -> str:
-        return "http://etl.p1:5001"
+        return "https://data.particle.one/edgar/v1/"
 
     @property
     def _api_routes(self) -> Dict[str, str]:
@@ -183,7 +180,7 @@ class EdgarClient(p1_abs.AbstractClient):
                     cik: Union[int, str],
                     start_date: str = None,
                     end_date: str = None,
-                    items: List[str] = None,
+                    item: str = None,
                     ) -> pd.DataFrame:
         """
         Get payload data for a form, and a company
@@ -194,7 +191,7 @@ class EdgarClient(p1_abs.AbstractClient):
         greater or equal start_date. Date format is "YYYY-MM-DD".
         :param end_date: Get a data where filing date is
         less or equal end_date. Date format is "YYYY-MM-DD".
-        :param items: List of items for searching.
+        :param item: Item for searching.
         :return: Pandas dataframe with payload data.
         """
 
@@ -202,7 +199,7 @@ class EdgarClient(p1_abs.AbstractClient):
         params = self._set_optional_params(params,
                                            start_date=start_date,
                                            end_date=end_date,
-                                           items=items)
+                                           item=item)
         url = f'{self.base_url}{self._api_routes["PAYLOAD"]}' \
               f'/{form_name}/{cik}'
         payload_dataframe = pd.DataFrame()

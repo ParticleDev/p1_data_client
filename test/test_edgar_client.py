@@ -2,13 +2,14 @@ import pandas as pd
 import helpers.unit_test as hut
 import p1_data_client_python.edgar_client as p1_edg
 
-TEST_BASE_URL = 'http://etl.p1:5001/edgar/v1/'
+TEST_BASE_URL = 'http://data.dev.alpha.p1/edgar/v1/'
+TOKEN = '8c9c9458b145202c7a6b6cceaabd82023e957a46d6cf7061ed8e1c94a168f2fd'
 
 
 class TestEdgarClient(hut.TestCase):
 
     def setUp(self) -> None:
-        self.client = p1_edg.EdgarClient(token="1234567890",
+        self.client = p1_edg.EdgarClient(token=TOKEN,
                                          base_url=TEST_BASE_URL)
         super().setUp()
 
@@ -17,7 +18,7 @@ class TestEdgarClient(hut.TestCase):
                                           cik=1002910,
                                           start_date='2020-01-04',
                                           end_date='2021-11-04',
-                                          items=['OIBDPQ', 'NIQ']
+                                          item='OIBDPQ'
                                           )
         self.assertIsInstance(payload, pd.DataFrame)
 
@@ -38,7 +39,7 @@ class TestEdgarClient(hut.TestCase):
 
 class TestGvkeyCikMapper(hut.TestCase):
     def setUp(self) -> None:
-        self.gvkey_mapper = p1_edg.GvkeyCikMapper(token="1234567890",
+        self.gvkey_mapper = p1_edg.GvkeyCikMapper(token=TOKEN,
                                                   base_url=TEST_BASE_URL)
         super().setUp()
 
@@ -56,7 +57,7 @@ class TestGvkeyCikMapper(hut.TestCase):
 class TestCompustatItemMapper(hut.TestCase):
     def setUp(self) -> None:
         self.item_mapper = \
-            p1_edg.CompustatItemMapper(token="1234567890",
+            p1_edg.CompustatItemMapper(token=TOKEN,
                                        base_url=TEST_BASE_URL)
         super().setUp()
 
