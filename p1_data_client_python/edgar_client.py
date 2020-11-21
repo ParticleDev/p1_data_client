@@ -192,10 +192,14 @@ class EdgarClient(p1_abs.AbstractClient):
 
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
-            params, start_date=start_date, end_date=end_date, item=item
+            params,
+            start_date=start_date,
+            end_date=end_date,
+            item=item,
+            cik=cik
         )
         url = (
-            f'{self.base_url}{self._api_routes["PAYLOAD"]}' f"/{form_name}/{cik}"
+            f'{self.base_url}{self._api_routes["PAYLOAD"]}' f"/{form_name}"
         )
         payload_dataframe = pd.DataFrame()
         for df in self._payload_generator(
