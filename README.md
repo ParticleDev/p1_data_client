@@ -84,7 +84,7 @@ client.get_payload(form_name='8-K',
                    cik=1002910,
                    start_date='2021-11-04',
                    end_date='2020-11-04',
-                   items=['OIBDPQ', 'NIQ']
+                   item='OIBDPQ'
                    )
 
 gvkey_mapper = p1_edg.GvkeyCikMapper(token=TOKEN)
@@ -92,7 +92,7 @@ gvkey_mapper.get_gvkey_from_cik(cik='0000940800', as_of_date='2007-01-18')
 gvkey_mapper.get_cik_from_gvkey(gvkey='061411', as_of_date='2007-01-18')
 
 item_mapper = p1_edg.CompustatItemMapper(token="1234567890")
-item_mapper.get_item_from_keywords(keywords=['short-term', 'short term'])
+item_mapper.get_item_from_keywords(keywords='short-term short term')
 item_mapper.get_mapping()
 ``` 
 

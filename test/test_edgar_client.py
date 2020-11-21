@@ -44,13 +44,14 @@ class TestGvkeyCikMapper(hut.TestCase):
         super().setUp()
 
     def test_get_gvkey_from_cik(self):
-        gvkey = self.gvkey_mapper.get_gvkey_from_cik(cik='0000940800',
-                                                     as_of_date='2007-01-18')
+        gvkey = self.gvkey_mapper.get_gvkey_from_cik(cik='33115',
+                                                     as_of_date='2007-01-01')
         self.assertIsInstance(gvkey, pd.DataFrame)
 
     def test_get_cik_from_gvkey(self):
         cik = self.gvkey_mapper.get_cik_from_gvkey(gvkey='061411',
-                                                   as_of_date='2007-01-18')
+                                                   as_of_date='2007-03-14'
+                                                   )
         self.assertIsInstance(cik, pd.DataFrame)
 
 
@@ -63,7 +64,7 @@ class TestCompustatItemMapper(hut.TestCase):
 
     def test_get_item(self) -> None:
         item = self.item_mapper.get_item_from_keywords(
-            keywords=['short-term', 'short term'])
+            keywords='short-term short term')
         self.assertIsInstance(item, pd.DataFrame)
 
     def test_get_mapping(self) -> None:

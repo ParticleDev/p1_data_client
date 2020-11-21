@@ -11,13 +11,13 @@ Import as
 import p1_data_client_python.client as p1_edg
 """
 
-from typing import List, Dict, Optional, Union
 import json
 import sys
-import pandas as pd
+from typing import Any, Dict, Optional, Union
 
-import p1_data_client_python.exceptions as p1_exc
 import p1_data_client_python.abstract_client as p1_abs
+import p1_data_client_python.exceptions as p1_exc
+import pandas as pd
 
 PAYLOAD_BLOCK_SIZE = 100
 P1_CIK = Union[str, int]
@@ -31,31 +31,27 @@ class CompustatItemMapper(p1_abs.AbstractClient):
 
     @property
     def _api_routes(self) -> Dict[str, str]:
-        return {
-            "MAPPING": "/metadata/mapping",
-            "ITEM": "/metadata/item"
-        }
+        return {"MAPPING": "/metadata/mapping", "ITEM": "/metadata/item"}
 
     @property
     def _default_base_url(self) -> str:
         return "https://data.particle.one/edgar/v1/"
 
-    def get_mapping(self):
+    def get_mapping(self) -> pd.DataFrame:
         """
         Get all mapping for items.
+
+        :return: Item mapping as dataframe.
         """
 
-        params = {'mapping_type': 'compustat_items'}
+        params = {"mapping_type": "compustat_items"}
         url = f'{self.base_url}{self._api_routes["MAPPING"]}'
         response = self._make_request(
-            "GET",
-            url,
-            headers=self.headers,
-            params=params
+            "GET", url, headers=self.headers, params=params
         )
         return self._get_dataframe_from_response(response)
 
-    def get_item_from_keywords(self, keywords) -> pd.DataFrame:
+    def get_item_from_keywords(self, keywords: str) -> pd.DataFrame:
         """
         Obtain item by keywords.
 
@@ -63,15 +59,11 @@ class CompustatItemMapper(p1_abs.AbstractClient):
         :return: Item code.
         """
 
-        params = {}
-        params = self._set_optional_params(params,
-                                           keywords=keywords)
+        params: Dict[str, Any] = {}
+        params = self._set_optional_params(params, keywords=keywords)
         url = f'{self.base_url}{self._api_routes["ITEM"]}'
         response = self._make_request(
-            "GET",
-            url,
-            headers=self.headers,
-            params=params
+            "GET", url, headers=self.headers, params=params
         )
         return self._get_dataframe_from_response(response)
 
@@ -80,6 +72,7 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
     """
     Handler for GVKey <-> Cik transformation
     """
+
     @property
     def _api_routes(self) -> Dict[str, str]:
         return {
@@ -91,9 +84,9 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
     def _default_base_url(self) -> str:
         return "https://data.particle.one/edgar/v1/"
 
-    def get_gvkey_from_cik(self,
-                           cik: P1_CIK,
-                           as_of_date: Optional[str] = None) -> pd.DataFrame:
+    def get_gvkey_from_cik(
+        self, cik: P1_CIK, as_of_date: Optional[str] = None
+    ) -> pd.DataFrame:
         """
         Get GVkey by the cik and date.
 
@@ -103,19 +96,16 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
         """
 
         # TODO(Greg,Vlad): Implement as_of_date.
-        params = {'cik': cik}
+        params = {"cik": cik, "as_of_date": as_of_date}
         url = f'{self.base_url}{self._api_routes["GVKEY"]}'
         response = self._make_request(
-            "GET",
-            url,
-            headers=self.headers,
-            params=params
+            "GET", url, headers=self.headers, params=params
         )
         return self._get_dataframe_from_response(response)
 
-    def get_cik_from_gvkey(self,
-                           gvkey: P1_GVKEY,
-                           as_of_date: Optional[str] = None) -> pd.DataFrame:
+    def get_cik_from_gvkey(
+        self, gvkey: P1_GVKEY, as_of_date: Optional[str] = None
+    ) -> pd.DataFrame:
         """
         Get Cik by GVKey and date.
 
@@ -124,16 +114,13 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
         more than one cik may be to be returned.
         """
 
-        params = {}
-        params = self._set_optional_params(params,
-                                           gvkey=gvkey,
-                                           gvkey_date=as_of_date)
+        params: Dict[str, Any] = {}
+        params = self._set_optional_params(
+            params, gvkey=gvkey, gvkey_date=as_of_date
+        )
         url = f'{self.base_url}{self._api_routes["CIK"]}'
         response = self._make_request(
-            "GET",
-            url,
-            headers=self.headers,
-            params=params
+            "GET", url, headers=self.headers, params=params
         )
         return self._get_dataframe_from_response(response)
 
@@ -156,32 +143,40 @@ class EdgarClient(p1_abs.AbstractClient):
         return {
             "PAYLOAD": "/data",
             "CIK": "/metadata/cik",
-            "ITEM": "/metadata/item"
+            "ITEM": "/metadata/item",
         }
 
-    def _payload_generator(self, *args, **kwargs):
+    def _payload_generator(self, *args, **kwargs) -> pd.DataFrame:
+        """
+        Payload generator that output payload data by DataAPI pagination.
+
+        :param args: Positional arguments for making request.
+        :param kwargs: Key arguments for making request.
+        :return: Pandas dataframe with a current chunk of data.
+        """
         current_offset = 0
         count_lines = sys.maxsize
         while current_offset < count_lines:
-            kwargs['params']['offset'] = current_offset
+            kwargs["params"]["offset"] = current_offset
             response = self._make_request(*args, **kwargs)
             try:
-                payload_dataframe = pd.DataFrame(response.json()['data'])
+                payload_dataframe = pd.DataFrame(response.json()["data"])
             except (KeyError, json.JSONDecodeError) as e:
                 raise p1_exc.ParseResponseException(
                     "Can't transform server response to a pandas Dataframe"
                 ) from e
-            count_lines = response.json()['count']
+            count_lines = response.json()["count"]
             yield payload_dataframe
             current_offset += PAYLOAD_BLOCK_SIZE
 
-    def get_payload(self,
-                    form_name: str,
-                    cik: Union[int, str],
-                    start_date: str = None,
-                    end_date: str = None,
-                    item: str = None,
-                    ) -> pd.DataFrame:
+    def get_payload(
+        self,
+        form_name: str,
+        cik: Union[int, str],
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+        item: Optional[str] = None,
+    ) -> pd.DataFrame:
         """
         Get payload data for a form, and a company
 
@@ -195,27 +190,28 @@ class EdgarClient(p1_abs.AbstractClient):
         :return: Pandas dataframe with payload data.
         """
 
-        params = {}
-        params = self._set_optional_params(params,
-                                           start_date=start_date,
-                                           end_date=end_date,
-                                           item=item)
-        url = f'{self.base_url}{self._api_routes["PAYLOAD"]}' \
-              f'/{form_name}/{cik}'
+        params: Dict[str, Any] = {}
+        params = self._set_optional_params(
+            params, start_date=start_date, end_date=end_date, item=item
+        )
+        url = (
+            f'{self.base_url}{self._api_routes["PAYLOAD"]}' f"/{form_name}/{cik}"
+        )
         payload_dataframe = pd.DataFrame()
-        for df in self._payload_generator("GET",
-                                          url,
-                                          headers=self.headers,
-                                          params=params):
+        for df in self._payload_generator(
+            "GET", url, headers=self.headers, params=params
+        ):
             payload_dataframe = payload_dataframe.append(df, ignore_index=True)
         return payload_dataframe
 
-    def get_cik(self, gvkey: Optional[Union[str, int]] = None,
-                gvkey_date: Optional[str] = None,
-                ticker: Optional[str] = None,
-                cusip: Optional[str] = None,
-                company: Optional[str] = None,
-                ) -> pd.DataFrame:
+    def get_cik(
+        self,
+        gvkey: Optional[Union[str, int]] = None,
+        gvkey_date: Optional[str] = None,
+        ticker: Optional[str] = None,
+        cusip: Optional[str] = None,
+        company: Optional[str] = None,
+    ) -> pd.DataFrame:
         """
         Obtain Company Identification Key (cik) by given parameters.
 
@@ -228,39 +224,33 @@ class EdgarClient(p1_abs.AbstractClient):
         :param company: Company name.
         :return: Pandas dataframe with cik information.
         """
-        params = {}
-        params = self._set_optional_params(params,
-                                           gvkey=gvkey,
-                                           gvkey_date=gvkey_date,
-                                           ticker=ticker,
-                                           cusip=cusip,
-                                           company=company)
+        params: Dict[str, Any] = {}
+        params = self._set_optional_params(
+            params,
+            gvkey=gvkey,
+            gvkey_date=gvkey_date,
+            ticker=ticker,
+            cusip=cusip,
+            company=company,
+        )
         url = f'{self.base_url}{self._api_routes["CIK"]}'
         response = self._make_request(
-            "GET",
-            url,
-            headers=self.headers,
-            params=params
+            "GET", url, headers=self.headers, params=params
         )
         return self._get_dataframe_from_response(response)
 
-    def get_item(self, keywords: Optional[List[str]] = None) -> pd.DataFrame:
+    def get_item(self, keywords: Optional[str] = None) -> pd.DataFrame:
         """
-        Obtain item by given parameters.
+        Obtain item by given keywords.
 
-        :param keywords: List of keywords.
+        :param keywords: Sentence of keywords.
         :return: Item code.
         """
 
-        params = {}
-        params = self._set_optional_params(params,
-                                           keywords=keywords)
+        params: Dict[str, Any] = {}
+        params = self._set_optional_params(params, keywords=keywords)
         url = f'{self.base_url}{self._api_routes["ITEM"]}'
         response = self._make_request(
-            "GET",
-            url,
-            headers=self.headers,
-            params=params
+            "GET", url, headers=self.headers, params=params
         )
         return self._get_dataframe_from_response(response)
-

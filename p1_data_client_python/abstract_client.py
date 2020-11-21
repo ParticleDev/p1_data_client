@@ -5,16 +5,16 @@ Import as
 import p1_data_client_python.abstract_client as p1_abs
 """
 
-from typing import Dict, Any
-import datetime as dt
-import pandas as pd
-import json
 import abc
+import datetime as dt
+import json
+from typing import Any, Dict
+
+import p1_data_client_python.exceptions as p1_exc
+import pandas as pd
 import requests
 import requests.adapters as rq_adapt
 import requests.packages.urllib3.util.retry as rq_retry
-
-import p1_data_client_python.exceptions as p1_exc
 
 
 class AbstractClient:
@@ -47,14 +47,15 @@ class AbstractClient:
         Validate string date
         """
         try:
-            dt.datetime.strptime(date_text, '%Y-%m-%d')
+            dt.datetime.strptime(date_text, "%Y-%m-%d")
         except ValueError:
             raise ValueError("Incorrect data format, should be YYYY-MM-DD")
         return True
 
     @classmethod
-    def _get_dataframe_from_response(cls, response: requests.Response)\
-            -> pd.DataFrame:
+    def _get_dataframe_from_response(
+        cls, response: requests.Response
+    ) -> pd.DataFrame:
         """
         Retrieve tha dataframe from the json part of a response.
 
@@ -62,20 +63,27 @@ class AbstractClient:
         :return: Dataframe from json.
         """
         try:
-            data = pd.DataFrame(response.json()['data'])
+            data = pd.DataFrame(response.json()["data"])
         except (KeyError, json.JSONDecodeError) as e:
             raise p1_exc.ParseResponseException(
                 "Can't transform server response to a pandas Dataframe"
             ) from e
         return data
 
-    def _set_optional_params(self, params, **kwargs) -> Dict[str, Any]:
-        for param, value in \
-                [(k, v) for k, v in kwargs.items() if v]:
-            if param.endswith('date'):
+    def _set_optional_params(self, params: Dict[str, Any], **kwargs) \
+            -> Dict[str, Any]:
+        """
+        Settle optional parameters to the params dict for requests running.
+
+        :param params: Dict for parameters.
+        :param kwargs: All parameters should be implemented.
+        :return: Params dict.
+        """
+        for param, value in [(k, v) for k, v in kwargs.items() if v]:
+            if param.endswith("date"):
                 self.validate_date(kwargs[param])
             if isinstance(value, list):
-                params[param] = ','.join(value)
+                params[param] = ",".join(value)
             else:
                 params[param] = value
 
@@ -84,7 +92,7 @@ class AbstractClient:
     def __init__(
         self,
         token: str,
-        base_url: str = None,
+        base_url: str = '',
         use_retries: bool = True,
         retries_number: int = 5,
         backoff_factor: float = 0.3,
