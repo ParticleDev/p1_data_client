@@ -1,5 +1,4 @@
-"""
-P1 Data API exceptions.
+"""P1 Data API exceptions.
 
 Import as
 

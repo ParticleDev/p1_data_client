@@ -1,10 +1,11 @@
-from typing import List
 import unittest.mock as mock
+from typing import List
+
+import pandas as pd
 
 import helpers.unit_test as hut
 import p1_data_client_python.client as p1_data
 import p1_data_client_python.exceptions as p1_exc
-import pandas as pd
 
 TOKEN_ENV_NAME = "P1_API_TOKEN"
 EXAMPLE_METADATA_TYPE = "COMMODITIES"

@@ -14,13 +14,14 @@ import re
 import unittest
 from typing import Any, List, Mapping, NoReturn, Optional, Union
 
+import numpy as np
+import pandas as pd
+
 import helpers.dbg as dbg
 import helpers.git as git
 import helpers.io_ as io_
 import helpers.printing as prnt
 import helpers.system_interaction as si
-import numpy as np
-import pandas as pd
 
 _LOG = logging.getLogger(__name__)
 
@@ -140,8 +141,7 @@ def convert_df_to_json_string(
     n_tail: Optional[int] = 10,
     columns_order: Optional[List[str]] = None,
 ) -> str:
-    """
-    Convert dataframe to pretty-printed json string.
+    """Convert dataframe to pretty-printed json string.
 
     To select all rows of the dataframe, pass `n_head` as None.
 
