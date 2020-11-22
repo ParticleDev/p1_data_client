@@ -1,10 +1,11 @@
 import os
 
+import pandas as pd
+import pytest
+
 import helpers.unit_test as hut
 import p1_data_client_python.client as p1_data
 import p1_data_client_python.exceptions as p1_exc
-import pandas as pd
-import pytest
 
 # TODO: Remove alpha url before production usage
 TOKEN_ENV_NAME = "P1_API_TOKEN"

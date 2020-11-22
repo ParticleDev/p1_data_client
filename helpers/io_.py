@@ -14,9 +14,10 @@ import shutil
 import time
 from typing import Any, List, Optional
 
+import pandas as pd
+
 import helpers.dbg as dbg
 import helpers.system_interaction as si
-import pandas as pd
 
 _LOG = logging.getLogger(__name__)
 
