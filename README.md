@@ -63,14 +63,14 @@ This package contains:
   > python -c "import p1_data_client_python; print(p1_data_client_python)"
   <module 'p1_data_client_python' (namespace)>
   > export P1_API_TOKEN='your_token_here'
-  # E.g, export P1_API_TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c1772590'
+  # E.g, export P1_API_TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c177259e'
   > pytest -x
   ```
 
 ## Getting a Particle.One token
 
 - Go to `https://particle.one/` and request a free token
-- The token looks like `e44e7c6b04ef3ea1cfb7a8a67db74751c1772590`
+- The token looks like `e44e7c6b04ef3ea1cfb7a8a67db74751c177259e`
 
 # Quick Start
 
@@ -83,7 +83,7 @@ This package contains:
 
   API_URL = "https://data.particle.one"
   TOKEN = '<your_token_here>'
-  # E.g., TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c1772590'
+  # E.g., TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c177259e'
 
   client = p1_data.Client(base_url=API_URL, token=TOKEN)
 
@@ -102,7 +102,7 @@ This package contains:
   import p1_data_client_python.edgar_client as p1_edg
 
   TOKEN = '<your_token_here>'
-  # E.g., TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c1772590'
+  # E.g., TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c177259e'
 
   client = p1_edg.EdgarClient(token=TOKEN)
 
@@ -131,7 +131,7 @@ This package contains:
 
   ```bash
   > export P1_API_TOKEN='your_token_here'
-  # E.g, export P1_API_TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c1772590'
+  # E.g, export P1_API_TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c1772598'
   > pytest -x
   =============================================================================================== test session starts ================================================================================================
   platform linux -- Python 3.7.3, pytest-6.0.2, py-1.9.0, pluggy-0.13.1
