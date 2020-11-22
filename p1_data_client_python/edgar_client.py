@@ -1,5 +1,4 @@
-"""
-P1 Edgar Data REST API wrapper
+"""P1 Edgar Data REST API wrapper.
 
 Copyright 2020 by Particle.One Inc.
 All rights reserved.
@@ -15,9 +14,10 @@ import json
 import sys
 from typing import Any, Dict, Optional, Union
 
+import pandas as pd
+
 import p1_data_client_python.abstract_client as p1_abs
 import p1_data_client_python.exceptions as p1_exc
-import pandas as pd
 
 PAYLOAD_BLOCK_SIZE = 100
 P1_CIK = Union[str, int]
@@ -25,21 +25,10 @@ P1_GVKEY = Union[str, int]
 
 
 class CompustatItemMapper(p1_abs.AbstractClient):
-    """
-    Handler for Compustat item mapping.
-    """
-
-    @property
-    def _api_routes(self) -> Dict[str, str]:
-        return {"MAPPING": "/metadata/mapping", "ITEM": "/metadata/item"}
-
-    @property
-    def _default_base_url(self) -> str:
-        return "https://data.particle.one/edgar/v1/"
+    """Handler for Compustat item mapping."""
 
     def get_mapping(self) -> pd.DataFrame:
-        """
-        Get all mapping for items.
+        """Get all mapping for items.
 
         :return: Item mapping as dataframe.
         """
@@ -52,8 +41,7 @@ class CompustatItemMapper(p1_abs.AbstractClient):
         return self._get_dataframe_from_response(response)
 
     def get_item_from_keywords(self, keywords: str) -> pd.DataFrame:
-        """
-        Obtain item by keywords.
+        """Obtain item by keywords.
 
         :param keywords: List of keywords.
         :return: Item code.
@@ -67,28 +55,22 @@ class CompustatItemMapper(p1_abs.AbstractClient):
         )
         return self._get_dataframe_from_response(response)
 
-
-class GvkeyCikMapper(p1_abs.AbstractClient):
-    """
-    Handler for GVKey <-> Cik transformation
-    """
-
     @property
     def _api_routes(self) -> Dict[str, str]:
-        return {
-            "GVKEY": "/metadata/gvkey",
-            "CIK": "/metadata/cik",
-        }
+        return {"MAPPING": "/metadata/mapping", "ITEM": "/metadata/item"}
 
     @property
     def _default_base_url(self) -> str:
         return "https://data.particle.one/edgar/v1/"
 
+
+class GvkeyCikMapper(p1_abs.AbstractClient):
+    """Handler for GVKey <-> Cik transformation."""
+
     def get_gvkey_from_cik(
         self, cik: P1_CIK, as_of_date: Optional[str] = None
     ) -> pd.DataFrame:
-        """
-        Get GVkey by the cik and date.
+        """Get GVkey by the cik and date.
 
         :param cik: Company Identification Key as integer.
         :param as_of_date: Date of gvkey. Date format is "YYYY-MM-DD".
@@ -106,8 +88,7 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
     def get_cik_from_gvkey(
         self, gvkey: P1_GVKEY, as_of_date: Optional[str] = None
     ) -> pd.DataFrame:
-        """
-        Get Cik by GVKey and date.
+        """Get Cik by GVKey and date.
 
         :param gvkey: Global Company Key(gvkey)
         :param as_of_date: Date of gvkey, if missed then
@@ -124,50 +105,24 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
         )
         return self._get_dataframe_from_response(response)
 
-
-class EdgarClient(p1_abs.AbstractClient):
-    """
-    Class for p1 Edgar data REST API operating.
-    """
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.cik_gvkey_mapping = None
+    @property
+    def _api_routes(self) -> Dict[str, str]:
+        return {
+            "GVKEY": "/metadata/gvkey",
+            "CIK": "/metadata/cik",
+        }
 
     @property
     def _default_base_url(self) -> str:
         return "https://data.particle.one/edgar/v1/"
 
-    @property
-    def _api_routes(self) -> Dict[str, str]:
-        return {
-            "PAYLOAD": "/data",
-            "CIK": "/metadata/cik",
-            "ITEM": "/metadata/item",
-        }
 
-    def _payload_generator(self, *args, **kwargs) -> pd.DataFrame:
-        """
-        Payload generator that output payload data by DataAPI pagination.
+class EdgarClient(p1_abs.AbstractClient):
+    """Class for p1 Edgar data REST API operating."""
 
-        :param args: Positional arguments for making request.
-        :param kwargs: Key arguments for making request.
-        :return: Pandas dataframe with a current chunk of data.
-        """
-        current_offset = 0
-        count_lines = sys.maxsize
-        while current_offset < count_lines:
-            kwargs["params"]["offset"] = current_offset
-            response = self._make_request(*args, **kwargs)
-            try:
-                payload_dataframe = pd.DataFrame(response.json()["data"])
-            except (KeyError, json.JSONDecodeError) as e:
-                raise p1_exc.ParseResponseException(
-                    "Can't transform server response to a pandas Dataframe"
-                ) from e
-            count_lines = response.json()["count"]
-            yield payload_dataframe
-            current_offset += PAYLOAD_BLOCK_SIZE
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.cik_gvkey_mapping = None
 
     def get_payload(
         self,
@@ -177,8 +132,7 @@ class EdgarClient(p1_abs.AbstractClient):
         end_date: Optional[str] = None,
         item: Optional[str] = None,
     ) -> pd.DataFrame:
-        """
-        Get payload data for a form, and a company
+        """Get payload data for a form, and a company.
 
         :param form_name: Form name.
         :param cik: Company Identification Key as integer.
@@ -192,15 +146,9 @@ class EdgarClient(p1_abs.AbstractClient):
 
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
-            params,
-            start_date=start_date,
-            end_date=end_date,
-            item=item,
-            cik=cik
+            params, start_date=start_date, end_date=end_date, item=item, cik=cik
         )
-        url = (
-            f'{self.base_url}{self._api_routes["PAYLOAD"]}' f"/{form_name}"
-        )
+        url = f'{self.base_url}{self._api_routes["PAYLOAD"]}' f"/{form_name}"
         payload_dataframe = pd.DataFrame()
         for df in self._payload_generator(
             "GET", url, headers=self.headers, params=params
@@ -216,8 +164,7 @@ class EdgarClient(p1_abs.AbstractClient):
         cusip: Optional[str] = None,
         company: Optional[str] = None,
     ) -> pd.DataFrame:
-        """
-        Obtain Company Identification Key (cik) by given parameters.
+        """Obtain Company Identification Key (cik) by given parameters.
 
         :param gvkey: Global Company Key(gvkey)
         :param gvkey_date: Date of gvkey, if missed then
@@ -244,8 +191,7 @@ class EdgarClient(p1_abs.AbstractClient):
         return self._get_dataframe_from_response(response)
 
     def get_item(self, keywords: Optional[str] = None) -> pd.DataFrame:
-        """
-        Obtain item by given keywords.
+        """Obtain item by given keywords.
 
         :param keywords: Sentence of keywords.
         :return: Item code.
@@ -258,3 +204,37 @@ class EdgarClient(p1_abs.AbstractClient):
             "GET", url, headers=self.headers, params=params
         )
         return self._get_dataframe_from_response(response)
+
+    @property
+    def _default_base_url(self) -> str:
+        return "https://data.particle.one/edgar/v1/"
+
+    @property
+    def _api_routes(self) -> Dict[str, str]:
+        return {
+            "PAYLOAD": "/data",
+            "CIK": "/metadata/cik",
+            "ITEM": "/metadata/item",
+        }
+
+    def _payload_generator(self, *args, **kwargs) -> pd.DataFrame:
+        """Payload generator that output payload data by DataAPI pagination.
+
+        :param args: Positional arguments for making request.
+        :param kwargs: Key arguments for making request.
+        :return: Pandas dataframe with a current chunk of data.
+        """
+        current_offset = 0
+        count_lines = sys.maxsize
+        while current_offset < count_lines:
+            kwargs["params"]["offset"] = current_offset
+            response = self._make_request(*args, **kwargs)
+            try:
+                payload_dataframe = pd.DataFrame(response.json()["data"])
+            except (KeyError, json.JSONDecodeError) as e:
+                raise p1_exc.ParseResponseException(
+                    "Can't transform server response to a pandas Dataframe"
+                ) from e
+            count_lines = response.json()["count"]
+            yield payload_dataframe
+            current_offset += PAYLOAD_BLOCK_SIZE

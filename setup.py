@@ -19,8 +19,8 @@ PACKAGES = [
 ]
 
 project_urls = {
-  'Site': 'https://particle.one/',
-  'API registration': 'https://particle.one/api'
+    "Site": "https://particle.one/",
+    "API registration": "https://particle.one/api",
 }
 
 with open("README.md", "r") as fh:
@@ -32,9 +32,16 @@ setup(
     description="Package for P1 Data API access",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    keywords=["p1_data_client_python", "API",
-              "data", "financial", "economic",
-              "particle", "particleone", "particle.one"],
+    keywords=[
+        "p1_data_client_python",
+        "API",
+        "data",
+        "financial",
+        "economic",
+        "particle",
+        "particleone",
+        "particle.one",
+    ],
     author="GP Saggese, Paul Smith",
     author_email="gp@particle.one, paul@particle.one",
     maintainer="",
@@ -53,5 +60,5 @@ setup(
     python_requires=">= 3.7",
     test_suite="pytest",
     packages=PACKAGES,
-    project_urls=project_urls
+    project_urls=project_urls,
 )

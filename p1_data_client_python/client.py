@@ -1,5 +1,4 @@
-"""
-The core of P1 Data REST API wrapper
+"""The core of P1 Data REST API wrapper.
 
 Copyright 2020 by Particle.One Inc.
 All rights reserved.
@@ -15,17 +14,16 @@ import p1_data_client_python.client as p1_data
 
 import json
 from typing import Any, Dict, List
+
 import pandas as pd
 import requests
 
-import p1_data_client_python.exceptions as p1_exc
 import p1_data_client_python.abstract_client as p1_abs
+import p1_data_client_python.exceptions as p1_exc
 
 
 class Client(p1_abs.AbstractClient):
-    """
-    Class for p1 data REST API operating.
-    """
+    """Class for p1 data REST API operating."""
 
     SEARCH_CHUNK_SIZE = 1000
 
@@ -37,29 +35,14 @@ class Client(p1_abs.AbstractClient):
     }
 
     @property
-    def _default_base_url(self) -> str:
-        return "https://data.particle.one"
-
-    @property
-    def _api_routes(self) -> Dict[str, str]:
-        return {
-            "AUTH": "/auth-token/",
-            "SEARCH": "/data-api/v1/search/",
-            "SEARCH_SCROLL": "/data-api/v1/search-scroll/",
-            "PAYLOAD": "/data-api/v1/payload/",
-        }
-
-    @property
     def list_of_metadata(self) -> List[str]:
-        """
-        Retrieve list of metadata keys from METADATA_ROUTES
-        """
+        """Retrieve list of metadata keys from METADATA_ROUTES."""
         return list(self.METADATA_ROUTES.keys())
 
     def search_pages(self, pages_limit: int = 100) -> pd.DataFrame:
-        """
-        Get generator which scrolling down through pages
-        until end or limit will reached.
+        """Get generator which scrolling down through pages until end or limit
+        will reached.
+
         :param pages_limit: Max paged for scrolling.
         """
         current_page_number = 1
@@ -77,9 +60,7 @@ class Client(p1_abs.AbstractClient):
                 current_page_number += 1
 
     def search_scroll(self) -> Dict[Any, Any]:
-        """
-        Get next chunk(page) of payloads by given scroll_id
-        """
+        """Get next chunk(page) of payloads by given scroll_id."""
         response = self._make_request(
             "GET",
             self.base_url + self._api_routes["SEARCH_SCROLL"],
@@ -97,19 +78,9 @@ class Client(p1_abs.AbstractClient):
             )
         return next_page
 
-    def _parse_search(self, response: requests.Response) -> pd.DataFrame:
-        """
-        Parse search response and return pandas Dataframe
-        """
-        payloads = response.json()
-        self._scroll_id = payloads["scroll_id"]
-        self._last_total_count = payloads["total_count"]
-
-        return pd.DataFrame(payloads["rows"])
-
     def search(self, **search_payload) -> pd.DataFrame:
-        """
-        Get payloads IDs by given search conditions.
+        """Get payloads IDs by given search conditions.
+
         :param text:
         :param commodity:
         :param business_category:
@@ -135,17 +106,9 @@ class Client(p1_abs.AbstractClient):
             ) from e
         return search_dataframe
 
-    @staticmethod
-    def _parse_payload(response: requests.Response) -> pd.DataFrame:
-        """
-        Parse payload response and return pandas Dataframe.
-        """
-        payload_response = response.json()
-        return pd.DataFrame(payload_response["payload_data"])
-
     def get_payload(self, payload_id: str) -> pd.DataFrame:
-        """
-        Get time series data by payload_id.
+        """Get time series data by payload_id.
+
         :param payload_id: ID of payload from search method.
         """
         response = self._make_request(
@@ -163,20 +126,9 @@ class Client(p1_abs.AbstractClient):
             ) from e
         return payload_dataframe
 
-    @staticmethod
-    def _parse_metadata_type(
-        metadata_type: str, response: requests.Response
-    ) -> pd.DataFrame:
-        """
-        Parse metadata_type response and return pandas Dataframe
-        """
-        metadata_response = response.json()
-        metadata_list = [row["name"] for row in metadata_response["data"]]
-        return pd.DataFrame(metadata_list, columns=[metadata_type])
-
     def get_metadata_type(self, metadata_type: str) -> pd.DataFrame:
-        """
-        Get list of values for any metadata type.
+        """Get list of values for any metadata type.
+
         All types are listed in METADATA_ROUTES.
         :return: pandas Dataframe with metadata type values on-board
         """
@@ -202,3 +154,39 @@ class Client(p1_abs.AbstractClient):
                 "Can't transform server response to a pandas Dataframe"
             ) from e
         return metadata_type_dataframe
+
+    @property
+    def _default_base_url(self) -> str:
+        return "https://data.particle.one"
+
+    @property
+    def _api_routes(self) -> Dict[str, str]:
+        return {
+            "AUTH": "/auth-token/",
+            "SEARCH": "/data-api/v1/search/",
+            "SEARCH_SCROLL": "/data-api/v1/search-scroll/",
+            "PAYLOAD": "/data-api/v1/payload/",
+        }
+
+    def _parse_search(self, response: requests.Response) -> pd.DataFrame:
+        """Parse search response and return pandas Dataframe."""
+        payloads = response.json()
+        self._scroll_id = payloads["scroll_id"]
+        self._last_total_count = payloads["total_count"]
+
+        return pd.DataFrame(payloads["rows"])
+
+    @staticmethod
+    def _parse_payload(response: requests.Response) -> pd.DataFrame:
+        """Parse payload response and return pandas Dataframe."""
+        payload_response = response.json()
+        return pd.DataFrame(payload_response["payload_data"])
+
+    @staticmethod
+    def _parse_metadata_type(
+        metadata_type: str, response: requests.Response
+    ) -> pd.DataFrame:
+        """Parse metadata_type response and return pandas Dataframe."""
+        metadata_response = response.json()
+        metadata_list = [row["name"] for row in metadata_response["data"]]
+        return pd.DataFrame(metadata_list, columns=[metadata_type])

@@ -1,12 +1,15 @@
 <!--ts-->
-   * [Particle.One Data API client](#particleone-data-api-client)
+   * [Particle.One Data API](#particleone-data-api)
       * [Description](#description)
       * [Prerequisites](#prerequisites)
       * [Installation](#installation)
-      * [Quick Start](#quick-start)
-      * [Jupyter notebook](#jupyter-notebook)
-      * [Tests](#tests)
-      * [License](#license)
+      * [Getting a Particle.One token](#getting-a-particleone-token)
+   * [Quick Start](#quick-start)
+      * [Data API](#data-api)
+      * [Edgar Data API](#edgar-data-api)
+      * [Run tests](#run-tests)
+      * [Useful links](#useful-links)
+   * [License](#license)
 
 
 
@@ -17,7 +20,8 @@
 ## Description
 
 This package contains:
-- `p1_data_client_python` 
+
+- `p1_data_client_python`
   - A Python module wrapping the Data REST API and Edgar Data REST API into a
     Pandas-friendly interface
 - `notebooks/p1_data_client_example.ipynb`
@@ -35,11 +39,13 @@ This package contains:
 ## Installation
 
 - To install from PyPI:
+
   ```bash
   > pip install p1_data_client_python
   ```
 
 - To install from source:
+
   ```bash
   # Check out the code.
   > git clone git@github.com:ParticleDev/p1_data_client_python.git
@@ -71,6 +77,7 @@ This package contains:
 ## Data API
 
 - An example of how to use the Data API from Python is:
+
   ```python
   import p1_data_client_python.client as p1_data
 
@@ -90,6 +97,7 @@ This package contains:
 ## Edgar Data API
 
 - An example of how to use the Edgar API from Python is:
+
   ```python
   import p1_data_client_python.edgar_client as p1_edg
 
@@ -115,11 +123,12 @@ This package contains:
        end_date='2020-11-04',
        item='OIBDPQ'
        )
-  ``` 
+  ```
 
 ## Run tests
 
 - To run all tests with `bash` just run:
+
   ```bash
   > export P1_API_TOKEN='your_token_here'
   # E.g, export P1_API_TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c1772590'
@@ -130,22 +139,22 @@ This package contains:
   plugins: openfiles-0.4.0, astropy-header-0.1.2, flaky-3.7.0, doctestplus-0.4.0, remotedata-0.3.1, arraydiff-0.3, hypothesis-5.3.0
   collected 20 items
 
-  test/test_client.py ....                                                                                                                                                                                                       
-  test/test_client_jupyter.py .                                                                                                                                                                                                   
-  test/test_client_mock.py ....                                                                                                                                                                                                    
-  test/test_edgar_client.py ........                                                                                                                                                                                              
+  test/test_client.py ....
+  test/test_client_jupyter.py .
+  test/test_client_mock.py ....
+  test/test_edgar_client.py ........
   test/test_edgar_client_mock.py ...
   ================================================================================================ 9 passed in 3.46s =================================================================================================
-``
+  ```
 
 ## Useful links
 
 - GitHub repo
-  - https://github.com/ParticleDev/p1_data_client_python
+  - `https://github.com/ParticleDev/p1_data_client_python`
 - Rest API documentation
-  - https://doc.particle.one/
+  - `https://doc.particle.one`
 - Data entry point
-  - https://data.particle.one/
+  - `https://data.particle.one`
 
 # License
 
