@@ -1,15 +1,17 @@
+import os
+
 import pandas as pd
 
 import helpers.unit_test as hut
 import p1_data_client_python.edgar_client as p1_edg
 
-TEST_BASE_URL = "https://data.dev.alpha.service.particle.one/edgar/v1"
-TOKEN = "8c9c9458b145202c7a6b6cceaabd82023e957a46d6cf7061ed8e1c94a168f2fd"
+P1_API_URL = os.environ["P1_EDGAR_API_URL"]
+P1_API_TOKEN = os.environ["P1_EDGAR_API_TOKEN"]
 
 
 class TestEdgarClient(hut.TestCase):
     def setUp(self) -> None:
-        self.client = p1_edg.EdgarClient(token=TOKEN, base_url=TEST_BASE_URL)
+        self.client = p1_edg.EdgarClient(token=P1_API_TOKEN, base_url=P1_API_URL)
         super().setUp()
 
     def test_get_payload_precise_sampling(self) -> None:
@@ -45,7 +47,7 @@ class TestEdgarClient(hut.TestCase):
 class TestGvkeyCikMapper(hut.TestCase):
     def setUp(self) -> None:
         self.gvkey_mapper = p1_edg.GvkeyCikMapper(
-            token=TOKEN, base_url=TEST_BASE_URL
+            token=P1_API_TOKEN, base_url=P1_API_URL
         )
         super().setUp()
 
@@ -67,7 +69,7 @@ class TestGvkeyCikMapper(hut.TestCase):
 class TestCompustatItemMapper(hut.TestCase):
     def setUp(self) -> None:
         self.item_mapper = p1_edg.CompustatItemMapper(
-            token=TOKEN, base_url=TEST_BASE_URL
+            token=P1_API_TOKEN, base_url=P1_API_URL
         )
         super().setUp()
 

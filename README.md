@@ -31,6 +31,8 @@ This package contains:
 - `notebooks/p1_data_api_v1_example.ipynb`
   - An example Jupyter notebook showing how to connect to the Data REST API
     directly
+- `test/client_examples.py`
+  - Minimal example of API and EDGAR clients
 
 ## Prerequisites
 
@@ -74,55 +76,24 @@ This package contains:
 
 # Quick Start
 
-## Data API
+## Configuring through environment variables
 
-- An example of how to use the Data API from Python is:
+- To use the notebooks, unit tests, and examples you need to configure the
+  environment with:
 
-  ```python
-  import p1_data_client_python.client as p1_data
-
-  API_URL = "https://data.particle.one"
-  TOKEN = '<your_token_here>'
-  # E.g., TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c177259e'
-
-  client = p1_data.Client(base_url=API_URL, token=TOKEN)
-
-  client.get_metadata_type('COMMODITIES')
-
-  client.search(text='Price', commodity=['Coal'], country=['Belize', 'Brazil'])
-
-  client.get_payload('00158d049d149197f67115a6cc3224e956e5c9e0')
+  ```bash
+  > export P1_API_URL='https://data.particle.one'
+  > export P1_API_TOKEN='your_api_token_here'
+  > export P1_EDGAR_API_URL='https://data.dev.alpha.service.particle.one/edgar/v1'
+  > export P1_EDGAR_API_TOKEN='your_edgar_token_here'
   ```
 
-## Edgar Data API
-
-- An example of how to use the Edgar API from Python is:
-
-  ```python
-  import p1_data_client_python.edgar_client as p1_edg
-
-  TOKEN = '<your_token_here>'
-  # E.g., TOKEN = 'e44e7c6b04ef3ea1cfb7a8a67db74751c177259e'
-
-  client = p1_edg.EdgarClient(token=TOKEN)
-
-  # Map GVKEY to CIK and vice versa.
-  gvkey_mapper = p1_edg.GvkeyCikMapper(token=TOKEN)
-  gvkey_mapper.get_gvkey_from_cik(cik='0000940800', as_of_date='2007-01-18')
-  gvkey_mapper.get_cik_from_gvkey(gvkey='061411', as_of_date='2007-01-18')
-
-  # Get Compustat item mapper.
-  item_mapper = p1_edg.CompustatItemMapper(token="1234567890")
-  item_mapper.get_item_from_keywords(keywords='short-term short term')
-  item_mapper.get_mapping()
-
-  # Get data.
-  client.get_payload(form_name='8-K',
-       cik=1002910,
-       start_date='2021-11-04',
-       end_date='2020-11-04',
-       item='OIBDPQ'
-       )
+- E.g.,
+  ```bash
+  > export P1_API_URL="https://data.particle.one"
+  > export P1_API_TOKEN='e44e7c6b04ef3ea1cfb7a8a67db74751c177259e'
+  > export P1_EDGAR_API_URL="https://data.dev.alpha.service.particle.one/edgar/v1"
+  > export P1_EDGAR_API_TOKEN='8c9c9458b145202c7a6b6cceaabd82023e957a46d6cf7061ed8e1c94a168f2fd'
   ```
 
 ## Run tests
