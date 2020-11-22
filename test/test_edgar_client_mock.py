@@ -24,6 +24,7 @@ class PayloadGoodResponseMock:
     @staticmethod
     def json() -> dict:
         return {
+            "count": 2,
             "data": [
                 {
                     "url": "https://www.sec.gov/Archives/edgar/data/1002910/000162828020015521/000162828020015521/0001628280-20-015521-index.html",
