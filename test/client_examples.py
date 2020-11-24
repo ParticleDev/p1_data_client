@@ -34,13 +34,13 @@ print("P1_API_TOKEN=", P1_API_TOKEN)
 
 client = p1_edg.EdgarClient(base_url=P1_API_URL, token=P1_API_TOKEN)
 
-# Map GVKEY to CIK and vice versa.
-gvkey_mapper = p1_edg.GvkeyCikMapper(base_url=P1_API_URL, token=P1_API_TOKEN)
-gvkey_mapper.get_gvkey_from_cik(cik='0000940800', as_of_date='2007-01-18')
-gvkey_mapper.get_cik_from_gvkey(gvkey='061411', as_of_date='2007-01-18')
+# Map Gvk to CIK and vice versa.
+gvk_mapper = p1_edg.GvkCikMapper(base_url=P1_API_URL, token=P1_API_TOKEN)
+gvk_mapper.get_gvk_from_cik(cik='0000940800', as_of_date='2007-01-18')
+gvk_mapper.get_cik_from_gvk(gvk='061411', as_of_date='2007-01-18')
 
-# Get Compustat item mapper.
-item_mapper = p1_edg.CompustatItemMapper(base_url=P1_API_URL, token=P1_API_TOKEN)
+# Get an item mapper.
+item_mapper = p1_edg.ItemMapper(base_url=P1_API_URL, token=P1_API_TOKEN)
 item_mapper.get_item_from_keywords(keywords='short-term short term')
 item_mapper.get_mapping()
 

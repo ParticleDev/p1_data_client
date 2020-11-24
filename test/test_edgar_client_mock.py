@@ -94,11 +94,11 @@ class TestEdgarPythonClientMock(hut.TestCase):
         # test on UnauthorizedException
         mock_request.return_value = mock.Mock(status_code=401)
         with self.assertRaises(p1_exc.UnauthorizedException):
-            self.client.get_cik(gvkey="123", gvkey_date="2020-01-01")
+            self.client.get_cik(gvk="123", gvk_date="2020-01-01")
         # test on good response
         mock_request.return_value = CikGoodResponseMock()
         self.assertIsInstance(
-            self.client.get_cik(gvkey="123", gvkey_date="2020-01-01"),
+            self.client.get_cik(gvk="123", gvk_date="2020-01-01"),
             pd.DataFrame,
         )
 

@@ -34,41 +34,41 @@ class TestEdgarClient(hut.TestCase):
         self.assertFalse(payload.empty)
 
     def test_get_cik(self) -> None:
-        cik = self.client.get_cik(gvkey="004083", gvkey_date="2007-01-18")
+        cik = self.client.get_cik(gvk="004083", gvk_date="2007-01-18")
         self.assertIsInstance(cik, pd.DataFrame)
         self.assertFalse(cik.empty)
 
     def test_get_item(self) -> None:
-        item = self.client.get_item(keywords=["short-term", "short term"])
+        item = self.client.get_item(keywords="short-term short term")
         self.assertIsInstance(item, pd.DataFrame)
         self.assertFalse(item.empty)
 
 
-class TestGvkeyCikMapper(hut.TestCase):
+class TestGvkCikMapper(hut.TestCase):
     def setUp(self) -> None:
-        self.gvkey_mapper = p1_edg.GvkeyCikMapper(
+        self.gvk_mapper = p1_edg.GvkCikMapper(
             token=P1_API_TOKEN, base_url=P1_API_URL
         )
         super().setUp()
 
-    def test_get_gvkey_from_cik(self):
-        gvkey = self.gvkey_mapper.get_gvkey_from_cik(
+    def test_get_gvk_from_cik(self):
+        gvk = self.gvk_mapper.get_gvk_from_cik(
             cik="33115", as_of_date="2007-01-01"
         )
-        self.assertIsInstance(gvkey, pd.DataFrame)
-        self.assertFalse(gvkey.empty)
+        self.assertIsInstance(gvk, pd.DataFrame)
+        self.assertFalse(gvk.empty)
 
-    def test_get_cik_from_gvkey(self):
-        cik = self.gvkey_mapper.get_cik_from_gvkey(
-            gvkey="061411", as_of_date="2007-03-14"
+    def test_get_cik_from_gvk(self):
+        cik = self.gvk_mapper.get_cik_from_gvk(
+            gvk="061411", as_of_date="2007-03-14"
         )
         self.assertIsInstance(cik, pd.DataFrame)
         self.assertFalse(cik.empty)
 
 
-class TestCompustatItemMapper(hut.TestCase):
+class TestItemMapper(hut.TestCase):
     def setUp(self) -> None:
-        self.item_mapper = p1_edg.CompustatItemMapper(
+        self.item_mapper = p1_edg.ItemMapper(
             token=P1_API_TOKEN, base_url=P1_API_URL
         )
         super().setUp()

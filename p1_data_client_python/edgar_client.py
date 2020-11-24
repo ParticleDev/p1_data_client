@@ -21,11 +21,11 @@ import p1_data_client_python.exceptions as p1_exc
 
 PAYLOAD_BLOCK_SIZE = 100
 P1_CIK = Union[str, int]
-P1_GVKEY = Union[str, int]
+P1_GVK = Union[str, int]
 
 
-class CompustatItemMapper(p1_abs.AbstractClient):
-    """Handler for Compustat item mapping."""
+class ItemMapper(p1_abs.AbstractClient):
+    """Handler for an item mapping."""
 
     def get_mapping(self) -> pd.DataFrame:
         """Get all mapping for items.
@@ -33,7 +33,7 @@ class CompustatItemMapper(p1_abs.AbstractClient):
         :return: Item mapping as dataframe.
         """
 
-        params = {"mapping_type": "compustat_items"}
+        params = {"mapping_type": "items"}
         url = f'{self.base_url}{self._api_routes["MAPPING"]}'
         response = self._make_request(
             "GET", url, headers=self.headers, params=params
@@ -41,7 +41,7 @@ class CompustatItemMapper(p1_abs.AbstractClient):
         return self._get_dataframe_from_response(response)
 
     def get_item_from_keywords(self, keywords: str) -> pd.DataFrame:
-        """Obtain item by keywords.
+        """Obtain an item by keywords.
 
         :param keywords: List of keywords.
         :return: Item code.
@@ -64,40 +64,39 @@ class CompustatItemMapper(p1_abs.AbstractClient):
         return "https://data.particle.one/edgar/v1/"
 
 
-class GvkeyCikMapper(p1_abs.AbstractClient):
-    """Handler for GVKey <-> Cik transformation."""
+class GvkCikMapper(p1_abs.AbstractClient):
+    """Handler for GVK <-> Cik transformation."""
 
-    def get_gvkey_from_cik(
+    def get_gvk_from_cik(
         self, cik: P1_CIK, as_of_date: Optional[str] = None
     ) -> pd.DataFrame:
-        """Get GVkey by the cik and date.
+        """Get GVK by the cik and date.
 
         :param cik: Company Identification Key as integer.
-        :param as_of_date: Date of gvkey. Date format is "YYYY-MM-DD".
+        :param as_of_date: Date of gvk. Date format is "YYYY-MM-DD".
         Not implemented for now.
         """
 
-        # TODO(Greg,Vlad): Implement as_of_date.
         params = {"cik": cik, "as_of_date": as_of_date}
-        url = f'{self.base_url}{self._api_routes["GVKEY"]}'
+        url = f'{self.base_url}{self._api_routes["GVK"]}'
         response = self._make_request(
             "GET", url, headers=self.headers, params=params
         )
         return self._get_dataframe_from_response(response)
 
-    def get_cik_from_gvkey(
-        self, gvkey: P1_GVKEY, as_of_date: Optional[str] = None
+    def get_cik_from_gvk(
+        self, gvk: P1_GVK, as_of_date: Optional[str] = None
     ) -> pd.DataFrame:
-        """Get Cik by GVKey and date.
+        """Get Cik by GVK and date.
 
-        :param gvkey: Global Company Key(gvkey)
-        :param as_of_date: Date of gvkey, if missed then
+        :param gvk: Global Company Key(gvk)
+        :param as_of_date: Date of gvk, if missed then
         more than one cik may be to be returned.
         """
 
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
-            params, gvkey=gvkey, gvkey_date=as_of_date
+            params, gvk=gvk, gvk_date=as_of_date
         )
         url = f'{self.base_url}{self._api_routes["CIK"]}'
         response = self._make_request(
@@ -108,7 +107,7 @@ class GvkeyCikMapper(p1_abs.AbstractClient):
     @property
     def _api_routes(self) -> Dict[str, str]:
         return {
-            "GVKEY": "/metadata/gvkey",
+            "GVK": "/metadata/gvk",
             "CIK": "/metadata/cik",
         }
 
@@ -122,7 +121,7 @@ class EdgarClient(p1_abs.AbstractClient):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.cik_gvkey_mapping = None
+        self.cik_gvk_mapping = None
 
     def get_payload(
         self,
@@ -158,16 +157,16 @@ class EdgarClient(p1_abs.AbstractClient):
 
     def get_cik(
         self,
-        gvkey: Optional[Union[str, int]] = None,
-        gvkey_date: Optional[str] = None,
+        gvk: Optional[Union[str, int]] = None,
+        gvk_date: Optional[str] = None,
         ticker: Optional[str] = None,
         cusip: Optional[str] = None,
         company: Optional[str] = None,
     ) -> pd.DataFrame:
         """Obtain Company Identification Key (cik) by given parameters.
 
-        :param gvkey: Global Company Key(gvkey)
-        :param gvkey_date: Date of gvkey, if missed then
+        :param gvk: Global Company Key(gvk)
+        :param gvk_date: Date of gvk, if missed then
         more than one cik may be to be returned.
         :param ticker: Company ticker.
         :param cusip: Committee on Uniform Securities
@@ -178,28 +177,13 @@ class EdgarClient(p1_abs.AbstractClient):
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
             params,
-            gvkey=gvkey,
-            gvkey_date=gvkey_date,
+            gvk=gvk,
+            gvk_date=gvk_date,
             ticker=ticker,
             cusip=cusip,
             company=company,
         )
         url = f'{self.base_url}{self._api_routes["CIK"]}'
-        response = self._make_request(
-            "GET", url, headers=self.headers, params=params
-        )
-        return self._get_dataframe_from_response(response)
-
-    def get_item(self, keywords: Optional[str] = None) -> pd.DataFrame:
-        """Obtain item by given keywords.
-
-        :param keywords: Sentence of keywords.
-        :return: Item code.
-        """
-
-        params: Dict[str, Any] = {}
-        params = self._set_optional_params(params, keywords=keywords)
-        url = f'{self.base_url}{self._api_routes["ITEM"]}'
         response = self._make_request(
             "GET", url, headers=self.headers, params=params
         )
