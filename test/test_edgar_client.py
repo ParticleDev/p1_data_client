@@ -38,11 +38,6 @@ class TestEdgarClient(hut.TestCase):
         self.assertIsInstance(cik, pd.DataFrame)
         self.assertFalse(cik.empty)
 
-    def test_get_item(self) -> None:
-        item = self.client.get_item(keywords="short-term short term")
-        self.assertIsInstance(item, pd.DataFrame)
-        self.assertFalse(item.empty)
-
 
 class TestGvkCikMapper(hut.TestCase):
     def setUp(self) -> None:
