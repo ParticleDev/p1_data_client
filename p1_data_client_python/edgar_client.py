@@ -13,7 +13,6 @@ import p1_data_client_python.client as p1_edg
 import json
 import sys
 from typing import Any, Dict, Optional, Union
-
 import pandas as pd
 
 import p1_data_client_python.abstract_client as p1_abs
@@ -153,7 +152,7 @@ class EdgarClient(p1_abs.AbstractClient):
             "GET", url, headers=self.headers, params=params
         ):
             payload_dataframe = payload_dataframe.append(df, ignore_index=True)
-        return payload_dataframe
+        return payload_dataframe.reset_index(drop=True)
 
     def get_cik(
         self,
@@ -215,6 +214,8 @@ class EdgarClient(p1_abs.AbstractClient):
             response = self._make_request(*args, **kwargs)
             try:
                 payload_dataframe = pd.DataFrame(response.json()["data"])
+                payload_dataframe = payload_dataframe.astype(
+                    dtype={"internal_timestamp": "datetime64"})
             except (KeyError, json.JSONDecodeError) as e:
                 raise p1_exc.ParseResponseException(
                     "Can't transform server response to a pandas Dataframe"
