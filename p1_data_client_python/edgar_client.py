@@ -19,8 +19,8 @@ import p1_data_client_python.abstract_client as p1_abs
 import p1_data_client_python.exceptions as p1_exc
 
 PAYLOAD_BLOCK_SIZE = 100
-P1_CIK = Union[str, int]
-P1_GVK = Union[str, int]
+P1_CIK = int
+P1_GVK = int
 
 
 class ItemMapper(p1_abs.AbstractClient):
@@ -125,7 +125,7 @@ class EdgarClient(p1_abs.AbstractClient):
     def get_payload(
         self,
         form_name: str,
-        cik: Union[int, str],
+        cik: P1_CIK,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
         item: Optional[str] = None,
@@ -156,7 +156,7 @@ class EdgarClient(p1_abs.AbstractClient):
 
     def get_cik(
         self,
-        gvk: Optional[Union[str, int]] = None,
+        gvk: Optional[P1_GVK] = None,
         gvk_date: Optional[str] = None,
         ticker: Optional[str] = None,
         cusip: Optional[str] = None,
