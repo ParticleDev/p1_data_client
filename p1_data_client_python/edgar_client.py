@@ -12,7 +12,7 @@ import p1_data_client_python.client as p1_edg
 
 import json
 import sys
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, List
 import pandas as pd
 
 import p1_data_client_python.abstract_client as p1_abs
@@ -125,7 +125,7 @@ class EdgarClient(p1_abs.AbstractClient):
     def get_payload(
         self,
         form_name: str,
-        cik: P1_CIK,
+        cik: Optional[Union[P1_CIK, List[P1_CIK]]],
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
         item: Optional[str] = None,
@@ -134,6 +134,7 @@ class EdgarClient(p1_abs.AbstractClient):
 
         :param form_name: Form name.
         :param cik: Company Identification Key as integer.
+        Could by list of P1_CIK or just one identifier.
         :param start_date: Get a data where filing date is
         greater or equal start_date. Date format is "YYYY-MM-DD".
         :param end_date: Get a data where filing date is
@@ -207,19 +208,28 @@ class EdgarClient(p1_abs.AbstractClient):
         :param kwargs: Key arguments for making request.
         :return: Pandas dataframe with a current chunk of data.
         """
-        current_offset = 0
-        count_lines = sys.maxsize
-        while current_offset < count_lines:
-            kwargs["params"]["offset"] = current_offset
-            response = self._make_request(*args, **kwargs)
-            try:
-                payload_dataframe = pd.DataFrame(response.json()["data"])
-                payload_dataframe = payload_dataframe.astype(
-                    dtype={"internal_timestamp": "datetime64"})
-            except (KeyError, json.JSONDecodeError) as e:
-                raise p1_exc.ParseResponseException(
-                    "Can't transform server response to a pandas Dataframe"
-                ) from e
-            count_lines = response.json()["count"]
-            yield payload_dataframe
-            current_offset += PAYLOAD_BLOCK_SIZE
+        params = kwargs['params']
+        cik_list = [None]
+        if 'cik' in params:
+            cik_list = [params['cik']] if isinstance(params['cik'], int) \
+                else params['cik']
+        for cik in cik_list:
+            current_offset = 0
+            count_lines = sys.maxsize
+            while current_offset < count_lines:
+                params["offset"] = current_offset
+                self._set_optional_params(params, cik=cik)
+                response = self._make_request(*args, **kwargs)
+                try:
+                    payload_dataframe = pd.DataFrame(response.json()["data"])
+                    payload_dataframe = payload_dataframe.astype(
+                        dtype={"internal_timestamp": "datetime64"})
+                except (KeyError, json.JSONDecodeError) as e:
+                    raise p1_exc.ParseResponseException(
+                        "Can't transform server response to a pandas Dataframe"
+                    ) from e
+                count_lines = response.json()["count"]
+                yield payload_dataframe
+                current_offset += PAYLOAD_BLOCK_SIZE
+
+

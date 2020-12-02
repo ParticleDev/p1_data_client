@@ -33,8 +33,16 @@ class TestEdgarClient(hut.TestCase):
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
 
+    def test_get_payload_multi_cik(self) -> None:
+        payload = self.client.get_payload(
+            form_name="8-K",
+            cik=[1002910, 1733998]
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+
     def test_get_cik(self) -> None:
-        cik = self.client.get_cik(gvk="004083", gvk_date="2007-01-18")
+        cik = self.client.get_cik(gvk=4083, gvk_date="2007-01-18")
         self.assertIsInstance(cik, pd.DataFrame)
         self.assertFalse(cik.empty)
 
@@ -48,14 +56,14 @@ class TestGvkCikMapper(hut.TestCase):
 
     def test_get_gvk_from_cik(self):
         gvk = self.gvk_mapper.get_gvk_from_cik(
-            cik="33115", as_of_date="2007-01-01"
+            cik=33115, as_of_date="2007-01-01"
         )
         self.assertIsInstance(gvk, pd.DataFrame)
         self.assertFalse(gvk.empty)
 
     def test_get_cik_from_gvk(self):
         cik = self.gvk_mapper.get_cik_from_gvk(
-            gvk="061411", as_of_date="2007-03-14"
+            gvk=61411, as_of_date="2007-03-14"
         )
         self.assertIsInstance(cik, pd.DataFrame)
         self.assertFalse(cik.empty)
