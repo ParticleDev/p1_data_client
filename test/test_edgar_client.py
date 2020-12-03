@@ -25,6 +25,16 @@ class TestEdgarClient(hut.TestCase):
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
 
+    def test_get_payload_without_cik(self) -> None:
+        payload = self.client.get_payload(
+            form_name="8-K",
+            start_date="2020-01-04",
+            end_date="2020-07-05",
+            item="OIBDPQ",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+
     def test_get_payload_pagination(self) -> None:
         payload = self.client.get_payload(
             form_name="8-K",

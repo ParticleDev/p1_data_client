@@ -125,7 +125,7 @@ class EdgarClient(p1_abs.AbstractClient):
     def get_payload(
         self,
         form_name: str,
-        cik: Optional[Union[P1_CIK, List[P1_CIK]]],
+        cik: Optional[Union[P1_CIK, List[P1_CIK]]] = None,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
         item: Optional[str] = None,
