@@ -223,7 +223,7 @@ class EdgarClient(p1_abs.AbstractClient):
                 try:
                     payload_dataframe = pd.DataFrame(response.json()["data"])
                     payload_dataframe = payload_dataframe.astype(
-                        dtype={"internal_timestamp": "datetime64"})
+                        dtype={"creation_timestamp": "datetime64"})
                 except (KeyError, json.JSONDecodeError) as e:
                     raise p1_exc.ParseResponseException(
                         "Can't transform server response to a pandas Dataframe"

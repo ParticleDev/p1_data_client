@@ -17,10 +17,10 @@ class TestEdgarClient(hut.TestCase):
     def test_get_payload_precise_sampling(self) -> None:
         payload = self.client.get_payload(
             form_name="8-K",
-            cik=1002910,
+            cik=18498,
             start_date="2020-01-04",
-            end_date="2021-11-04",
-            item="OIBDPQ",
+            end_date="2020-12-04",
+            item="ACT_QUARTER",
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
@@ -28,9 +28,9 @@ class TestEdgarClient(hut.TestCase):
     def test_get_payload_without_cik(self) -> None:
         payload = self.client.get_payload(
             form_name="8-K",
-            start_date="2020-01-04",
-            end_date="2020-07-05",
-            item="OIBDPQ",
+            start_date="2020-10-04",
+            end_date="2020-12-04",
+            item="ACT_QUARTER",
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
@@ -38,7 +38,7 @@ class TestEdgarClient(hut.TestCase):
     def test_get_payload_pagination(self) -> None:
         payload = self.client.get_payload(
             form_name="8-K",
-            cik=1002910,
+            cik=18498,
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
@@ -46,7 +46,7 @@ class TestEdgarClient(hut.TestCase):
     def test_get_payload_multi_cik(self) -> None:
         payload = self.client.get_payload(
             form_name="8-K",
-            cik=[1002910, 1733998]
+            cik=[18498]
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
