@@ -16,7 +16,7 @@ class TestEdgarClient(hut.TestCase):
 
     def test_get_payload_precise_sampling(self) -> None:
         payload = self.client.get_payload(
-            form_name="8-K",
+            form_name="form8k",
             cik=18498,
             start_date="2020-01-04",
             end_date="2020-12-04",
@@ -27,7 +27,7 @@ class TestEdgarClient(hut.TestCase):
 
     def test_get_payload_without_cik(self) -> None:
         payload = self.client.get_payload(
-            form_name="8-K",
+            form_name="form8k",
             start_date="2020-10-04",
             end_date="2020-12-04",
             item="ACT_QUARTER",
@@ -37,7 +37,7 @@ class TestEdgarClient(hut.TestCase):
 
     def test_get_payload_pagination(self) -> None:
         payload = self.client.get_payload(
-            form_name="8-K",
+            form_name="form8k",
             cik=18498,
         )
         self.assertIsInstance(payload, pd.DataFrame)
@@ -45,16 +45,11 @@ class TestEdgarClient(hut.TestCase):
 
     def test_get_payload_multi_cik(self) -> None:
         payload = self.client.get_payload(
-            form_name="8-K",
+            form_name="form8k",
             cik=[18498]
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
-
-    def test_get_cik(self) -> None:
-        cik = self.client.get_cik(gvk=4083, gvk_date="2007-01-18")
-        self.assertIsInstance(cik, pd.DataFrame)
-        self.assertFalse(cik.empty)
 
 
 class TestGvkCikMapper(hut.TestCase):
