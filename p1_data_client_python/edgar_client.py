@@ -60,7 +60,7 @@ class ItemMapper(p1_abs.AbstractClient):
 
     @property
     def _default_base_url(self) -> str:
-        return "https://data.particle.one/edgar/v1/"
+        return "https://data.particle.one/edgar/v2/"
 
 
 class GvkCikMapper(p1_abs.AbstractClient):
