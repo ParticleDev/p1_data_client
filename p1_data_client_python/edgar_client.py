@@ -153,6 +153,10 @@ class EdgarClient(p1_abs.AbstractClient):
             "GET", url, headers=self.headers, params=params
         ):
             payload_dataframe = payload_dataframe.append(df, ignore_index=True)
+        payload_dataframe = \
+            payload_dataframe.sort_values(['filing_date',
+                                           'cik',
+                                           'item_name'])
         return payload_dataframe.reset_index(drop=True)
 
     def get_cik(

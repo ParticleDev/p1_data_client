@@ -46,7 +46,7 @@ class TestEdgarClient(hut.TestCase):
     def test_get_payload_multi_cik(self) -> None:
         payload = self.client.get_payload(
             form_name="form8k",
-            cik=[18498]
+            cik=[18498, 319201, 5768]
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
