@@ -51,6 +51,17 @@ class TestEdgarClient(hut.TestCase):
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
 
+    def test_get_payload_empty(self) -> None:
+        payload = self.client.get_payload(
+            form_name="form8k",
+            cik=1212,
+            start_date="2020-01-04",
+            end_date="2020-12-04",
+            item="QWE_QUARTER",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertTrue(payload.empty)
+
 
 class TestGvkCikMapper(hut.TestCase):
     def setUp(self) -> None:

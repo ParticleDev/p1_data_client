@@ -71,7 +71,7 @@ class GvkCikMapper(p1_abs.AbstractClient):
     ) -> pd.DataFrame:
         """Get GVK by the cik and date.
 
-        :param cik: Company Identification Key as integer.
+        :param cik: Central Index Key as integer.
         :param as_of_date: Date of gvk. Date format is "YYYY-MM-DD".
         Not implemented for now.
         """
@@ -133,7 +133,7 @@ class EdgarClient(p1_abs.AbstractClient):
         """Get payload data for a form, and a company.
 
         :param form_name: Form name.
-        :param cik: Company Identification Key as integer.
+        :param cik: Central Index Key as integer.
         Could by list of P1_CIK or just one identifier.
         :param start_date: Get a data where filing date is
         greater or equal start_date. Date format is "YYYY-MM-DD".
@@ -153,10 +153,11 @@ class EdgarClient(p1_abs.AbstractClient):
             "GET", url, headers=self.headers, params=params
         ):
             payload_dataframe = payload_dataframe.append(df, ignore_index=True)
-        payload_dataframe = \
-            payload_dataframe.sort_values(['filing_date',
-                                           'cik',
-                                           'item_name'])
+        if not payload_dataframe.empty:
+            payload_dataframe = \
+                payload_dataframe.sort_values(['filing_date',
+                                               'cik',
+                                               'item_name'])
         return payload_dataframe.reset_index(drop=True)
 
     def get_cik(
@@ -167,7 +168,7 @@ class EdgarClient(p1_abs.AbstractClient):
         cusip: Optional[str] = None,
         company: Optional[str] = None,
     ) -> pd.DataFrame:
-        """Obtain Company Identification Key (cik) by given parameters.
+        """Obtain Central Index Key (cik) by given parameters.
 
         :param gvk: Global Company Key(gvk)
         :param gvk_date: Date of gvk, if missed then
@@ -226,8 +227,9 @@ class EdgarClient(p1_abs.AbstractClient):
                 response = self._make_request(*args, **kwargs)
                 try:
                     payload_dataframe = pd.DataFrame(response.json()["data"])
-                    payload_dataframe = payload_dataframe.astype(
-                        dtype={"creation_timestamp": "datetime64"})
+                    if 'creation_timestamp' in payload_dataframe:
+                        payload_dataframe = payload_dataframe.astype(
+                            dtype={"creation_timestamp": "datetime64"})
                 except (KeyError, json.JSONDecodeError) as e:
                     raise p1_exc.ParseResponseException(
                         "Can't transform server response to a pandas Dataframe"
