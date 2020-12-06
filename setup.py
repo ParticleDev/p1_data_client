@@ -27,7 +27,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    version="1.1.0",
+    version="1.2.0",
     name="p1_data_client_python",
     description="Package for P1 Data API access",
     long_description=long_description,

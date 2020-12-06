@@ -103,10 +103,7 @@ class AbstractClient:
         for param, value in [(k, v) for k, v in kwargs.items() if v]:
             if param.endswith("date"):
                 self.validate_date(kwargs[param])
-            if isinstance(value, list):
-                params[param] = ",".join(value)
-            else:
-                params[param] = value
+            params[param] = value
 
         return params
 

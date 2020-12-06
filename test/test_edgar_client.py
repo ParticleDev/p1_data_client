@@ -3,6 +3,8 @@ import os
 import pandas as pd
 
 import helpers.unit_test as hut
+import helpers.io_ as io_
+
 import p1_data_client_python.edgar_client as p1_edg
 
 P1_API_URL = os.environ["P1_EDGAR_API_URL"]
@@ -16,59 +18,86 @@ class TestEdgarClient(hut.TestCase):
 
     def test_get_payload_precise_sampling(self) -> None:
         payload = self.client.get_payload(
-            form_name="8-K",
-            cik=1002910,
+            form_name="form8k",
+            cik=18498,
             start_date="2020-01-04",
-            end_date="2021-11-04",
-            item="OIBDPQ",
+            end_date="2020-12-04",
+            item="ACT_QUARTER",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+
+    def test_get_payload_without_cik(self) -> None:
+        payload = self.client.get_payload(
+            form_name="form8k",
+            start_date="2020-10-04",
+            end_date="2020-12-04",
+            item="ACT_QUARTER",
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
 
     def test_get_payload_pagination(self) -> None:
         payload = self.client.get_payload(
-            form_name="8-K",
-            cik=1002910,
+            form_name="form8k",
+            cik=18498,
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
 
-    def test_get_cik(self) -> None:
-        cik = self.client.get_cik(gvkey="004083", gvkey_date="2007-01-18")
-        self.assertIsInstance(cik, pd.DataFrame)
-        self.assertFalse(cik.empty)
+    def test_get_payload_multi_cik(self) -> None:
+        payload = self.client.get_payload(
+            form_name="form8k",
+            cik=[18498, 319201, 5768]
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
 
-    def test_get_item(self) -> None:
-        item = self.client.get_item(keywords=["short-term", "short term"])
-        self.assertIsInstance(item, pd.DataFrame)
-        self.assertFalse(item.empty)
+    def test_get_payload_empty(self) -> None:
+        payload = self.client.get_payload(
+            form_name="form8k",
+            cik=1212,
+            start_date="2020-01-04",
+            end_date="2020-12-04",
+            item="QWE_QUARTER",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertTrue(payload.empty)
+
+    def test_get_payload_form10(self) -> None:
+        payload = self.client.get_form10_payload(
+            cik=1002910
+        )
+        scratch_dir = self.get_scratch_space()
+        io_.to_json(os.path.join(scratch_dir, 'form10_test.json'),
+                    {"data": payload})
 
 
-class TestGvkeyCikMapper(hut.TestCase):
+class TestGvkCikMapper(hut.TestCase):
     def setUp(self) -> None:
-        self.gvkey_mapper = p1_edg.GvkeyCikMapper(
+        self.gvk_mapper = p1_edg.GvkCikMapper(
             token=P1_API_TOKEN, base_url=P1_API_URL
         )
         super().setUp()
 
-    def test_get_gvkey_from_cik(self):
-        gvkey = self.gvkey_mapper.get_gvkey_from_cik(
-            cik="33115", as_of_date="2007-01-01"
+    def test_get_gvk_from_cik(self):
+        gvk = self.gvk_mapper.get_gvk_from_cik(
+            cik=33115, as_of_date="2007-01-01"
         )
-        self.assertIsInstance(gvkey, pd.DataFrame)
-        self.assertFalse(gvkey.empty)
+        self.assertIsInstance(gvk, pd.DataFrame)
+        self.assertFalse(gvk.empty)
 
-    def test_get_cik_from_gvkey(self):
-        cik = self.gvkey_mapper.get_cik_from_gvkey(
-            gvkey="061411", as_of_date="2007-03-14"
+    def test_get_cik_from_gvk(self):
+        cik = self.gvk_mapper.get_cik_from_gvk(
+            gvk=61411, as_of_date="2007-03-14"
         )
         self.assertIsInstance(cik, pd.DataFrame)
         self.assertFalse(cik.empty)
 
 
-class TestCompustatItemMapper(hut.TestCase):
+class TestItemMapper(hut.TestCase):
     def setUp(self) -> None:
-        self.item_mapper = p1_edg.CompustatItemMapper(
+        self.item_mapper = p1_edg.ItemMapper(
             token=P1_API_TOKEN, base_url=P1_API_URL
         )
         super().setUp()
