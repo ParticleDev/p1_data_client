@@ -4,6 +4,7 @@
 # export P1_EDGAR_API_URL="https://data.dev.alpha.service.particle.one/edgar/v1"; export P1_EDGAR_API_TOKEN='8c9c9458b145202c7a6b6cceaabd82023e957a46d6cf7061ed8e1c94a168f2fd'
 
 import os
+import helpers.io_ as io_
 import p1_data_client_python.client as p1_data
 import p1_data_client_python.edgar_client as p1_edg
 
@@ -36,8 +37,8 @@ client = p1_edg.EdgarClient(base_url=P1_API_URL, token=P1_API_TOKEN)
 
 # Map Gvk to CIK and vice versa.
 gvk_mapper = p1_edg.GvkCikMapper(base_url=P1_API_URL, token=P1_API_TOKEN)
-gvk_mapper.get_gvk_from_cik(cik='0000940800', as_of_date='2007-01-18')
-gvk_mapper.get_cik_from_gvk(gvk='061411', as_of_date='2007-01-18')
+gvk_mapper.get_gvk_from_cik(cik=940800, as_of_date='2007-01-18')
+gvk_mapper.get_cik_from_gvk(gvk=61411, as_of_date='2007-01-18')
 
 # Get an item mapper.
 item_mapper = p1_edg.ItemMapper(base_url=P1_API_URL, token=P1_API_TOKEN)
@@ -46,8 +47,15 @@ item_mapper.get_mapping()
 
 # Get data.
 client.get_payload(form_name='8-K',
-   cik=1002910,
-   start_date='2021-11-04',
-   end_date='2020-11-04',
-   item='OIBDPQ'
-   )
+                   cik=1002910,
+                   start_date='2021-11-04',
+                   end_date='2020-11-04',
+                   item='OIBDPQ'
+                   )
+
+# Get data by form10.
+payload = client.get_form10_payload(
+    cik=1002910
+)
+io_.to_json(os.path.join(os.path.dirname(__file__), 'form10_test.json'),
+            {"data": payload})

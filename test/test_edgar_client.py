@@ -3,6 +3,8 @@ import os
 import pandas as pd
 
 import helpers.unit_test as hut
+import helpers.io_ as io_
+
 import p1_data_client_python.edgar_client as p1_edg
 
 P1_API_URL = os.environ["P1_EDGAR_API_URL"]
@@ -61,6 +63,14 @@ class TestEdgarClient(hut.TestCase):
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertTrue(payload.empty)
+
+    def test_get_payload_form10(self) -> None:
+        payload = self.client.get_form10_payload(
+            cik=1002910
+        )
+        scratch_dir = self.get_scratch_space()
+        io_.to_json(os.path.join(scratch_dir, 'form10_test.json'),
+                    {"data": payload})
 
 
 class TestGvkCikMapper(hut.TestCase):
