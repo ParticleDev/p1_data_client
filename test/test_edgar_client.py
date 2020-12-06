@@ -1,4 +1,5 @@
 import os
+import pprint
 
 import pandas as pd
 
@@ -24,6 +25,7 @@ class TestGvkCikMapper(hut.TestCase):
         )
         self.assertIsInstance(gvk, pd.DataFrame)
         self.assertFalse(gvk.empty)
+        self.check_string(hut.convert_df_to_string(gvk))
 
     def test_get_cik_from_gvk(self):
         cik = self.gvk_mapper.get_cik_from_gvk(
@@ -31,6 +33,7 @@ class TestGvkCikMapper(hut.TestCase):
         )
         self.assertIsInstance(cik, pd.DataFrame)
         self.assertFalse(cik.empty)
+        self.check_string(hut.convert_df_to_string(cik))
 
 
 class TestItemMapper(hut.TestCase):
@@ -46,11 +49,13 @@ class TestItemMapper(hut.TestCase):
         )
         self.assertIsInstance(item, pd.DataFrame)
         self.assertFalse(item.empty)
+        self.check_string(hut.convert_df_to_string(item))
 
     def test_get_mapping(self) -> None:
         mapping = self.item_mapper.get_mapping()
         self.assertIsInstance(mapping, pd.DataFrame)
         self.assertFalse(mapping.empty)
+        self.check_string(hut.convert_df_to_string(mapping))
 
 
 class TestEdgarClient(hut.TestCase):
@@ -68,6 +73,7 @@ class TestEdgarClient(hut.TestCase):
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
+        self.check_string(hut.convert_df_to_string(payload))
 
     def test_form8_get_payload_without_cik(self) -> None:
         payload = self.client.get_payload(
@@ -78,6 +84,7 @@ class TestEdgarClient(hut.TestCase):
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
+        self.check_string(hut.convert_df_to_string(payload))
 
     def test_form8_get_payload_pagination(self) -> None:
         payload = self.client.get_payload(
@@ -86,6 +93,7 @@ class TestEdgarClient(hut.TestCase):
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
+        self.check_string(hut.convert_df_to_string(payload))
 
     def test_form8_get_payload_multi_cik(self) -> None:
         payload = self.client.get_payload(
@@ -94,6 +102,7 @@ class TestEdgarClient(hut.TestCase):
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
+        self.check_string(hut.convert_df_to_string(payload))
 
     def test_form8_get_payload_empty(self) -> None:
         payload = self.client.get_payload(
@@ -105,6 +114,7 @@ class TestEdgarClient(hut.TestCase):
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertTrue(payload.empty)
+        self.check_string(hut.convert_df_to_string(payload))
 
     def test_form10_get_payload(self) -> None:
         payload = self.client.get_form10_payload(
@@ -114,9 +124,14 @@ class TestEdgarClient(hut.TestCase):
         )
         self.assertIsInstance(payload, list)
         self.assertEqual(len(payload), 1)
-        #scratch_dir = self.get_scratch_space()
-        #io_.to_json(os.path.join(scratch_dir, 'form10_test.json'),
-        #            {"data": payload})
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload[0].keys()=%s" % payload[0].keys()))
+        actual.append(('payload[0]["meta"]=\n%s' % pprint.pformat(payload[0]["meta"])))
+        json_str = payload[0]["data"]
+        actual.append(pprint.pformat(payload[0]["data"])[:2000])
+        actual = "\n".join(actual)
+        self.check_string(actual)
 
     def test_form10_get_payload_empty(self) -> None:
         """

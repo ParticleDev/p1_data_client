@@ -1,0 +1,173 @@
+             item                                                                description
+    ACCHG_QUARTER                                     Accounting Changes / Cumulative Effect
+  ACOMINC_QUARTER                              Accumulated Other Comprehensive Income (Loss)
+      ACO_QUARTER                                             Current Assets - Other - Total
+      ACT_QUARTER                                                     Current Assets - Total
+     ADRR_QUARTER                                                                  ADR Ratio
+     AJEX_QUARTER                        Adjustment Factor (Company) - Cumulative by Ex-Date
+      AJP_QUARTER                        Adjustment Factor (Company) - Cumulative byPay-Date
+     ALTO_QUARTER                                                     Other Long-term Assets
+      AOLOCH_YEAR                                Assets and Liabilities - Other (Net Change)
+       AO_QUARTER                                                     Assets - Other - Total
+      APALCH_YEAR             Accounts Payable and Accrued Liabilities - Increase (Decrease)
+       AP_QUARTER                                          Account Payable/Creditors - Trade
+      AQA_QUARTER                                               Acquisition/Merger After-Tax
+         AQC_YEAR                                                               Acquisitions
+      AQD_QUARTER                                      Acquisition/Merger Diluted EPS Effect
+    AQEPS_QUARTER                                        Acquisition/Merger Basic EPS Effect
+      AQP_QUARTER                                                  Acquisition/Merger Pretax
+       AT_QUARTER                                                             Assets - Total
+    CAPR1_QUARTER                                       Risk-Adjusted Capital Ratio - Tier 1
+    CAPRT_QUARTER                            Risk-Adjusted Capital Ratio / Total / Quarterly
+     CAPS_QUARTER                                      Capital Surplus/Share Premium Reserve
+        CAPX_YEAR                                                       Capital Expenditures
+      CEQ_QUARTER                                             Common/Ordinary Equity - Total
+       CHECH_YEAR                            Cash and Cash Equivalents - Increase (Decrease)
+      CHE_QUARTER                                            Cash and Short-Term Investments
+     COGS_QUARTER                                                         Cost of Goods Sold
+    CSH12_QUARTER      Common Shares Used to Calculate Earnings Per Share / 12 Months Moving
+    CSHFD_QUARTER                                                 Com Shares for Diluted EPS
+     CSHI_QUARTER                                                       Common Shares Issued
+     CSHO_QUARTER                                                  Common Shares Outstanding
+    CSHPR_QUARTER                 Common Shares Used to Calculate Earnings Per Share / Basic
+    CSHTR_QUARTER                                             Common Shares Traded / Quarter
+    CSTKE_QUARTER                                  Common Stock Equivalents / Dollar Savings
+     CSTK_QUARTER                                            Common/Ordinary Stock (Capital)
+   CURRTR_QUARTER                                                  Currency Translation Rate
+     DCOM_QUARTER                                                      Deferred Compensation
+    DILAD_QUARTER                                                        Dilution Adjustment
+    DILAV_QUARTER                         Dilution Available / Excluding Extraordinary Items
+       DLCCH_YEAR                                                    Changes in Current Debt
+      DLC_QUARTER                                                Debt in Current Liabilities
+       DLTIS_YEAR                                                  Long-Term Debt - Issuance
+        DLTR_YEAR                                                 Long-Term Debt - Reduction
+     DLTT_QUARTER                                                     Long-Term Debt - Total
+       DO_QUARTER                                                    Discontinued Operations
+   DPACRE_QUARTER                                    Accumulated Depreciation of RE Property
+    DPACT_QUARTER                     Depreciation, Depletion and Amortization (Accumulated)
+         DPC_YEAR                    Depreciation and Amortization - Statement of Cash Flows
+       DP_QUARTER                                      Depreciation and Amortization - Total
+    DPRET_QUARTER                                                     Depr/Amort of Property
+      DVP_QUARTER                                           Dividends / Preferred/Preference
+    DVPSP_QUARTER                                   Dividends per Share / Pay Date / Quarter
+    DVPSX_QUARTER                                           Div per Share - Exdate - Quarter
+           DVRATE                                                    Dividend Rate / Monthly
+          DV_YEAR                                                             Cash Dividends
+    EPSFI_QUARTER               Earnings Per Share (Diluted) / Including Extraordinary Items
+    EPSFX_QUARTER               Earnings Per Share (Diluted) / Excluding Extraordinary items
+    EPSPI_QUARTER                 Earnings Per Share (Basic) / Including Extraordinary Items
+    EPSPX_QUARTER                 Earnings Per Share (Basic) / Excluding Extraordinary Items
+       ESUBC_YEAR                                          Equity in Net Loss/Earnings (C/F)
+        EXRE_YEAR                                                       Exchange Rate Effect
+      FCA_QUARTER                                             Foreign Exchange Income (Loss)
+        FIAO_YEAR                                               Financing Activities - Other
+       FINCF_YEAR                                       Financing Activities - Net Cash Flow
+        FOPO_YEAR                                              Funds from Operations - Other
+        FOPT_YEAR                                              Funds From Operations / Total
+       FSRCO_YEAR                                                   Sources of Funds - Other
+       FSRCT_YEAR                                                   Sources of Funds - Total
+       FUSEO_YEAR                                                      Uses of Funds - Other
+       FUSET_YEAR                                                      Uses of Funds - Total
+   GDWLAM_QUARTER                                                   Amortization of Goodwill
+   GDWLIA_QUARTER                                           Impairment of Goodwill After-tax
+   GDWLID_QUARTER                                  Impairment of Goodwill Diluted EPS Effect
+ GDWLIEPS_QUARTER                                    Impairment of Goodwill Basic EPS Effect
+   GDWLIP_QUARTER                                              Impairment of Goodwill Pretax
+     GDWL_QUARTER                                                             Goodwill (net)
+      GLA_QUARTER                                                        Gain/Loss After-Tax
+      GLD_QUARTER                                               Gain/Loss Diluted EPS Effect
+    GLEPS_QUARTER                                                 Gain/Loss Basic EPS Effect
+      GLP_QUARTER                                                           Gain/Loss Pretax
+    IBADJ_QUARTER  Income Before Extraordinary Items / Adjusted for Common Stock Equivalents
+    IBCOM_QUARTER                   Income Before Extraordinary Items / Available for Common
+         IBC_YEAR                Income Before Extraordinary Items - Statement of Cash Flows
+       IB_QUARTER                                          Income Before Extraordinary Items
+    ICAPT_QUARTER                                       Invested Capital / Total / Quarterly
+   INTANO_QUARTER                                                          Other Intangibles
+       INTPN_YEAR                                                        Interest Paid - Net
+       INVCH_YEAR                                            Inventory - Decrease (Increase)
+     INVT_QUARTER                                                        Inventories - Total
+       IVACO_YEAR                                               Investing Activities - Other
+        IVCH_YEAR                                                    Increase in Investments
+     IVLT_QUARTER                                                Total Long-term Investments
+       IVNCF_YEAR                                       Investing Activities - Net Cash Flow
+      IVSTCH_YEAR                                            Short-Term Investments - Change
+      LCO_QUARTER                                        Current Liabilities - Other - Total
+      LCT_QUARTER                                                Current Liabilities - Total
+       LO_QUARTER                                                        Liabilities - Other
+       LT_QUARTER                                                        Liabilities - Total
+      MIB_QUARTER                                          Minority Interest - Balance Sheet
+      MII_QUARTER                                         Minority Interest - Income Account
+      NCO_QUARTER                                                            Net Charge-Offs
+     NIIT_QUARTER                                       Net Interest Income (Tax Equivalent)
+      NIM_QUARTER                                                        Net Interest Margin
+       NI_QUARTER                                                          Net Income (Loss)
+     NOPI_QUARTER                                     Non-Operating Income (Expense) - Total
+     NPAT_QUARTER                                               Nonperforming Assets / Total
+       OANCF_YEAR                                       Operating Activities - Net Cash Flow
+           OEPS12                      Earnings Per Share from Operations - 12 Months Moving
+    OEPSX_QUARTER                             Earnings Per Share / Diluted / from Operations
+    OIBDP_QUARTER                           Operating Income Before Depreciation - Quarterly
+    OPEPS_QUARTER                                         Earnings Per Share from Operations
+       PI_QUARTER                                                              Pretax Income
+      PLL_QUARTER                                            Provision for Loan/Asset Losses
+    PPEGT_QUARTER                  Property, Plant and Equipment / Total (Gross) / Quarterly
+    PPENT_QUARTER                                 Property Plant and Equipment - Total (Net)
+            PRCCM                                                    Price / Close / Monthly
+            PRCHM                                                     Price / High / Monthly
+            PRCLM                                                      Price / Low / Monthly
+      PRSTKC_YEAR                                     Purchase of Common and Preferred Stock
+     PSTK_QUARTER                               Preferred/Preference Stock (Capital) - Total
+    PSTKR_QUARTER                                    Preferred/Preference Stock / Redeemable
+      RCA_QUARTER                                               Restructuring Cost After-tax
+      RCD_QUARTER                                      Restructuring Cost Diluted EPS Effect
+    RCEPS_QUARTER                                        Restructuring Cost Basic EPS Effect
+      RCP_QUARTER                                                  Restructuring Cost Pretax
+     RDIP_QUARTER                                                             In Process R&D
+       RECCH_YEAR                                  Accounts Receivable - Decrease (Increase)
+     RECT_QUARTER                                                        Receivables - Total
+       RE_QUARTER                                                          Retained Earnings
+      RET_QUARTER                                                          Total RE Property
+    REUNA_QUARTER                                               Unadjusted Retained Earnings
+      RLL_QUARTER                                              Reserve for Loan/Asset Losses
+     SALE_QUARTER                                                       Sales/Turnover (Net)
+     SEQO_QUARTER                                      Other Stockholders Equity Adjustments
+      SEQ_QUARTER                                               Shareholders' Equity - Total
+     SETA_QUARTER                                Settlement (Litigation/Insurance) After-tax
+     SETD_QUARTER                       Settlement (Litigation/Insurance) Diluted EPS Effect
+   SETEPS_QUARTER                         Settlement (Litigation/Insurance) Basic EPS Effect
+     SETP_QUARTER                                   Settlement (Litigation/Insurance) Pretax
+         SIV_YEAR                                                        Sale of Investments
+     SPID_QUARTER                                     Other Special Items Diluted EPS Effect
+   SPIEPS_QUARTER                                       Other Special Items Basic EPS Effect
+    SPIOA_QUARTER                                              Other Special Items After-tax
+    SPIOP_QUARTER                                                 Other Special Items Pretax
+      SPI_QUARTER                                                              Special Items
+        SPPE_YEAR                                                           Sale of Property
+       SPPIV_YEAR                                 Sale of PP&E and Investments - (Gain) Loss
+     SRET_QUARTER                                              Gain/Loss on Sale of Property
+        SSTK_YEAR                                         Sale of Common and Preferred Stock
+    STKCO_QUARTER                                                 Stock Compensation Expense
+      TIE_QUARTER                              Interest Expense / Total (Financial Services)
+      TII_QUARTER                               Interest Income / Total (Financial Services)
+     TSTK_QUARTER                                       Treasury Stock - Total (All Capital)
+       TXACH_YEAR                               Income Taxes - Accrued - Increase (Decrease)
+      TXBCOF_YEAR                  Excess Tax Benefit of Stock Options - Cash Flow Financing
+        TXDC_YEAR                                   Deferred Taxes (Statement of Cash Flows)
+     TXDI_QUARTER                                                    Income Taxes / Deferred
+   TXDITC_QUARTER                                   Deferred Taxes and Investment Tax Credit
+        TXPD_YEAR                                                          Income Taxes Paid
+      TXP_QUARTER                                                       Income Taxes Payable
+      TXT_QUARTER                                                       Income Taxes - Total
+      WCAPCH_YEAR                                            Working Capital Changes - Total
+       WCAPC_YEAR                       Working Capital Change / Other / Increase/(Decrease)
+      WDA_QUARTER                                                       Writedowns After-tax
+      WDD_QUARTER                                              Writedowns Diluted EPS Effect
+    WDEPS_QUARTER                                                Writedowns Basic EPS Effect
+      WDP_QUARTER                                                          Writedowns Pretax
+       XIDOC_YEAR  Extraordinary Items and Discontinued Operations (Statement of Cash Flows)
+     XIDO_QUARTER                            Extraordinary Items and Discontinued Operations
+     XINT_QUARTER                                        Interest and Related Expense- Total
+       XI_QUARTER                                                        Extraordinary Items
+      XRD_QUARTER                                           Research and Development Expense
+     XSGA_QUARTER                               Selling, General and Administrative Expenses
