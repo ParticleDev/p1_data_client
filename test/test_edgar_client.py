@@ -11,68 +11,6 @@ P1_API_URL = os.environ["P1_EDGAR_API_URL"]
 P1_API_TOKEN = os.environ["P1_EDGAR_API_TOKEN"]
 
 
-class TestEdgarClient(hut.TestCase):
-    def setUp(self) -> None:
-        self.client = p1_edg.EdgarClient(token=P1_API_TOKEN, base_url=P1_API_URL)
-        super().setUp()
-
-    def test_get_payload_precise_sampling(self) -> None:
-        payload = self.client.get_payload(
-            form_name="form8k",
-            cik=18498,
-            start_date="2020-01-04",
-            end_date="2020-12-04",
-            item="ACT_QUARTER",
-        )
-        self.assertIsInstance(payload, pd.DataFrame)
-        self.assertFalse(payload.empty)
-
-    def test_get_payload_without_cik(self) -> None:
-        payload = self.client.get_payload(
-            form_name="form8k",
-            start_date="2020-10-04",
-            end_date="2020-12-04",
-            item="ACT_QUARTER",
-        )
-        self.assertIsInstance(payload, pd.DataFrame)
-        self.assertFalse(payload.empty)
-
-    def test_get_payload_pagination(self) -> None:
-        payload = self.client.get_payload(
-            form_name="form8k",
-            cik=18498,
-        )
-        self.assertIsInstance(payload, pd.DataFrame)
-        self.assertFalse(payload.empty)
-
-    def test_get_payload_multi_cik(self) -> None:
-        payload = self.client.get_payload(
-            form_name="form8k",
-            cik=[18498, 319201, 5768]
-        )
-        self.assertIsInstance(payload, pd.DataFrame)
-        self.assertFalse(payload.empty)
-
-    def test_get_payload_empty(self) -> None:
-        payload = self.client.get_payload(
-            form_name="form8k",
-            cik=1212,
-            start_date="2020-01-04",
-            end_date="2020-12-04",
-            item="QWE_QUARTER",
-        )
-        self.assertIsInstance(payload, pd.DataFrame)
-        self.assertTrue(payload.empty)
-
-    def test_get_payload_form10(self) -> None:
-        payload = self.client.get_form10_payload(
-            cik=1002910
-        )
-        scratch_dir = self.get_scratch_space()
-        io_.to_json(os.path.join(scratch_dir, 'form10_test.json'),
-                    {"data": payload})
-
-
 class TestGvkCikMapper(hut.TestCase):
     def setUp(self) -> None:
         self.gvk_mapper = p1_edg.GvkCikMapper(
@@ -113,3 +51,83 @@ class TestItemMapper(hut.TestCase):
         mapping = self.item_mapper.get_mapping()
         self.assertIsInstance(mapping, pd.DataFrame)
         self.assertFalse(mapping.empty)
+
+
+class TestEdgarClient(hut.TestCase):
+    def setUp(self) -> None:
+        self.client = p1_edg.EdgarClient(token=P1_API_TOKEN, base_url=P1_API_URL)
+        super().setUp()
+
+    def test_form8_get_payload_precise_sampling(self) -> None:
+        payload = self.client.get_payload(
+            form_name="form8k",
+            cik=18498,
+            start_date="2020-01-04",
+            end_date="2020-12-04",
+            item="ACT_QUARTER",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+
+    def test_form8_get_payload_without_cik(self) -> None:
+        payload = self.client.get_payload(
+            form_name="form8k",
+            start_date="2020-10-04",
+            end_date="2020-12-04",
+            item="ACT_QUARTER",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+
+    def test_form8_get_payload_pagination(self) -> None:
+        payload = self.client.get_payload(
+            form_name="form8k",
+            cik=18498,
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+
+    def test_form8_get_payload_multi_cik(self) -> None:
+        payload = self.client.get_payload(
+            form_name="form8k",
+            cik=[18498, 319201, 5768]
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+
+    def test_form8_get_payload_empty(self) -> None:
+        payload = self.client.get_payload(
+            form_name="form8k",
+            cik=1212,
+            start_date="2020-01-04",
+            end_date="2020-12-04",
+            item="QWE_QUARTER",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertTrue(payload.empty)
+
+    def test_form10_get_payload(self) -> None:
+        payload = self.client.get_form10_payload(
+            cik=1002910,
+            start_date="2020-05-10",
+            end_date="2020-05-12",
+        )
+        self.assertIsInstance(payload, list)
+        self.assertEqual(len(payload), 1)
+        #scratch_dir = self.get_scratch_space()
+        #io_.to_json(os.path.join(scratch_dir, 'form10_test.json'),
+        #            {"data": payload})
+
+    def test_form10_get_payload_empty(self) -> None:
+        """
+        Verify that nothing is returned for an interval without Form 10*.
+
+        https://www.sec.gov/cgi-bin/browse-edgar?CIK=1002910&owner=exclude
+        """
+        payload = self.client.get_form10_payload(
+            cik=1002910,
+            start_date="2020-05-12",
+            end_date="2020-05-13",
+        )
+        self.assertIsInstance(payload, list)
+        self.assertEqual(len(payload), 0)
