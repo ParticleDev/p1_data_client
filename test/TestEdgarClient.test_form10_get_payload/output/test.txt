@@ -1,0 +1,36 @@
+len(payload)=1
+payload[0].keys()=dict_keys(['meta', 'data'])
+payload[0]["meta"]=
+{'cik': {'0': 1002910},
+ 'filing_date': {'0': '2020-05-11'},
+ 'filing_url': {'0': 'https://www.sec.gov/Archives/edgar/data/1002910/000100291020000115/0001002910-20-000115-index.html'},
+ 'form_type': {'0': '10-Q'},
+ 'uuid': {'0': '981cfc73-7380-4093-8cd7-f0d6a845b3e4'}}
+{'calculation': {'calculationLinkbase': [['linkRole',
+                                          {'definition': '1002000 - Statement '
+                                                         '- Consolidated '
+                                                         'Statement of Income '
+                                                         '(Loss) and '
+                                                         'Comprehensive Income '
+                                                         '(Loss)',
+                                           'role': 'http://www.ameren.com/role/ConsolidatedStatementOfIncomeLossAndComprehensiveIncomeLoss'},
+                                          {},
+                                          ['concept',
+                                           {'label': 'Net Income (Loss) '
+                                                     'Attributable to Parent',
+                                            'name': 'us-gaap:NetIncomeLoss'},
+                                           {'balance': 'credit'},
+                                           ['concept',
+                                            {'label': '(+1) Net Income (Loss), '
+                                                      'Including Portion '
+                                                      'Attributable to '
+                                                      'Noncontrolling Interest',
+                                             'name': 'us-gaap:ProfitLoss'},
+                                            {'balance': 'credit',
+                                             'weight': '1 '},
+                                            ['concept',
+                                             {'label': '(+1) Income (Loss) '
+                                                       'from Continuing '
+                                                       'Operations before '
+                                                       'Equity Method '
+                             
