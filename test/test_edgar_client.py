@@ -1,3 +1,4 @@
+import logging
 import os
 import pprint
 
@@ -7,6 +8,8 @@ import helpers.unit_test as hut
 import helpers.io_ as io_
 
 import p1_data_client_python.edgar_client as p1_edg
+
+_LOG = logging.getLogger(__name__)
 
 P1_API_URL = os.environ["P1_EDGAR_API_URL"]
 P1_API_TOKEN = os.environ["P1_EDGAR_API_TOKEN"]
@@ -63,7 +66,18 @@ class TestEdgarClient(hut.TestCase):
         self.client = p1_edg.EdgarClient(token=P1_API_TOKEN, base_url=P1_API_URL)
         super().setUp()
 
+    @staticmethod
+    def _get_df_info(df: pd.DataFrame) -> str:
+        ret = []
+        for col_name in ["ticker", "item_name", "filing_date"]:
+            vals= sorted(df[col_name].unique())
+            ret.append("col_name=(%d) %s" % (len(vals), ", ".join(vals)))
+        return "\n".join(ret)
+
     def test_form8_get_payload_precise_sampling(self) -> None:
+        """
+        Specify all the parameters.
+        """
         payload = self.client.get_payload(
             form_name="form8k",
             cik=18498,
@@ -73,9 +87,13 @@ class TestEdgarClient(hut.TestCase):
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
+        _LOG.debug("info=\n%s", self._get_df_info(payload))
         self.check_string(hut.convert_df_to_string(payload))
 
     def test_form8_get_payload_without_cik(self) -> None:
+        """
+        Specify all the parameters excluding CIK.
+        """
         payload = self.client.get_payload(
             form_name="form8k",
             start_date="2020-10-04",
@@ -84,24 +102,33 @@ class TestEdgarClient(hut.TestCase):
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
+        _LOG.debug("info=\n%s", self._get_df_info(payload))
         self.check_string(hut.convert_df_to_string(payload))
 
     def test_form8_get_payload_pagination(self) -> None:
+        """
+        Specify only CIK.
+        """
         payload = self.client.get_payload(
             form_name="form8k",
             cik=18498,
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
+        _LOG.debug("info=\n%s", self._get_df_info(payload))
         self.check_string(hut.convert_df_to_string(payload))
 
     def test_form8_get_payload_multi_cik(self) -> None:
+        """
+        Specify multiple CIKs.
+        """
         payload = self.client.get_payload(
             form_name="form8k",
             cik=[18498, 319201, 5768]
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
+        _LOG.debug("info=\n%s", self._get_df_info(payload))
         self.check_string(hut.convert_df_to_string(payload))
 
     def test_form8_get_payload_empty(self) -> None:
