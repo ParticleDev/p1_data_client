@@ -31,7 +31,6 @@ class ItemMapper(p1_abs.AbstractClient):
 
         :return: Item mapping as dataframe.
         """
-
         params = {"mapping_type": "items"}
         url = f'{self.base_url}{self._api_routes["MAPPING"]}'
         response = self._make_request(
@@ -45,7 +44,6 @@ class ItemMapper(p1_abs.AbstractClient):
         :param keywords: List of keywords.
         :return: Item code.
         """
-
         params: Dict[str, Any] = {}
         params = self._set_optional_params(params, keywords=keywords)
         url = f'{self.base_url}{self._api_routes["ITEM"]}'
@@ -75,7 +73,6 @@ class GvkCikMapper(p1_abs.AbstractClient):
         :param as_of_date: Date of gvk. Date format is "YYYY-MM-DD".
         Not implemented for now.
         """
-
         params = {"cik": cik, "as_of_date": as_of_date}
         url = f'{self.base_url}{self._api_routes["GVK"]}'
         response = self._make_request(
@@ -92,7 +89,6 @@ class GvkCikMapper(p1_abs.AbstractClient):
         :param as_of_date: Date of gvk, if missed then
         more than one cik may be to be returned.
         """
-
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
             params, gvk=gvk, gvk_date=as_of_date
@@ -122,36 +118,6 @@ class EdgarClient(p1_abs.AbstractClient):
         super().__init__(*args, **kwargs)
         self.cik_gvk_mapping = None
 
-    def get_form10_payload(
-        self,
-        cik: Optional[Union[P1_CIK, List[P1_CIK]]] = None,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
-    ) -> pd.DataFrame:
-        """Get payload data for a form10, and a company.
-
-        :param form_name: Form name.
-        :param cik: Central Index Key as integer.
-        Could by list of P1_CIK or just one identifier.
-        :param start_date: Get a data where filing date is
-        greater or equal start_date. Date format is "YYYY-MM-DD".
-        :param end_date: Get a data where filing date is
-        less or equal end_date. Date format is "YYYY-MM-DD".
-        :param item: Item for searching.
-        :return: Pandas dataframe with payload data.
-        """
-
-        form_name = 'form10'
-        params: Dict[str, Any] = {}
-        params = self._set_optional_params(
-            params, start_date=start_date, end_date=end_date, cik=cik
-        )
-        url = f'{self.base_url}{self._api_routes["PAYLOAD"]}' f"/{form_name}"
-        response = self._make_request(
-            "GET", url, headers=self.headers, params=params
-        )
-        return response.json()["data"]
-
     def get_payload(
         self,
         form_name: str,
@@ -163,12 +129,12 @@ class EdgarClient(p1_abs.AbstractClient):
         """Get payload data for a form, and a company.
 
         :param form_name: Form name.
-        :param cik: Central Index Key as integer.
-        Could by list of P1_CIK or just one identifier.
-        :param start_date: Get a data where filing date is
-        greater or equal start_date. Date format is "YYYY-MM-DD".
-        :param end_date: Get a data where filing date is
-        less or equal end_date. Date format is "YYYY-MM-DD".
+        :param cik: Central Index Key as integer. Could by list of P1_CIK or
+            just one identifier.
+        :param start_date: Get a data where filing date is greater or equal
+            start_date. Date format is "YYYY-MM-DD".
+        :param end_date: Get a data where filing date is less or equal
+            end_date. Date format is "YYYY-MM-DD".
         :param item: Item for searching.
         :return: Pandas dataframe with payload data.
         """
@@ -192,6 +158,35 @@ class EdgarClient(p1_abs.AbstractClient):
                                                'item_name'])
         return payload_dataframe.reset_index(drop=True)
 
+    def get_form10_payload(
+        self,
+        cik: Optional[Union[P1_CIK, List[P1_CIK]]] = None,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+    ) -> pd.DataFrame:
+        """Get payload data for a form10, and a company.
+
+        :param form_name: Form name.
+        :param cik: Central Index Key as integer. Could by list of P1_CIK or
+            just one identifier.
+        :param start_date: Get data where filing date is greater or equal
+            start_date. Date format is "YYYY-MM-DD".
+        :param end_date: Get data where filing date is less or equal end_date.
+            Date format is "YYYY-MM-DD".
+        :param item: Item for searching.
+        :return: Pandas dataframe with payload data.
+        """
+        form_name = 'form10'
+        params: Dict[str, Any] = {}
+        params = self._set_optional_params(
+            params, start_date=start_date, end_date=end_date, cik=cik
+        )
+        url = f'{self.base_url}{self._api_routes["PAYLOAD"]}' f"/{form_name}"
+        response = self._make_request(
+            "GET", url, headers=self.headers, params=params
+        )
+        return response.json()["data"]
+
     def get_cik(
         self,
         gvk: Optional[P1_GVK] = None,
@@ -203,11 +198,11 @@ class EdgarClient(p1_abs.AbstractClient):
         """Obtain Central Index Key (cik) by given parameters.
 
         :param gvk: Global Company Key(gvk)
-        :param gvk_date: Date of gvk, if missed then
-        more than one cik may be to be returned.
+        :param gvk_date: Date of gvk, if missed then more than one cik may be
+            to be returned.
         :param ticker: Company ticker.
-        :param cusip: Committee on Uniform Securities
-        Identification Procedures number.
+        :param cusip: Committee on Uniform Securities Identification Procedures
+            number.
         :param company: Company name.
         :return: Pandas dataframe with cik information.
         """
