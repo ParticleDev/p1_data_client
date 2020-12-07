@@ -129,16 +129,15 @@ class EdgarClient(p1_abs.AbstractClient):
         """Get payload data for a form, and a company.
 
         :param form_name: Form name.
-        :param cik: Central Index Key as integer. Could by list of P1_CIK or
-            just one identifier.
-        :param start_date: Get a data where filing date is greater or equal
-            start_date. Date format is "YYYY-MM-DD".
-        :param end_date: Get a data where filing date is less or equal
-            end_date. Date format is "YYYY-MM-DD".
-        :param item: Item for searching.
+        :param cik: Central Index Key as integer. It could be a list of P1_CIK
+            or just one identifier. None means all CIKs.
+        :param start_date: Get data where filing date is >= start_date. Date
+            format is "YYYY-MM-DD". None means the entire available date range.
+        :param end_date: Get data where filing date is <= end_date. Date format
+            is "YYYY-MM-DD". None means the entire available date range.
+        :param item: Item to retrieve. None means all items.
         :return: Pandas dataframe with payload data.
         """
-
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
             params, start_date=start_date, end_date=end_date, item=item, cik=cik
@@ -169,11 +168,10 @@ class EdgarClient(p1_abs.AbstractClient):
         :param form_name: Form name.
         :param cik: Central Index Key as integer. Could by list of P1_CIK or
             just one identifier.
-        :param start_date: Get data where filing date is greater or equal
-            start_date. Date format is "YYYY-MM-DD".
-        :param end_date: Get data where filing date is less or equal end_date.
-            Date format is "YYYY-MM-DD".
-        :param item: Item for searching.
+        :param start_date: Get data where filing date is >= start_date. Date
+            format is "YYYY-MM-DD". None means the entire available date range.
+        :param end_date: Get data where filing date is <= end_date. Date format
+            is "YYYY-MM-DD". None means the entire available date range.
         :return: Pandas dataframe with payload data.
         """
         form_name = 'form10'
@@ -264,5 +262,3 @@ class EdgarClient(p1_abs.AbstractClient):
                 count_lines = response.json()["count"]
                 yield payload_dataframe
                 current_offset += PAYLOAD_BLOCK_SIZE
-
-
