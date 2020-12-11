@@ -65,12 +65,13 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest
 
       - name: Run fast tests
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.GH_ACTION_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.GH_ACTION_AWS_SECRET_ACCESS_KEY }}
+          P1_API_TOKEN: ${{ secrets.GH_ACTION_P1_API_TOKEN_PROD }}
+          P1_API_URL: ${{ secrets.GH_ACTION_P1_API_URL_PROD }}
+          P1_EDGAR_API_TOKEN: ${{ secrets.GH_ACTION_P1_EDGAR_API_TOKEN_PROD }}
+          P1_EDGAR_API_URL: ${{ secrets.GH_ACTION_P1_EDGAR_API_URL_PROD }}
         run: make fast_test_gh_actions
 
       - name: Post status if was triggered manually
