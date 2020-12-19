@@ -108,7 +108,7 @@ class GvkCikMapper(p1_abs.AbstractClient):
 
     @property
     def _default_base_url(self) -> str:
-        return "https://data.particle.one/edgar/v1/"
+        return "https://data.particle.one/edgar/v2/"
 
 
 class EdgarClient(p1_abs.AbstractClient):
@@ -221,7 +221,7 @@ class EdgarClient(p1_abs.AbstractClient):
 
     @property
     def _default_base_url(self) -> str:
-        return "https://data.particle.one/edgar/v1/"
+        return "https://data.particle.one/edgar/v2/"
 
     @property
     def _api_routes(self) -> Dict[str, str]:
