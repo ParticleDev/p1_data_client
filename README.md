@@ -80,7 +80,7 @@ use it.
 - When installing from source, you need to add the path of this package to
   `PYTHONPATH`, e.g.:
   ```bash
-  export PYTHONPATH=$PYTHONPATH:$(pwd)
+  export PYTHONPATH=$(pwd):$(pwd)/p1_data_client_python
   ```
 
 ## Getting a Particle.One token
