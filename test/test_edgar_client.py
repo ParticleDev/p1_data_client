@@ -2,6 +2,8 @@ import logging
 import os
 import pprint
 
+import pytest
+
 import pandas as pd
 
 import p1_data_client_python.helpers.unit_test as hut
@@ -213,6 +215,7 @@ class TestEdgarClient(hut.TestCase):
         actual = "\n".join(actual)
         self.check_string(actual)
 
+    @pytest.mark.skip("Disabled while refreshing the db")
     def test_form13_get_payload_large_response(self) -> None:
         payload = self.client.get_form13_payload(
             start_date="2020-12-10", end_date="2020-12-17",
