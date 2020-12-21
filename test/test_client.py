@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import pytest
 
-import helpers.unit_test as hut
+import p1_data_client_python.helpers.unit_test as hut
 import p1_data_client_python.client as p1_data
 import p1_data_client_python.exceptions as p1_exc
 
@@ -16,7 +16,7 @@ BAD_METADATA_TYPE = "Stranger Things"
 
 
 class TestPythonClient(hut.TestCase):
-    def set_env_token(self):
+    def set_env_token(self) -> None:
         self.env_token = os.getenv(TOKEN_ENV_NAME)
         if not self.env_token:
             raise p1_exc.TestTokenNotFound(

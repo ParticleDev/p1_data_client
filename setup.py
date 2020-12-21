@@ -1,4 +1,6 @@
+import os
 import sys
+
 
 if sys.version_info[:2] < (3, 7):
     raise ImportError(
@@ -12,10 +14,17 @@ try:
 except ImportError:
     from distutils.core import setup
 
+sys.path.insert(
+    0, os.path.join(os.path.dirname(__file__), "p1_data_client_python")
+)
+
+import version  # NOQA
+
 INSTALL_REQUIRES = ["pandas>=1.0.0", "requests>=2.18.0"]
 TEST_REQUIRES = ["pytest>=5.0.0"]
 PACKAGES = [
     "p1_data_client_python",
+    "p1_data_client_python.helpers"
 ]
 
 project_urls = {
@@ -27,7 +36,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    version="1.2.0",
+    version=version.VERSION,
     name="p1_data_client_python",
     description="Package for P1 Data API access",
     long_description=long_description,

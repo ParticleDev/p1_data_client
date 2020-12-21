@@ -39,19 +39,27 @@ use it.
 
 - Python version >= 3.7
 
-## Installation
+## Installation through PyPI
 
-- To install from PyPI:
+- You can install the Particle.One data python client in 3 different ways:
 
-  ```bash
-  pip install p1_data_client_python
-  ```
+1) Install from PyPI:
+   ```bash
+   pip install p1_data_client_python
+   ```
 
-- To install from source:
+2) Install and build from the source
+- Assuming the name of the Github repo is <GITHUB_REPO> (e.g.,
+  `p1_data_client_python`)
+   ```bash
+   pip install git+https://github.com/ParticleDev/<INSERT_GITHUB_REPO_NAME>.git
+   ```
+
+2) Install without building the package from source:
 
   ```bash
   # Check out the code.
-  git clone git@github.com:ParticleDev/p1_data_client_python.git
+  git clone git@github.com:ParticleDev/<INSERT_GITHUB_REPO_NAME>.git
   cd p1_data_client_python
 
   # Create environment.
@@ -65,10 +73,12 @@ use it.
   ```bash
   python -c "import p1_data_client_python; print(p1_data_client_python)"
   <module 'p1_data_client_python' (namespace)>
+
+  > python -c "import p1_data_client_python.version as version; print(version.VERSION)"
   ```
 
-- If the script above exits with an error you need to add to `PYTHONPATH` the
-  path of this package, e.g.:
+- When installing from source, you need to add the path of this package to
+  `PYTHONPATH`, e.g.:
   ```bash
   export PYTHONPATH=$PYTHONPATH:$(pwd)
   ```
@@ -84,23 +94,17 @@ use it.
   environment with:
 
   ```bash
-  export PYTHONPATH=$PYTHONPATH:$(pwd)
-  export P1_API_URL='https://data.particle.one'
   export P1_API_TOKEN='your_api_token_here'
-  export P1_EDGAR_API_URL='https://data.particle.one/edgar/v2/'
   export P1_EDGAR_API_TOKEN='your_edgar_token_here'
   ```
 
 - E.g., from `test/set_env_vars.sh`
   ```bash
-  export PYTHONPATH=$PYTHONPATH:$(pwd)
-  export P1_API_URL="https://data.particle.one"
   export P1_API_TOKEN='e44e7c6b04ef3ea1cfb7a8a67db74751c177259e'
-  export P1_EDGAR_API_URL="https://data.particle.one/edgar/v2/"
   export P1_EDGAR_API_TOKEN='8c9c9458b145202c7a6b6cceaabd82023e957a46d6cf7061ed8e1c94a168f2fd'
   ```
 
-## Run tests
+## Run tests (only when installing from source)
 
 - After configuring the environment variables, run all tests with:
 

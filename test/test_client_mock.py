@@ -1,9 +1,9 @@
 import unittest.mock as mock
-from typing import List
+from typing import Any
 
 import pandas as pd
 
-import helpers.unit_test as hut
+import p1_data_client_python.helpers.unit_test as hut
 import p1_data_client_python.client as p1_data
 import p1_data_client_python.exceptions as p1_exc
 
@@ -79,10 +79,10 @@ class TestPythonClientMock(hut.TestCase):
         super().setUp()
 
     def test_list_of_metadata(self) -> None:
-        self.assertIsInstance(self.client.list_of_metadata, List)
+        self.assertIsInstance(self.client.list_of_metadata, list)
 
     @mock.patch("requests.Session.request")
-    def test_search(self, mock_request):
+    def test_search(self, mock_request: Any) -> None:
         # test on UnauthorizedException
         mock_request.return_value = mock.Mock(status_code=401)
         with self.assertRaises(p1_exc.UnauthorizedException):
@@ -94,7 +94,7 @@ class TestPythonClientMock(hut.TestCase):
             self.assertIsInstance(page, pd.DataFrame)
 
     @mock.patch("requests.Session.request")
-    def test_payload(self, mock_request) -> None:
+    def test_payload(self, mock_request: Any) -> None:
         payload_id = "some very good get_payload ID"
         # test on UnauthorizedException
         mock_request.return_value = mock.Mock(status_code=401)
@@ -109,7 +109,7 @@ class TestPythonClientMock(hut.TestCase):
             self.client.get_payload(payload_id)
 
     @mock.patch("requests.Session.request")
-    def test_get_metadata_type_mock(self, mock_request) -> None:
+    def test_get_metadata_type_mock(self, mock_request: Any) -> None:
         # test on UnauthorizedException
         mock_request.return_value = mock.Mock(status_code=401)
         with self.assertRaises(p1_exc.UnauthorizedException):

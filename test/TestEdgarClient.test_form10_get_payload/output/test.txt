@@ -1,19 +1,17 @@
 len(payload)=1
 payload[0].keys()=dict_keys(['meta', 'data'])
 payload[0]["meta"]=
-{'cik': {'0': 1002910},
- 'filing_date': {'0': '2020-05-11'},
- 'filing_url': {'0': 'https://www.sec.gov/Archives/edgar/data/1002910/000100291020000115/0001002910-20-000115-index.html'},
- 'form_type': {'0': '10-Q'},
- 'uuid': {'0': '981cfc73-7380-4093-8cd7-f0d6a845b3e4'}}
+{'cik': {'0': 320193},
+ 'filing_date': {'0': '2017-11-03'},
+ 'filing_url': {'0': 'https://www.sec.gov/Archives/edgar/data/320193/000032019317000070/0000320193-17-000070-index.html'},
+ 'form_type': {'0': '10-K'},
+ 'uuid': {'0': 'd8e400c7-2aa6-4f20-b2e1-3157c8814160'}}
 {'calculation': {'calculationLinkbase': [['linkRole',
-                                          {'definition': '1002000 - Statement '
-                                                         '- Consolidated '
-                                                         'Statement of Income '
-                                                         '(Loss) and '
-                                                         'Comprehensive Income '
-                                                         '(Loss)',
-                                           'role': 'http://www.ameren.com/role/ConsolidatedStatementOfIncomeLossAndComprehensiveIncomeLoss'},
+                                          {'definition': '1001000 - Statement '
+                                                         '- CONSOLIDATED '
+                                                         'STATEMENTS OF '
+                                                         'OPERATIONS',
+                                           'role': 'http://www.apple.com/role/ConsolidatedStatementsOfOperations'},
                                           {},
                                           ['concept',
                                            {'label': 'Net Income (Loss) '
@@ -21,16 +19,17 @@ payload[0]["meta"]=
                                             'name': 'us-gaap:NetIncomeLoss'},
                                            {'balance': 'credit'},
                                            ['concept',
-                                            {'label': '(+1) Net Income (Loss), '
-                                                      'Including Portion '
-                                                      'Attributable to '
+                                            {'label': '(+1) Income (Loss) from '
+                                                      'Continuing Operations '
+                                                      'before Income Taxes, '
                                                       'Noncontrolling Interest',
-                                             'name': 'us-gaap:ProfitLoss'},
+                                             'name': 'us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest'},
                                             {'balance': 'credit',
                                              'weight': '1 '},
                                             ['concept',
-                                             {'label': '(+1) Income (Loss) '
-                                                       'from Continuing '
-                                                       'Operations before '
-                                                       'Equity Method '
-                             
+                                             {'label': '(+1) Operating Income '
+                                                       '(Loss)',
+                                              'name': 'us-gaap:OperatingIncomeLoss'},
+                                             {'balance': 'credit',
+                                              'weight': '1 '},
+                                             ['concept',

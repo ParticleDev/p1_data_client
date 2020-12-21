@@ -6,13 +6,12 @@ This file is part of the ParticleOne and is released under the "MIT". Please
 see the license.txt file that should have been included as part of this
 package.
 
-
-Import as
-
+Import as:
 import p1_data_client_python.client as p1_data
 """
 
 import json
+import os
 from typing import Any, Dict, List
 
 import pandas as pd
@@ -21,17 +20,21 @@ import requests
 import p1_data_client_python.abstract_client as p1_abs
 import p1_data_client_python.exceptions as p1_exc
 
+P1_DATA_API_VERSION = os.environ.get("P1_DATA_API_VERSION", "1")
+
 
 class Client(p1_abs.AbstractClient):
     """Class for p1 data REST API operating."""
 
     SEARCH_CHUNK_SIZE = 1000
 
+    _URL = f"/data-api/v{P1_DATA_API_VERSION}"
+
     METADATA_ROUTES = {
-        "COMMODITIES": "/data-api/v1/commodities/",
-        "BUSINESS-CATEGORIES": "/data-api/v1/business-categories/",
-        "COUNTRIES": "/data-api/v1/countries/",
-        "FREQUENCIES": "/data-api/v1/frequencies/",
+        "COMMODITIES": _URL + "/commodities/",
+        "BUSINESS-CATEGORIES": _URL + "/business-categories/",
+        "COUNTRIES": _URL + "/countries/",
+        "FREQUENCIES": _URL + "/frequencies/",
     }
 
     @property
@@ -47,7 +50,6 @@ class Client(p1_abs.AbstractClient):
         """
         current_page_number = 1
         row_count = self._last_total_count
-
         if self._scroll_id:
             while True:
                 if row_count > 0 and current_page_number < pages_limit:
@@ -60,7 +62,7 @@ class Client(p1_abs.AbstractClient):
                 current_page_number += 1
 
     def search_scroll(self) -> Dict[Any, Any]:
-        """Get next chunk(page) of payloads by given scroll_id."""
+        """Get next chunk (page) of payloads by given scroll_id."""
         response = self._make_request(
             "GET",
             self.base_url + self._api_routes["SEARCH_SCROLL"],
@@ -78,7 +80,7 @@ class Client(p1_abs.AbstractClient):
             )
         return next_page
 
-    def search(self, **search_payload) -> pd.DataFrame:
+    def search(self, **search_payload: Any) -> pd.DataFrame:
         """Get payloads IDs by given search conditions.
 
         :param text:
@@ -173,7 +175,6 @@ class Client(p1_abs.AbstractClient):
         payloads = response.json()
         self._scroll_id = payloads["scroll_id"]
         self._last_total_count = payloads["total_count"]
-
         return pd.DataFrame(payloads["rows"])
 
     @staticmethod
