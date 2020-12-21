@@ -127,10 +127,7 @@ class EdgarClient(p1_abs.AbstractClient):
         end_date: Optional[str] = None,
     ) -> Dict[str, List[Dict[str, Any]]]:
         form_type = "form4"
-        result = self._get_form4_13_payload(form_type,
-                                            cik,
-                                            start_date,
-                                            end_date,)
+        result = self._get_form4_13_payload(form_type, cik, start_date, end_date,)
         return result
 
     def get_form8_payload(
@@ -206,10 +203,7 @@ class EdgarClient(p1_abs.AbstractClient):
         end_date: Optional[str] = None,
     ) -> Dict[str, List[Dict[str, Any]]]:
         form_type = "form13"
-        result = self._get_form4_13_payload(form_type,
-                                            cik,
-                                            start_date,
-                                            end_date)
+        result = self._get_form4_13_payload(form_type, cik, start_date, end_date,)
         return result
 
     def get_cik(
@@ -314,9 +308,7 @@ class EdgarClient(p1_abs.AbstractClient):
             yield data
             current_offset += PAYLOAD_BLOCK_SIZE
 
-    def _payload_form8_generator(self,
-                                 *args: Any,
-                                 **kwargs: Any) -> pd.DataFrame:
+    def _payload_form8_generator(self, *args: Any, **kwargs: Any) -> pd.DataFrame:
         """Payload generator that output payload data by DataAPI pagination.
 
         :param args: Positional arguments for making request.
