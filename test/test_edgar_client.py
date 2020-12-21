@@ -5,20 +5,16 @@ import pprint
 import pandas as pd
 
 import helpers.unit_test as hut
-import helpers.io_ as io_
-
 import p1_data_client_python.edgar_client as p1_edg
 
 _LOG = logging.getLogger(__name__)
-
-P1_API_URL = os.environ["P1_EDGAR_API_URL"]
 P1_API_TOKEN = os.environ["P1_EDGAR_API_TOKEN"]
 
 
 class TestGvkCikMapper(hut.TestCase):
     def setUp(self) -> None:
         self.gvk_mapper = p1_edg.GvkCikMapper(
-            token=P1_API_TOKEN, base_url=P1_API_URL
+            token=P1_API_TOKEN
         )
         super().setUp()
 
@@ -42,7 +38,7 @@ class TestGvkCikMapper(hut.TestCase):
 class TestItemMapper(hut.TestCase):
     def setUp(self) -> None:
         self.item_mapper = p1_edg.ItemMapper(
-            token=P1_API_TOKEN, base_url=P1_API_URL
+            token=P1_API_TOKEN
         )
         super().setUp()
 
@@ -63,7 +59,7 @@ class TestItemMapper(hut.TestCase):
 
 class TestEdgarClient(hut.TestCase):
     def setUp(self) -> None:
-        self.client = p1_edg.EdgarClient(token=P1_API_TOKEN, base_url=P1_API_URL)
+        self.client = p1_edg.EdgarClient(token=P1_API_TOKEN)
         super().setUp()
 
     @staticmethod
