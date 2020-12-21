@@ -15,6 +15,7 @@ import requests.adapters as rq_adapt
 import requests.packages.urllib3.util.retry as rq_retry
 
 import p1_data_client_python.exceptions as p1_exc
+import p1_data_client_python.version as version
 
 
 class AbstractClient:
@@ -58,6 +59,11 @@ class AbstractClient:
         return True
 
     @property
+    def client_version(self) -> str:
+        """Return a client version"""
+        return version.VERSION
+
+    @property
     @abc.abstractmethod
     def _api_routes(self) -> Dict[str, str]:
         """Abstract property for a dict API routes.
@@ -92,7 +98,7 @@ class AbstractClient:
         return data
 
     def _set_optional_params(
-        self, params: Dict[str, Any], **kwargs
+        self, params: Dict[str, Any], **kwargs: Any
     ) -> Dict[str, Any]:
         """Settle optional parameters to the params dict for requests running.
 
@@ -100,7 +106,7 @@ class AbstractClient:
         :param kwargs: All parameters should be implemented.
         :return: Params dict.
         """
-        for param, value in [(k, v) for k, v in kwargs.items() if v]:
+        for param, value in [(k, v) for k, v in kwargs.items() if v is not None]:
             if param.endswith("date"):
                 self.validate_date(kwargs[param])
             params[param] = value
@@ -122,7 +128,7 @@ class AbstractClient:
         session.mount("https://", adapter)
         return session
 
-    def _make_request(self, *args, **kwargs) -> requests.Response:
+    def _make_request(self, *args: Any, **kwargs: Any) -> requests.Response:
         """Single entry point for any request to the REST API.
 
         :return: requests Response.
