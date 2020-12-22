@@ -52,12 +52,13 @@ jobs:
         with:
           submodules: true
           ssh-key: ${{ secrets.GH_ACTION_SSH_PRIVATE_KEY }}
-          fetch-depth: 2
+          fetch-depth: 0
           ref: master
 
       - name: Switch branch
         run: |
           git status
+          git branch
           git checkout origin/${GITHUB_REF##*/}
 
       - name: Pull image
