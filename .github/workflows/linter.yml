@@ -55,7 +55,8 @@ jobs:
 
       - name: Switch branch
         run: |
-          git checkout master && git checkout ${GITHUB_REF##*/}
+          git checkout master
+          git checkout ${GITHUB_REF##*/}
 
       - name: Pull image
         run: make docker_pull
