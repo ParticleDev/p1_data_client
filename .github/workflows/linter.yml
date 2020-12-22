@@ -57,8 +57,6 @@ jobs:
 
       - name: Switch branch
         run: |
-          git status
-          git branch
           git checkout origin/${GITHUB_REF##*/}
 
       - name: Pull image
