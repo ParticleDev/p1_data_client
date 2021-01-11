@@ -2,8 +2,6 @@ import logging
 import os
 import pprint
 
-import pytest
-
 import pandas as pd
 
 import p1_data_client_python.helpers.unit_test as hut
@@ -61,13 +59,29 @@ class TestEdgarClient(hut.TestCase):
     def _get_df_info(df: pd.DataFrame) -> str:
         ret = []
         for col_name in ["ticker", "item_name", "filing_date"]:
-            vals = sorted(df[col_name].unique())
+            vals = sorted(df[col_name].unique().astype(str))
             ret.append("col_name=(%d) %s" % (len(vals), ", ".join(vals)))
         return "\n".join(ret)
 
     def test_form4_get_payload(self) -> None:
         payload = self.client.get_form4_payload(
             cik=58492, start_date="2016-01-26", end_date="2016-01-26",
+        )
+        self.assertIsInstance(payload, dict)
+        self.assertEqual(len(payload), 6)
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload.keys()=%s" % payload.keys()))
+        for table_name, data in payload.items():
+            actual.append(
+                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
+            )
+        actual = "\n".join(actual)
+        self.check_string(actual)
+
+    def test_form4_get_payload_with_multi_cik(self) -> None:
+        payload = self.client.get_form4_payload(
+            cik=[880266, 918160, 7789], start_date="2016-01-26", end_date="2016-01-26"
         )
         self.assertIsInstance(payload, dict)
         self.assertEqual(len(payload), 6)
@@ -215,7 +229,60 @@ class TestEdgarClient(hut.TestCase):
         actual = "\n".join(actual)
         self.check_string(actual)
 
-    @pytest.mark.skip("Disabled while refreshing the db")
+    def test_form13_get_payload_multi_cik(self) -> None:
+        payload = self.client.get_form13_payload(
+            cik=[836372, 859804], start_date="2015-11-16", end_date="2015-11-16",
+        )
+        self.assertIsInstance(payload, dict)
+        self.assertEqual(len(payload), 6)
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload.keys()=%s" % payload.keys()))
+        for table_name, data in payload.items():
+            actual.append(
+                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
+            )
+        actual = "\n".join(actual)
+        self.check_string(actual)
+
+    def test_form13_get_payload_cik_cusip(self) -> None:
+        with self.assertRaises(AssertionError):
+            self.client.get_form13_payload(cik=123, cusip="qwe")
+
+    def test_form13_get_payload_with_cusip(self) -> None:
+        payload = self.client.get_form13_payload(
+            cusip="01449J204", start_date="2015-11-16", end_date="2015-11-16",
+        )
+        self.assertIsInstance(payload, dict)
+        self.assertEqual(len(payload), 6)
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload.keys()=%s" % payload.keys()))
+        for table_name, data in payload.items():
+            actual.append(
+                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
+            )
+        actual = "\n".join(actual)
+        self.check_string(actual)
+
+    def test_form13_get_payload_with_multi_cusip(self) -> None:
+        payload = self.client.get_form13_payload(
+            cusip=["002824100", "01449J204"],
+            start_date="2016-11-15",
+            end_date="2016-11-15",
+        )
+        self.assertIsInstance(payload, dict)
+        self.assertEqual(len(payload), 6)
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload.keys()=%s" % payload.keys()))
+        for table_name, data in payload.items():
+            actual.append(
+                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
+            )
+        actual = "\n".join(actual)
+        self.check_string(actual)
+
     def test_form13_get_payload_large_response(self) -> None:
         payload = self.client.get_form13_payload(
             start_date="2020-12-10", end_date="2020-12-17",

@@ -190,6 +190,20 @@ payload = client.get_form13_payload(
 )
 _print_payload(payload)
 
+# %%
+# Form13. Get the data for one day and one cusip.
+payload = client.get_form13_payload(
+    cusip="01449J204", start_date="2015-11-16", end_date="2015-11-16",
+)
+_print_payload(payload)
+
+# %%
+# Form13. Get the data for one day and list of cusip's.
+payload = client.get_form13_payload(
+    cusip=["002824100", "01449J204"], start_date="2016-11-15", end_date="2016-11-15",
+)
+_print_payload(payload)
+
 # %% pycharm={"name": "#%%\n"}
 # Form4. Get the data for a week and one company.
 payload = client.get_form4_payload(

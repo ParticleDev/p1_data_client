@@ -1,4 +1,5 @@
-"""An abstract client class for all types of API.
+"""
+An abstract client class for all types of API.
 
 Import as:
 import p1_data_client_python.abstract_client as p1_abs
@@ -7,6 +8,8 @@ import p1_data_client_python.abstract_client as p1_abs
 import abc
 import datetime as dt
 import json
+import platform
+import tqdm
 from typing import Any, Dict
 
 import pandas as pd
@@ -19,7 +22,9 @@ import p1_data_client_python.version as version
 
 
 class AbstractClient:
-    """Base abstract class."""
+    """
+    Base abstract class.
+    """
 
     def __init__(
         self,
@@ -29,7 +34,8 @@ class AbstractClient:
         retries_number: int = 5,
         backoff_factor: float = 0.3,
     ):
-        """Pass arguments and gets authenticated in the system.
+        """
+        Pass arguments and gets authenticated in the system.
 
         :param base_url: REST API Server url.
         :param token: Your token for access to the system.
@@ -51,7 +57,9 @@ class AbstractClient:
 
     @classmethod
     def validate_date(cls, date_text: str) -> bool:
-        """Validate string date."""
+        """
+        Validate string date.
+        """
         try:
             dt.datetime.strptime(date_text, "%Y-%m-%d")
         except ValueError:
@@ -60,13 +68,16 @@ class AbstractClient:
 
     @property
     def client_version(self) -> str:
-        """Return a client version"""
+        """
+        Return the client's version.
+        """
         return version.VERSION
 
     @property
     @abc.abstractmethod
     def _api_routes(self) -> Dict[str, str]:
-        """Abstract property for a dict API routes.
+        """
+        Abstract property for a dict API routes.
 
         :return: Dict of API routes like "<ROUTE_NAME>": "ROUTE_PATH"
             Example: "SEARCH": "/data-api/v1/search/"
@@ -75,7 +86,8 @@ class AbstractClient:
     @property
     @abc.abstractmethod
     def _default_base_url(self) -> str:
-        """Abstract property that return base url.
+        """
+        Abstract property that return base url.
 
         :return: Default base server url.
         """
@@ -84,7 +96,8 @@ class AbstractClient:
     def _get_dataframe_from_response(
         cls, response: requests.Response
     ) -> pd.DataFrame:
-        """Retrieve tha dataframe from the json part of a response.
+        """
+        Retrieve tha dataframe from the json part of a response.
 
         :param response: Response from a request.
         :return: Dataframe from json.
@@ -97,10 +110,28 @@ class AbstractClient:
             ) from e
         return data
 
+    def _get_versions(self):
+        """
+        Get package versions.
+        """
+        versions = [
+            (
+                "P1 DATA API Python Client",
+                f"{self.client_version} ({platform.platform()})"
+            ),
+            ("Python", platform.python_version()),
+            ("Pandas", pd.__version__),
+            ("Requests", requests.__version__),
+            ("Tqdm", tqdm.__version__),
+        ]
+        result = " ".join("/".join(i) for i in versions)
+        return result
+
     def _set_optional_params(
         self, params: Dict[str, Any], **kwargs: Any
     ) -> Dict[str, Any]:
-        """Settle optional parameters to the params dict for requests running.
+        """
+        Settle optional parameters to the params dict for requests running.
 
         :param params: Dict for parameters.
         :param kwargs: All parameters should be implemented.
@@ -114,8 +145,10 @@ class AbstractClient:
         return params
 
     def _get_session(self) -> requests.Session:
-        """Initialize and return a session allows make retry when some errors
-        will raised."""
+        """
+        Initialize and return a session allows make retry when some errors
+        will raised.
+        """
         session = requests.Session()
         retry = rq_retry.Retry(
             total=self.retries_number,
@@ -129,10 +162,12 @@ class AbstractClient:
         return session
 
     def _make_request(self, *args: Any, **kwargs: Any) -> requests.Response:
-        """Single entry point for any request to the REST API.
-
-        :return: requests Response.
         """
+        Single entry point for any request to the REST API.
+        """
+        if kwargs.get("headers") is None:
+            kwargs["headers"] = dict()
+        kwargs["headers"]["User-Agent"] = self._get_versions()
         response = self.session.request(*args, **kwargs)
         # Throw exception, if token is not valid.
         if response.status_code == 401:
