@@ -21,6 +21,8 @@ import p1_data_client_python.exceptions as p1_exc
 import p1_data_client_python.version as version
 
 
+
+
 class AbstractClient:
     """
     Base abstract class.

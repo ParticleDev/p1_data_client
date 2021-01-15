@@ -201,6 +201,26 @@ class TestEdgarClient(hut.TestCase):
         actual = "\n".join(actual)
         self.check_string(actual)
 
+    def test_form10_get_payload_multi_cik(self) -> None:
+        """
+        Get the payload for form10 and a few cik
+        """
+        payload = self.client.get_form10_payload(
+            cik=[1750, 732717],
+            start_date="2018-01-01",
+            end_date="2018-07-15",
+        )
+        self.assertIsInstance(payload, list)
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload[0].keys()=%s" % payload[0].keys()))
+        actual.append(
+            ('payload[0]["meta"]=\n%s' % pprint.pformat(payload[0]["meta"]))
+        )
+        actual.append(pprint.pformat(payload[0]["data"])[:2000])
+        actual = "\n".join(actual)
+        self.check_string(actual)
+
     def test_form10_get_payload_empty(self) -> None:
         """
         Verify that nothing is returned for an interval without Form 10*.
@@ -218,32 +238,16 @@ class TestEdgarClient(hut.TestCase):
             cik=1259313, start_date="2015-11-16", end_date="2015-11-16",
         )
         self.assertIsInstance(payload, dict)
-        self.assertEqual(len(payload), 6)
-        actual = []
-        actual.append(("len(payload)=%s" % len(payload)))
-        actual.append(("payload.keys()=%s" % payload.keys()))
-        for table_name, data in payload.items():
-            actual.append(
-                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
-            )
-        actual = "\n".join(actual)
-        self.check_string(actual)
+        self.check_string(
+            hut.convert_df_to_string(payload['information_table']))
 
     def test_form13_get_payload_multi_cik(self) -> None:
         payload = self.client.get_form13_payload(
             cik=[836372, 859804], start_date="2015-11-16", end_date="2015-11-16",
         )
         self.assertIsInstance(payload, dict)
-        self.assertEqual(len(payload), 6)
-        actual = []
-        actual.append(("len(payload)=%s" % len(payload)))
-        actual.append(("payload.keys()=%s" % payload.keys()))
-        for table_name, data in payload.items():
-            actual.append(
-                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
-            )
-        actual = "\n".join(actual)
-        self.check_string(actual)
+        self.check_string(
+            hut.convert_df_to_string(payload['information_table']))
 
     def test_form13_get_payload_cik_cusip(self) -> None:
         with self.assertRaises(AssertionError):
@@ -254,16 +258,8 @@ class TestEdgarClient(hut.TestCase):
             cusip="01449J204", start_date="2015-11-16", end_date="2015-11-16",
         )
         self.assertIsInstance(payload, dict)
-        self.assertEqual(len(payload), 6)
-        actual = []
-        actual.append(("len(payload)=%s" % len(payload)))
-        actual.append(("payload.keys()=%s" % payload.keys()))
-        for table_name, data in payload.items():
-            actual.append(
-                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
-            )
-        actual = "\n".join(actual)
-        self.check_string(actual)
+        self.check_string(
+            hut.convert_df_to_string(payload['information_table']))
 
     def test_form13_get_payload_with_multi_cusip(self) -> None:
         payload = self.client.get_form13_payload(
@@ -272,29 +268,51 @@ class TestEdgarClient(hut.TestCase):
             end_date="2016-11-15",
         )
         self.assertIsInstance(payload, dict)
-        self.assertEqual(len(payload), 6)
-        actual = []
-        actual.append(("len(payload)=%s" % len(payload)))
-        actual.append(("payload.keys()=%s" % payload.keys()))
-        for table_name, data in payload.items():
-            actual.append(
-                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
-            )
-        actual = "\n".join(actual)
-        self.check_string(actual)
+        self.check_string(
+            hut.convert_df_to_string(payload['information_table']))
 
     def test_form13_get_payload_large_response(self) -> None:
         payload = self.client.get_form13_payload(
             start_date="2020-12-10", end_date="2020-12-17",
         )
         self.assertIsInstance(payload, dict)
-        self.assertEqual(len(payload), 6)
-        actual = []
-        actual.append(("len(payload)=%s" % len(payload)))
-        actual.append(("payload.keys()=%s" % payload.keys()))
-        for table_name, data in payload.items():
-            actual.append(
-                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
-            )
-        actual = "\n".join(actual)
+        self.check_string(
+            hut.convert_df_to_string(payload['information_table']))
+
+    def test_form_types(self) -> None:
+        form_types = self.client.form_types
+        actual = "\n".join(form_types)
         self.check_string(actual)
+
+    def test_get_form_headers(self) -> None:
+        payload = self.client.get_form_headers(
+            form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
+            cik=[320193],
+            start_date='2000-01-01',
+            end_date='2020-02-01'
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        self.check_string(hut.convert_df_to_string(payload))
+
+    def test_get_form_headers_one_form(self) -> None:
+        payload = self.client.get_form_headers(
+            form_type="4",
+            cik=320193,
+            start_date='2000-01-01',
+            end_date='2020-02-01'
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        self.check_string(hut.convert_df_to_string(payload))
+
+    def test_get_form_headers_one_cik(self) -> None:
+        payload = self.client.get_form_headers(
+            form_type='13F-HR',
+            cik=1404574,
+            start_date='2012-11-14',
+            end_date='2012-11-14'
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        self.check_string(hut.convert_df_to_string(payload))

@@ -20,7 +20,10 @@ sys.path.insert(
 
 import version  # NOQA
 
-INSTALL_REQUIRES = ["pandas>=1.2.0", "requests>=2.18.0", "tqdm>=4.50.0"]
+INSTALL_REQUIRES = ["pandas>=1.2.0",
+                    "requests>=2.18.0",
+                    "tqdm>=4.50.0",
+                    "halo>=0.0.31"]
 TEST_REQUIRES = ["pytest>=5.0.0"]
 PACKAGES = [
     "p1_data_client_python",

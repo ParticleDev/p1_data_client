@@ -1,0 +1,2 @@
+                                uuid     cik filing_date form_type                                  edgar_path                     company       acceptance_datetime                       created_at
+da15f8a0-2a47-4e4c-a7e9-b38f0fd63796 1404574  2012-11-14    13F-HR edgar/data/1404574/0000919574-12-006180.txt 683 Capital Management, LLC 2012-11-14T01:20:20+00:00 2020-06-12T23:05:02.759003+00:00

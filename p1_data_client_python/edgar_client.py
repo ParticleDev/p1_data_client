@@ -11,13 +11,16 @@ Import as:
 import p1_data_client_python.client as p1_edg
 """
 
+import contextlib as clib
+import itertools
 import json
 import os
 import sys
 from typing import Any, Dict, List, Optional, Union
 
+import halo
 import pandas as pd
-import tqdm
+import tqdm.auto as tqdm
 
 import p1_data_client_python.abstract_client as p1_abs
 import p1_data_client_python.exceptions as p1_exc
@@ -32,10 +35,43 @@ FORM8_FIELD_TYPES = {
     "gvk": "int64",
     "item_value": "float64",
 }
+# Mapping between short form names and form types in the Edgar universe.
+FORM_NAMES_TYPES = {
+    'form4': ['3', '3/A', '4', '4/A', '5', '5/A'],
+    'form8': ['8-K', '8-K/A'],
+    'form10': ['10-K', '10-K/A', '10-Q', '10-Q/A'],
+    'form13': ['13F-HR', '13F-HR/A'],
+}
 P1_EDGAR_DATA_API_VERSION = os.environ.get("P1_EDGAR_DATA_API_VERSION", "3")
 PAYLOAD_BLOCK_SIZE = 100
 P1_CIK = int
 P1_GVK = int
+
+
+@clib.contextmanager
+def _spinner_exception_handling(spinner: Union[halo.Halo, halo.HaloNotebook]):
+    try:
+        yield
+    finally:
+        spinner.stop()
+
+
+def _check_sorted_unique_param(name: str,
+                               value: Union[list, Any]
+                               ) -> Union[list, Any]:
+    """
+    Check an argument for duplicates.
+
+    :param name: Name of parameter.
+    :param value: Value of parameter. If list then check for duplicated.
+    :return: Processed value.
+    """
+    if isinstance(value, list):
+        sorted_unique_value = sorted(list(set(value)))
+        if len(sorted_unique_value) < len(value):
+            dbg.dfatal(f"Some values: {value} in the {name} parameter "
+                       f"is duplicated.")
+    return value
 
 
 class ItemMapper(p1_abs.AbstractClient):
@@ -132,21 +168,80 @@ class EdgarClient(p1_abs.AbstractClient):
     """Class for p1 Edgar data REST API operating."""
 
     def __init__(self, *args: Any, **kwargs: Any):
+        """
+        Edgar client init.
+
+        :param is_jupyter: Run in a Jupyter notebook or not.
+        """
         super().__init__(*args, **kwargs)
         self.cik_gvk_mapping = None
+        self.is_jupyter = dbg.is_running_in_ipynb()
+        if self.is_jupyter:
+            self.spinner = halo.HaloNotebook(text='Waiting response size...', spinner='dots')
+        else:
+            self.spinner = halo.Halo(text='Waiting response size...', spinner='dots')
+
+    def get_form_headers(self,
+                         form_type: Union[str, List[str]],
+                         cik: Optional[Union[P1_CIK, List[P1_CIK]]] = None,
+                         start_date: Optional[str] = None,
+                         end_date: Optional[str] = None,
+                         output_type: str = 'dataframes',
+                         ) -> Union[List[Dict[str, Any]], pd.DataFrame]:
+        """
+        Get form headers metadata with the following parameters.
+
+        :param form_type: Form type or list of form types. Required.
+            Example: form_type=['13F-HR', '4']
+        :param cik: Central Index Key as integer. It could be a list of P1_CIK
+            or just one identifier. None means all CIKs.
+        :param start_date: Get data where filing date is >= start_date. Date
+            format is "YYYY-MM-DD". None means the entire available date range.
+        :param end_date: Get data where filing date is <= end_date. Date format
+            is "YYYY-MM-DD". None means the entire available date range.
+        :param output_type: Output format: 'dict' or 'dataframes'.
+        """
+        cik = _check_sorted_unique_param('cik', cik)
+        params: Dict[str, Any] = {}
+        params = self._set_optional_params(
+            params,
+            form_type=form_type,
+            start_date=start_date,
+            end_date=end_date,
+            cik=cik
+        )
+        url = f'{self.base_url}{self._api_routes["HEADERS"]}'
+        result = []
+        for data in self._payload_form_headers_generator(
+            "GET", url, headers=self.headers, params=params
+        ):
+            result += data
+        if output_type == 'dataframes':
+            try:
+                result = pd.DataFrame(result)
+            except (KeyError, json.JSONDecodeError) as e:
+                raise p1_exc.ParseResponseException(
+                    "Can't transform server response to a Pandas Dataframe"
+                ) from e
+        else:
+            dbg.dfatal(f"Output type {output_type} is not valid.")
+        return result
 
     def get_form4_payload(
         self,
         cik: Optional[Union[P1_CIK, List[P1_CIK]]] = None,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
+        output_type: str = 'dataframes'
     ) -> Dict[str, List[Dict[str, Any]]]:
+        cik = _check_sorted_unique_param('cik', cik)
         form_type = "form4"
         result = self._get_form4_13_payload(
             form_type,
             cik=cik,
             start_date=start_date,
             end_date=end_date,
+            output_type=output_type
         )
         return result
 
@@ -169,6 +264,7 @@ class EdgarClient(p1_abs.AbstractClient):
         :param item: Item to retrieve. None means all items.
         :return: Pandas dataframe with payload data.
         """
+        cik = _check_sorted_unique_param('cik', cik)
         form_name = "form8k"
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
@@ -198,7 +294,7 @@ class EdgarClient(p1_abs.AbstractClient):
         cik: Optional[Union[P1_CIK, List[P1_CIK]]] = None,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
-    ) -> pd.DataFrame:
+    ) -> List[Dict[str, Any]]:
         """
         Get payload data for a form10, and a company.
 
@@ -208,26 +304,41 @@ class EdgarClient(p1_abs.AbstractClient):
             format is "YYYY-MM-DD". None means the entire available date range.
         :param end_date: Get data where filing date is <= end_date. Date format
             is "YYYY-MM-DD". None means the entire available date range.
-        :return: Pandas dataframe with payload data.
+        :return: List with payload data.
         """
+        cik = _check_sorted_unique_param('cik', cik)
         form_name = "form10"
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
-            params, start_date=start_date, end_date=end_date, cik=cik
+            params, start_date=start_date, end_date=end_date
         )
         url = f'{self.base_url}{self._api_routes["PAYLOAD"]}/{form_name}'
-        response = self._make_request(
-            "GET", url, headers=self.headers, params=params
-        )
-        return response.json()["data"]
+        cik_list = [None]
+        compound_data = []
+        if cik is not None:
+            cik_list = ([cik] if isinstance(cik, int) else cik)
+        self.spinner.start()
+        with _spinner_exception_handling(self.spinner):
+            for cik in tqdm.tqdm(cik_list, desc="Processing CIK: "):
+                self._set_optional_params(params, cik=cik)
+                response = self._make_request(
+                    "GET", url, headers=self.headers, params=params
+                )
+                self.spinner.stop()
+                compound_data += response.json()["data"]
+
+        return compound_data
 
     def get_form13_payload(
         self,
         cik: Optional[Union[P1_CIK, List[P1_CIK]]] = None,
         cusip: Optional[Union[str, List[str]]] = None,
         start_date: Optional[str] = None,
-        end_date: Optional[str] = None
+        end_date: Optional[str] = None,
+        output_type: str = 'dataframes'
     ) -> Dict[str, List[Dict[str, Any]]]:
+        cik = _check_sorted_unique_param('cik', cik)
+        cusip = _check_sorted_unique_param('cusip', cusip)
         form_type = "form13"
         result = self._get_form4_13_payload(
             form_type,
@@ -235,6 +346,7 @@ class EdgarClient(p1_abs.AbstractClient):
             cusip=cusip,
             start_date=start_date,
             end_date=end_date,
+            output_type=output_type
         )
         return result
 
@@ -274,6 +386,17 @@ class EdgarClient(p1_abs.AbstractClient):
         return self._get_dataframe_from_response(response)
 
     @property
+    def form_types(self) -> List[str]:
+        """
+        Return form types from the mapping.
+
+        :return: List for form types.
+        """
+        form_types_list = [form_types for _, form_types
+                           in FORM_NAMES_TYPES.items()]
+        return list(itertools.chain.from_iterable(form_types_list))
+
+    @property
     def _default_base_url(self) -> str:
         return f"https://data.particle.one/edgar/v{P1_EDGAR_DATA_API_VERSION}/"
 
@@ -283,7 +406,34 @@ class EdgarClient(p1_abs.AbstractClient):
             "PAYLOAD": "/data",
             "CIK": "/metadata/cik",
             "ITEM": "/metadata/item",
+            "HEADERS": "/data/headers"
         }
+
+    @classmethod
+    def _process_form_4_13_10_output(cls,
+                                     output: Dict[str, List[Dict[str, Any]]],
+                                     output_type: str = 'dataframes',
+                                     ) -> Union[Dict[str, list],
+                                                Dict[str, pd.DataFrame]]:
+        """
+        Convert form4 or form13 output from dict to dict of Pandas Dataframes.
+
+        :param output: Output dict for transformation.
+        :param output_type: Output format: 'dict' or 'dataframes'.
+        :return: The transformed dict of dataframes.
+        """
+        if output_type == 'dict':
+            return output
+        elif output_type == 'dataframes':
+            try:
+                return {table_name: pd.DataFrame(forms)
+                        for table_name, forms in output.items()}
+            except (KeyError, json.JSONDecodeError) as e:
+                raise p1_exc.ParseResponseException(
+                    "Can't transform server response to a Pandas Dataframe"
+                ) from e
+        else:
+            dbg.dfatal(f"Output type {output_type} is not valid.")
 
     def _get_form4_13_payload(
         self,
@@ -291,7 +441,8 @@ class EdgarClient(p1_abs.AbstractClient):
         cik: Optional[Union[P1_CIK, List[P1_CIK]]] = None,
         cusip: Optional[Union[str, List[str]]] = None,
         start_date: Optional[str] = None,
-        end_date: Optional[str] = None
+        end_date: Optional[str] = None,
+        output_type: str = 'dataframes'
     ) -> Dict[str, List[Dict[str, Any]]]:
         """
         Get payload data for forms 4 or 13 and a company.
@@ -305,13 +456,17 @@ class EdgarClient(p1_abs.AbstractClient):
             format is "YYYY-MM-DD". None means the entire available date range.
         :param end_date: Get data where filing date is <= end_date. Date format
             is "YYYY-MM-DD". None means the entire available date range.
+        :param output_type: Output format: 'dict' or 'dataframes'.
         :return: Dict with a data tables.
         """
         dbg.dassert(not (cik is not None and cusip is not None),
                     msg="You cannot pass CIK and CUSIP parameters "
-                        "in the same time.")
+                        "at the same time.")
         dbg.dassert(form_type in ("form13", "form4"),
                     msg="The form_type parameter should be form13 or form4.")
+        dbg.dassert(output_type in ("dict", "dataframes"),
+                    msg="The output_type parameter should be a dict "
+                        "or dataframes.")
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
             params, start_date=start_date,
@@ -327,7 +482,43 @@ class EdgarClient(p1_abs.AbstractClient):
                     compound_data[key] += data[key]
                 else:
                     compound_data[key] = data[key]
-        return compound_data
+        return self._process_form_4_13_10_output(compound_data,
+                                                 output_type=output_type)
+
+    def _payload_form_headers_generator(
+        self, *args: Any, **kwargs: Any
+    ) -> Dict[str, List[Dict[str, Any]]]:
+        """
+        Payload generator that output form headers
+        by DataAPI pagination.
+
+        :param args: Positional arguments for making request.
+        :param kwargs: Key arguments for making request.
+        :return: 6 dicts of different types of data.
+        """
+        # Iterate over the list.
+        self.spinner.start()
+        with _spinner_exception_handling(self.spinner):
+            current_offset = 0
+            count_lines = sys.maxsize
+            progress_bar = tqdm.tqdm(desc=f'{"Transferring results: "}: ')
+            while current_offset < count_lines:
+                kwargs['params']["offset"] = current_offset
+                response = self._make_request(*args, **kwargs)
+                self.spinner.stop()
+                data = response.json()["data"]
+                count_lines = response.json()["count"]
+                yield data
+                current_offset += PAYLOAD_BLOCK_SIZE
+                # Row number clarification.
+                if current_offset > 0 and progress_bar.n == 0:
+                    progress_bar.reset(total=count_lines)
+                progress_bar.update(
+                    PAYLOAD_BLOCK_SIZE
+                    if current_offset < count_lines
+                    else count_lines - progress_bar.n
+                )
+            progress_bar.close()
 
     def _payload_form4_13_generator(
         self, *args: Any, **kwargs: Any
@@ -356,31 +547,37 @@ class EdgarClient(p1_abs.AbstractClient):
             iter_name = "CIK"
             iter_list = [None]
         # Iterate over the list.
-        for item in tqdm.tqdm(iter_list, desc=f"{iter_name}: ", position=0):
-            current_offset = 0
-            count_lines = sys.maxsize
-            progress_bar = tqdm.tqdm(desc=f'{item or "Main"}: ', position=1)
-            while current_offset < count_lines:
-                params["offset"] = current_offset
-                # Inject the current parameter from the list.
-                if iter_name == "CIK":
-                    self._set_optional_params(params, cik=item)
-                elif iter_name == "CUSIP":
-                    self._set_optional_params(params, cusip=item)
-                response = self._make_request(*args, **kwargs)
-                data = response.json()["data"]
-                count_lines = response.json()["count"]
-                yield data
-                current_offset += PAYLOAD_BLOCK_SIZE
-                # Row number clarification.
-                if current_offset > 0 and progress_bar.n == 0:
-                    progress_bar.reset(total=count_lines)
-                progress_bar.update(
-                    PAYLOAD_BLOCK_SIZE
-                    if current_offset < count_lines
-                    else count_lines - progress_bar.n
-                )
-            progress_bar.close()
+        self.spinner.start()
+        with _spinner_exception_handling(self.spinner):
+            for item in tqdm.tqdm(iter_list, desc=f"Processing {iter_name}: ",
+                                  position=1):
+                current_offset = 0
+                count_lines = sys.maxsize
+                progress_bar = tqdm.tqdm(desc=
+                                         f'{item or "Transferring results: "}: ',
+                                         position=2)
+                while current_offset < count_lines:
+                    params["offset"] = current_offset
+                    # Inject the current parameter from the list.
+                    if iter_name == "CIK":
+                        self._set_optional_params(params, cik=item)
+                    elif iter_name == "CUSIP":
+                        self._set_optional_params(params, cusip=item)
+                    response = self._make_request(*args, **kwargs)
+                    self.spinner.stop()
+                    data = response.json()["data"]
+                    count_lines = response.json()["count"]
+                    yield data
+                    current_offset += PAYLOAD_BLOCK_SIZE
+                    # Row number clarification.
+                    if current_offset > 0 and progress_bar.n == 0:
+                        progress_bar.reset(total=count_lines)
+                    progress_bar.update(
+                        PAYLOAD_BLOCK_SIZE
+                        if current_offset < count_lines
+                        else count_lines - progress_bar.n
+                    )
+                progress_bar.close()
 
     @classmethod
     def _cast_field_types(
@@ -423,10 +620,12 @@ class EdgarClient(p1_abs.AbstractClient):
                 if isinstance(params["cik"], int)
                 else params["cik"]
             )
-        for cik in tqdm.tqdm(cik_list, desc="Cik: ", position=0):
+        for cik in tqdm.tqdm(cik_list, desc="Processing CIKs: ", position=0):
             current_offset = 0
             count_lines = sys.maxsize
-            progress_bar = tqdm.tqdm(desc=f'{cik or "Main"}: ', position=1)
+            progress_bar = tqdm.tqdm(desc=
+                                     f'{cik or "Transferring results"}: ',
+                                     position=1)
             while current_offset < count_lines:
                 params["offset"] = current_offset
                 self._set_optional_params(params, cik=cik)

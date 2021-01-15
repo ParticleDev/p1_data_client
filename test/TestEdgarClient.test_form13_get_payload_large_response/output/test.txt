@@ -1,8 +1,3 @@
-len(payload)=6
-payload.keys()=dict_keys(['metadata', 'cover_page', 'header_data', 'information_table', 'signature_block', 'summary_page'])
-payload[metadata]=[]
-payload[cover_page]=[]
-payload[header_data]=[]
-payload[information_table]=[]
-payload[signature_block]=[]
-payload[summary_page]=[]
+Empty DataFrame
+Columns: []
+Index: []
