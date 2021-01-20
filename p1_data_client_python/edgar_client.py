@@ -13,6 +13,8 @@ import p1_data_client_python.client as p1_edg
 
 import contextlib as clib
 import itertools
+import time
+import logging
 import json
 import os
 import sys
@@ -26,6 +28,9 @@ import p1_data_client_python.abstract_client as p1_abs
 import p1_data_client_python.exceptions as p1_exc
 import p1_data_client_python.helpers.dbg as dbg
 
+_LOG = logging.getLogger(__name__)
+dbg.init_logger(logging.INFO)
+CIK_BLOCK_SIZE = 600
 FORM8_FIELD_TYPES = {
     "form_publication_timestamp": "datetime64[ns, UTC]",
     "filing_date": "datetime64[ns, UTC]",
@@ -42,8 +47,12 @@ FORM_NAMES_TYPES = {
     'form10': ['10-K', '10-K/A', '10-Q', '10-Q/A'],
     'form13': ['13F-HR', '13F-HR/A'],
 }
-P1_EDGAR_DATA_API_VERSION = os.environ.get("P1_EDGAR_DATA_API_VERSION", "3")
-PAYLOAD_BLOCK_SIZE = 100
+P1_EDGAR_DATA_API_VERSION = os.environ.get("P1_EDGAR_DATA_API_VERSION", "4")
+PAYLOAD_BLOCK_SIZE = {
+    'headers': 1000,
+    'form4_13': 500,
+    'form8': 1000,
+}
 P1_CIK = int
 P1_GVK = int
 
@@ -70,7 +79,7 @@ def _check_sorted_unique_param(name: str,
         sorted_unique_value = sorted(list(set(value)))
         if len(sorted_unique_value) < len(value):
             dbg.dfatal(f"Some values: {value} in the {name} parameter "
-                       f"is duplicated.")
+                       f"are duplicated.")
     return value
 
 
@@ -170,8 +179,6 @@ class EdgarClient(p1_abs.AbstractClient):
     def __init__(self, *args: Any, **kwargs: Any):
         """
         Edgar client init.
-
-        :param is_jupyter: Run in a Jupyter notebook or not.
         """
         super().__init__(*args, **kwargs)
         self.cik_gvk_mapping = None
@@ -325,6 +332,8 @@ class EdgarClient(p1_abs.AbstractClient):
                     "GET", url, headers=self.headers, params=params
                 )
                 self.spinner.stop()
+                data = response.json()["data"]
+                print(f"{cik or 'Summary'} :{len(data)} forms loaded")
                 compound_data += response.json()["data"]
 
         return compound_data
@@ -496,29 +505,55 @@ class EdgarClient(p1_abs.AbstractClient):
         :param kwargs: Key arguments for making request.
         :return: 6 dicts of different types of data.
         """
-        # Iterate over the list.
+        # Backup CIK
+        cik = kwargs['params'].get('cik')
+        cik_length = 0
+        pb_position = 0
+        if isinstance(cik, list):
+            cik_length = len(cik)
+            if cik_length > CIK_BLOCK_SIZE:
+                print(f'Amount of CIK is: {cik_length}', )
         self.spinner.start()
         with _spinner_exception_handling(self.spinner):
-            current_offset = 0
-            count_lines = sys.maxsize
-            progress_bar = tqdm.tqdm(desc=f'{"Transferring results: "}: ')
-            while current_offset < count_lines:
-                kwargs['params']["offset"] = current_offset
-                response = self._make_request(*args, **kwargs)
-                self.spinner.stop()
-                data = response.json()["data"]
-                count_lines = response.json()["count"]
-                yield data
-                current_offset += PAYLOAD_BLOCK_SIZE
-                # Row number clarification.
-                if current_offset > 0 and progress_bar.n == 0:
-                    progress_bar.reset(total=count_lines)
-                progress_bar.update(
-                    PAYLOAD_BLOCK_SIZE
-                    if current_offset < count_lines
-                    else count_lines - progress_bar.n
-                )
-            progress_bar.close()
+            cik_offset = 0
+            while (cik_length > cik_offset) \
+                    or (cik is None) \
+                    or (isinstance(cik, int)):
+                current_offset = 0
+                count_lines = sys.maxsize
+                progress_bar = tqdm.tqdm(desc='Transferring results: ',
+                                         position=pb_position)
+                time.sleep(2)
+                if cik_length > 0:
+                    kwargs['params']['cik'] = \
+                        cik[cik_offset:cik_offset+CIK_BLOCK_SIZE]
+                    if cik_length > CIK_BLOCK_SIZE:
+                        progress_bar.set_description_str(
+                            desc=f'Downloading CIK from: {cik_offset} '
+                                 f'to: {cik_offset + CIK_BLOCK_SIZE}')
+                        time.sleep(2)
+
+                while current_offset < count_lines:
+                    kwargs['params']["offset"] = current_offset
+                    response = self._make_request(*args, **kwargs)
+                    self.spinner.stop()
+                    data = response.json()["data"]
+                    count_lines = response.json()["count"]
+                    yield data
+                    current_offset += PAYLOAD_BLOCK_SIZE['headers']
+                    # Row number clarification.
+                    if current_offset > 0 and progress_bar.n == 0:
+                        progress_bar.reset(total=count_lines)
+                    progress_bar.update(
+                        PAYLOAD_BLOCK_SIZE['headers']
+                        if current_offset < count_lines
+                        else count_lines - progress_bar.n
+                    )
+                if cik_length == 0:
+                    break
+                cik_offset += CIK_BLOCK_SIZE
+                pb_position += 1
+                progress_bar.close()
 
     def _payload_form4_13_generator(
         self, *args: Any, **kwargs: Any
@@ -568,12 +603,12 @@ class EdgarClient(p1_abs.AbstractClient):
                     data = response.json()["data"]
                     count_lines = response.json()["count"]
                     yield data
-                    current_offset += PAYLOAD_BLOCK_SIZE
+                    current_offset += PAYLOAD_BLOCK_SIZE['form4_13']
                     # Row number clarification.
                     if current_offset > 0 and progress_bar.n == 0:
                         progress_bar.reset(total=count_lines)
                     progress_bar.update(
-                        PAYLOAD_BLOCK_SIZE
+                        PAYLOAD_BLOCK_SIZE['form4_13']
                         if current_offset < count_lines
                         else count_lines - progress_bar.n
                     )
@@ -641,12 +676,12 @@ class EdgarClient(p1_abs.AbstractClient):
                     ) from e
                 count_lines = response.json()["count"]
                 yield payload_dataframe
-                current_offset += PAYLOAD_BLOCK_SIZE
+                current_offset += PAYLOAD_BLOCK_SIZE['form8']
                 # Row number clarification.
                 if current_offset > 0 and progress_bar.n == 0:
                     progress_bar.reset(total=count_lines)
                 progress_bar.update(
-                    PAYLOAD_BLOCK_SIZE
+                    PAYLOAD_BLOCK_SIZE['form8']
                     if current_offset < count_lines
                     else count_lines - progress_bar.n
                 )

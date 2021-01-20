@@ -295,12 +295,22 @@ class TestEdgarClient(hut.TestCase):
         self.assertFalse(payload.empty)
         self.check_string(hut.convert_df_to_string(payload))
 
+    def test_get_form_headers_without_cik(self) -> None:
+        payload = self.client.get_form_headers(
+            form_type='13F-HR',
+            start_date='2020-03-01',
+            end_date='2020-10-10'
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        self.check_string(hut.convert_df_to_string(payload))
+
     def test_get_form_headers_one_form(self) -> None:
         payload = self.client.get_form_headers(
-            form_type="4",
-            cik=320193,
-            start_date='2000-01-01',
-            end_date='2020-02-01'
+            form_type="13F-HR",
+            cik=1404574,
+            start_date='2012-11-14',
+            end_date='2012-11-14'
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
