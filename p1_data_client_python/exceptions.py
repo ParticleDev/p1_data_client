@@ -18,5 +18,9 @@ class ParseResponseException(Exception):
     pass
 
 
+class CastException(Exception):
+    pass
+
+
 class TestTokenNotFound(Exception):
     pass

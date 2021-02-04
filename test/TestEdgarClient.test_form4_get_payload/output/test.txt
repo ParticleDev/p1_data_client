@@ -13,7 +13,7 @@ payload[metadata]=                                    uuid  ...         release_
 9   d4f78566-f306-4912-82fa-0cab2b1a27c8  ...  2016-01-26T00:00:00
 10  f3685aa3-ee7e-4757-b937-0678e1eebf47  ...  2016-01-26T00:00:00
 
-[11 rows x 9 columns]
+[11 rows x 8 columns]
 payload[derivative_table]=Empty DataFrame
 Columns: []
 Index: []

@@ -4,7 +4,7 @@ from typing import Any
 import pandas as pd
 
 import p1_data_client_python.helpers.unit_test as hut
-import p1_data_client_python.edgar_client as p1_edg
+import edgar.edgar_client as p1_edg
 import p1_data_client_python.exceptions as p1_exc
 
 SEARCH_ROW_EXAMPLE = {
@@ -25,6 +25,10 @@ class PayloadGoodResponseMock:
     @staticmethod
     def json() -> dict:
         return {
+            "links": {
+                'self': 'http://data.particle.one/edgar/v0/data/headers?form_type=3...',
+                'first': 'http://data.particle.one/edgar/v0/data/headers?form_type=3...',
+                'last': 'http://data.particle.one/edgar/v0/data/headers?form_type=3...'},
             "count": 2,
             "data": [
                 {

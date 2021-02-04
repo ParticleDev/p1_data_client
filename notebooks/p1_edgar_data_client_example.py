@@ -23,11 +23,11 @@
 # %autoreload 2
 
 import os
-import json
 import pprint
-from typing import Any
 
 import pandas as pd
+
+import edgar.mappers
 
 if False:
     import sys
@@ -36,7 +36,7 @@ if False:
     os.environ["P1_API_TOKEN"]='e44e7c6b04ef3ea1cfb7a8a67db74751c177259e'
     os.environ["P1_EDGAR_API_TOKEN"]='8c9c9458b145202c7a6b6cceaabd82023e957a46d6cf7061ed8e1c94a168f2fd'
 
-import p1_data_client_python.edgar_client as p1_edg
+import edgar.edgar_client as p1_edg
 
 # Enter your token here.
 # You can get your token by signing up at `www.particle.one`.
@@ -62,7 +62,7 @@ print("P1_API_TOKEN=", P1_API_TOKEN)
 # It handles CIK <-> GVK transformation.
 
 # %% pycharm={"is_executing": false, "name": "#%%\n"}
-gvk_mapper = p1_edg.GvkCikMapper(token=P1_API_TOKEN)
+gvk_mapper = edgar.mappers.GvkCikMapper(token=P1_API_TOKEN)
 gvk_mapper.get_gvk_from_cik(cik=940800, as_of_date="2007-01-18")
 
 # %% pycharm={"is_executing": false, "name": "#%%\n"}
@@ -74,7 +74,7 @@ gvk_mapper.get_cik_from_gvk(gvk=61411, as_of_date="2007-01-18")
 # It provides mapping between keywords and description of Compustat items.
 
 # %% pycharm={"is_executing": false, "name": "#%%\n"}
-item_mapper = p1_edg.ItemMapper(token=P1_API_TOKEN)
+item_mapper = edgar.mappers.ItemMapper(token=P1_API_TOKEN)
 item_mapper.get_item_from_keywords(keywords=["short-term", "short term"])
 
 # %% pycharm={"is_executing": false, "name": "#%%\n"}
@@ -92,7 +92,7 @@ def display_df(df: pd.DataFrame) -> None:
     print("num_rows=%s" % df.shape[0])
     display(df.head(3))
 
-    
+
 def print_payload(payload: str, n: int = 300) -> None:
     print(pprint.pformat(payload)[:n])
 

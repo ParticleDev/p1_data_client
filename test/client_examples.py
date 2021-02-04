@@ -3,9 +3,10 @@
 import os
 import pprint
 
+import edgar.mappers
 import helpers.io_ as io_
 import p1_data_client_python.client as p1_data
-import p1_data_client_python.edgar_client as p1_edg
+import edgar.edgar_client as p1_edg
 
 P1_API_TOKEN = os.environ["P1_API_TOKEN"]
 print("P1_API_TOKEN=", P1_API_TOKEN)
@@ -33,7 +34,7 @@ client = p1_edg.EdgarClient(token=P1_API_TOKEN)
 
 # Map Gvk to CIK and vice versa.
 print("# GvkCikMapper")
-gvk_mapper = p1_edg.GvkCikMapper(token=P1_API_TOKEN)
+gvk_mapper = edgar.mappers.GvkCikMapper(token=P1_API_TOKEN)
 print(
     "result=%s" % gvk_mapper.get_gvk_from_cik(cik=940800, as_of_date="2007-01-18")
 )
@@ -43,7 +44,7 @@ print(
 
 # Get an item mapper.
 print("# ItemMapper")
-item_mapper = p1_edg.ItemMapper(token=P1_API_TOKEN)
+item_mapper = edgar.mappers.ItemMapper(token=P1_API_TOKEN)
 print(
     "result=%s"
     % item_mapper.get_item_from_keywords(keywords="short-term short term")
