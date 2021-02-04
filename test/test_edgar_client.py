@@ -405,6 +405,23 @@ class TestEdgarClient(phunit.TestCase):
             phunit.convert_df_to_string(payload["information_table"])
         )
 
+    def test_form13_get_payload_irrelevant_cusip(self) -> None:
+        """
+        Get payload data for forms 13.
+
+        Check for irrelevant cusip.
+        """
+        payload = self.client.get_form13_payload(
+            cusip="ffffffffff",
+            start_date="2015-11-16",
+            end_date="2015-11-16",
+            date_mode="publication_date",
+        )
+        self.assertIsInstance(payload, dict)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
     def test_form_types(self) -> None:
         """
         Mapping between short form names and form types in the Edgar universe.
@@ -422,6 +439,23 @@ class TestEdgarClient(phunit.TestCase):
             cik=[320193],
             start_date="2000-01-01",
             end_date="2020-02-01",
+            date_mode="publication_date",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        self.check_string(phunit.convert_df_to_string(payload))
+
+    def test_headers_multi_cik(self) -> None:
+        """
+        Get form headers metadata with the following parameters.
+
+        Test with multiple CIKs.
+        """
+        payload = self.client.get_form_headers(
+            form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
+            cik=[320193, 732717],
+            start_date="2020-01-01",
+            end_date="2020-01-03",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, pd.DataFrame)

@@ -4,4 +4,13 @@ export P1_EDGAR_API_TOKEN='8c9c9458b145202c7a6b6cceaabd82023e957a46d6cf7061ed8e1
 
 echo "P1_API_TOKEN=$P1_API_TOKEN"
 echo "P1_EDGAR_API_TOKEN=$P1_EDGAR_API_TOKEN"
-echo "done"
+
+source venv/bin/activate
+
+export PYTHONPATH=$(pwd):$(pwd)/p1_data_client_python
+echo "PYTHONPATH=$PYTHONPATH"
+
+echo "Release:"
+python -c "import p1_data_client_python.version as version; print(version.VERSION)"
+
+echo "DONE"

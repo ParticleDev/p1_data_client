@@ -6,18 +6,23 @@ export P1_EDGAR_API_TOKEN='8c9c9458b145202c7a6b6cceaabd82023e957a46d6cf7061ed8e1
 
 echo "P1_API_TOKEN=$P1_API_TOKEN"
 echo "P1_EDGAR_API_TOKEN=$P1_EDGAR_API_TOKEN"
-echo "done"
 
-VENV_DIR="./venv"
+VENV_DIR="./venv_tmp"
 
 if [[ -d "$VENV_DIR" ]]; then
     rm -rf $VENV_DIR
 fi;
 
+export PYTHONPATH=$(pwd):$(pwd)/p1_data_client_python
+echo "PYTHONPATH=$PYTHONPATH"
+
 python3 -m venv $VENV_DIR
-source venv/bin/activate
+source $VENV_DIR/bin/activate
 pip install -r requirements.txt
 
+echo "Release:"
 python -c "import p1_data_client_python.version as version; print(version.VERSION)"
 
-pytest -vv
+#pytest -vv
+
+echo "DONE"
