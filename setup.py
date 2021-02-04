@@ -27,7 +27,8 @@ INSTALL_REQUIRES = ["pandas>=1.2.0",
 TEST_REQUIRES = ["pytest>=5.0.0"]
 PACKAGES = [
     "p1_data_client_python",
-    "p1_data_client_python.helpers"
+    "p1_data_client_python.helpers",
+    "p1_data_client_python.edgar"
 ]
 
 project_urls = {

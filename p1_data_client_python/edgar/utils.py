@@ -3,14 +3,14 @@ Utils for the Edgar API.
 
 Import as: import p1_data_client_python.edgar.utils as peutil
 """
+import halo
 import contextlib as contex
 import logging
-import urllib.parse as uparse
 from typing import Any, Dict, Generator, Iterator, List, Optional, Union
+import urllib.parse as uparse
 
-import halo
-from edgar.config import DATE_MODE
-from helpers import dbg as phdbg
+import p1_data_client_python.edgar.config as peconf
+import p1_data_client_python.helpers.dbg as phdbg  # type: ignore
 
 _LOG = logging.getLogger(__name__)
 
@@ -86,8 +86,9 @@ def check_date_mode(
                 "You need to specify date_mode parameter "
                 "when you give start/end date."
             )
-        if date_mode not in DATE_MODE:
-            phdbg.dfatal(f"The date_mode parameter has to be " f"{DATE_MODE}")
+        if date_mode not in peconf.DATE_MODE:
+            phdbg.dfatal(f"The date_mode parameter has to be " 
+                         f"{peconf.DATE_MODE}")
 
 
 def check_form_type(

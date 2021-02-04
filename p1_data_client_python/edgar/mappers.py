@@ -3,14 +3,14 @@ Helper classes for the Edgar mapping.
 
 Import as: import p1_data_client_python.edgar.mappers as pemapp
 """
+import pandas as pd
 from typing import Any, Dict, Optional
 
-import abstract_client as abstra
-import pandas as pd
-from edgar.config import P1_CIK, P1_EDGAR_DATA_API_VERSION, P1_GVK
+import p1_data_client_python.abstract_client as pabstr
+import p1_data_client_python.edgar.config as peconf
 
 
-class ItemMapper(abstra.AbstractClient):
+class ItemMapper(pabstr.AbstractClient):
     """
     Handler for an item mapping.
     """
@@ -49,16 +49,17 @@ class ItemMapper(abstra.AbstractClient):
 
     @property
     def _default_base_url(self) -> str:
-        return f"https://data.particle.one/edgar/v{P1_EDGAR_DATA_API_VERSION}/"
+        return f"https://data.particle.one/" \
+               f"edgar/v{peconf.P1_EDGAR_DATA_API_VERSION}/"
 
 
-class GvkCikMapper(abstra.AbstractClient):
+class GvkCikMapper(pabstr.AbstractClient):
     """
     Handler for GVK <-> Cik transformation.
     """
 
     def get_gvk_from_cik(
-        self, cik: P1_CIK, as_of_date: Optional[str] = None
+        self, cik: peconf.P1_CIK, as_of_date: Optional[str] = None
     ) -> pd.DataFrame:
         """
         Get GVK by the cik and date.
@@ -75,7 +76,7 @@ class GvkCikMapper(abstra.AbstractClient):
         return self._get_dataframe_from_response(response)
 
     def get_cik_from_gvk(
-        self, gvk: P1_GVK, as_of_date: Optional[str] = None
+        self, gvk: peconf.P1_GVK, as_of_date: Optional[str] = None
     ) -> pd.DataFrame:
         """
         Get Cik by GVK and date.
@@ -101,4 +102,5 @@ class GvkCikMapper(abstra.AbstractClient):
 
     @property
     def _default_base_url(self) -> str:
-        return f"https://data.particle.one/edgar/v{P1_EDGAR_DATA_API_VERSION}/"
+        return f"https://data.particle.one/" \
+               f"edgar/v{peconf.P1_EDGAR_DATA_API_VERSION}/"

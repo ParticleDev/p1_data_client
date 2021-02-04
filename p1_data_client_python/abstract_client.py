@@ -2,7 +2,7 @@
 An abstract client class for all types of API.
 
 Import as:
-import p1_data_client_python.abstract_client as p1_abs
+import p1_data_client_python.abstract_client as pabstr
 """
 
 import abc
