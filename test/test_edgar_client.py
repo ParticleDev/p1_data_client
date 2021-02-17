@@ -97,15 +97,63 @@ class TestEdgarClient(phunit.TestCase):
         actual = "\n".join(actual)
         self.check_string(actual)
 
+    def test_form4_get_payload_knowledge_date(self) -> None:
+        """
+        Get payload data for forms 4 and a company.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form4_payload(
+            cik=58492,
+            start_date="2021-01-01",
+            end_date="2021-01-11",
+            date_mode="knowledge_date"
+        )
+        self.assertIsInstance(payload, dict)
+        self.assertEqual(len(payload), 6)
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload.keys()=%s" % payload.keys()))
+        for table_name, data in payload.items():
+            actual.append(
+                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
+            )
+        actual = "\n".join(actual)
+        self.check_string(actual)
+
     def test_form4_get_payload_with_multi_cik(self) -> None:
         """
-        Get payload data for forms 4 and a list of CIK.
+        Get payload data for forms 4 and a list of CIKs.
         """
         payload = self.client.get_form4_payload(
             cik=[880266, 918160, 7789],
             start_date="2016-01-26",
             end_date="2016-01-26",
             date_mode="publication_date"
+        )
+        self.assertIsInstance(payload, dict)
+        self.assertEqual(len(payload), 6)
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload.keys()=%s" % payload.keys()))
+        for table_name, data in payload.items():
+            actual.append(
+                f"payload[{table_name}]=" f"{pprint.pformat(data[:100])}"
+            )
+        actual = "\n".join(actual)
+        self.check_string(actual)
+
+    def test_form4_get_payload_with_multi_cik_knowledge_date(self) -> None:
+        """
+        Get payload data for forms 4 and a list of CIKs.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form4_payload(
+            cik=[880266, 58492, 320193],
+            start_date="2021-01-01",
+            end_date="2021-01-11",
+            date_mode="knowledge_date"
         )
         self.assertIsInstance(payload, dict)
         self.assertEqual(len(payload), 6)
@@ -174,6 +222,24 @@ class TestEdgarClient(phunit.TestCase):
         _LOG.debug("info=\n%s", self._get_df_info(payload))
         self.check_string(phunit.convert_df_to_string(payload))
 
+    def test_form8_get_payload_knowledge_date(self) -> None:
+        """
+        Get payload data for forms 4 with all parameters.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form8_payload(
+            cik=320193,
+            start_date="2020-07-01",
+            end_date="2020-11-01",
+            item="ACT_QUARTER",
+            date_mode="knowledge_date"
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        _LOG.debug("info=\n%s", self._get_df_info(payload))
+        self.check_string(phunit.convert_df_to_string(payload))
+
     def test_form8_get_payload_without_cik(self) -> None:
         """
         Get payload data for forms 4.
@@ -212,6 +278,24 @@ class TestEdgarClient(phunit.TestCase):
         Specify multiple CIKs.
         """
         payload = self.client.get_form8_payload(cik=[18498, 319201, 5768])
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        _LOG.debug("info=\n%s", self._get_df_info(payload))
+        self.check_string(phunit.convert_df_to_string(payload))
+
+    def test_form8_get_payload_multi_cik_knowledge_date(self) -> None:
+        """
+        Get payload data for forms 4 with multiple CIKs.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form8_payload(
+            cik=[880266, 58492, 320193],
+            start_date="2020-07-01",
+            end_date="2020-11-01",
+            item="ACT_QUARTER",
+            date_mode="knowledge_date"
+        )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
@@ -257,6 +341,31 @@ class TestEdgarClient(phunit.TestCase):
         actual = "\n".join(actual)
         self.check_string(actual)
 
+    @pytest.mark.slow("About 25 seconds.")
+    def test_form10_get_payload_knowledge_date(self) -> None:
+        """
+        Get payload data for forms 10.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form10_payload(
+            cik=320193,
+            start_date="2020-10-01",
+            end_date="2020-11-01",
+            date_mode="knowledge_date"
+        )
+        self.assertIsInstance(payload, list)
+        self.assertEqual(len(payload), 1)
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload[0].keys()=%s" % payload[0].keys()))
+        actual.append(
+            ('payload[0]["meta"]=\n%s' % pprint.pformat(payload[0]["meta"]))
+        )
+        actual.append(pprint.pformat(payload[0]["data"])[:2000])
+        actual = "\n".join(actual)
+        self.check_string(actual)
+
     @pytest.mark.slow("About 1.30 minutes.")
     def test_form10_get_payload_multi_cik(self) -> None:
         """
@@ -267,6 +376,30 @@ class TestEdgarClient(phunit.TestCase):
             start_date="2018-01-01",
             end_date="2018-07-15",
             date_mode="publication_date"
+        )
+        self.assertIsInstance(payload, list)
+        actual = []
+        actual.append(("len(payload)=%s" % len(payload)))
+        actual.append(("payload[0].keys()=%s" % payload[0].keys()))
+        actual.append(
+            ('payload[0]["meta"]=\n%s' % pprint.pformat(payload[0]["meta"]))
+        )
+        actual.append(pprint.pformat(payload[0]["data"])[:2000])
+        actual = "\n".join(actual)
+        self.check_string(actual)
+
+    @pytest.mark.slow("About 45 seconds.")
+    def test_form10_get_payload_multi_cik_knowledge_date(self) -> None:
+        """
+        Get the payload for form10 and a few cik.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form10_payload(
+            cik=[58492, 320193],
+            start_date="2020-10-01",
+            end_date="2020-12-01",
+            date_mode="knowledge_date"
         )
         self.assertIsInstance(payload, list)
         actual = []
@@ -310,6 +443,23 @@ class TestEdgarClient(phunit.TestCase):
             phunit.convert_df_to_string(payload["information_table"])
         )
 
+    def test_form13_get_payload_knowledge_date(self) -> None:
+        """
+        Get payload data for forms 13.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form13_payload(
+            cik=1259313,
+            start_date="2020-11-01",
+            end_date="2020-12-31",
+            date_mode="knowledge_date",
+        )
+        self.assertIsInstance(payload, dict)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
     def test_form13_get_payload_multi_cik(self) -> None:
         """
         Get payload data for forms 13.
@@ -321,6 +471,23 @@ class TestEdgarClient(phunit.TestCase):
             start_date="2015-11-16",
             end_date="2015-11-16",
             date_mode='publication_date'
+        )
+        self.assertIsInstance(payload, dict)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
+    def test_form13_get_payload_multi_cik_knowledge_date(self) -> None:
+        """
+        Get payload data for forms 13 for multiple CIKs.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form13_payload(
+            cik=[836372, 859804],
+            start_date="2020-11-01",
+            end_date="2020-12-31",
+            date_mode='knowledge_date'
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
@@ -353,17 +520,49 @@ class TestEdgarClient(phunit.TestCase):
             phunit.convert_df_to_string(payload["information_table"])
         )
 
-    def test_form13_get_payload_with_multi_cusip(self) -> None:
+    def test_form13_get_payload_with_cusip_knowledge_date(self) -> None:
         """
         Get payload data for forms 13.
 
-        Check the cusip filter with multiple values.
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form13_payload(
+            cusip="002824100",
+            start_date="2020-12-30",
+            end_date="2020-12-30",
+            date_mode="knowledge_date",
+        )
+        self.assertIsInstance(payload, dict)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
+    def test_form13_get_payload_with_multi_cusip(self) -> None:
+        """
+        Get payload data for forms 13 for multiple CUSIPs.
         """
         payload = self.client.get_form13_payload(
             cusip=["002824100", "01449J204"],
             start_date="2016-11-15",
             end_date="2016-11-15",
             date_mode="publication_date",
+        )
+        self.assertIsInstance(payload, dict)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
+    def test_form13_get_payload_with_multi_cusip_knowledge_date(self) -> None:
+        """
+        Get payload data for forms 13 for multiple CUSIPs.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form13_payload(
+            cusip=["002824100", "928563402"],
+            start_date="2021-01-01",
+            end_date="2021-01-05",
+            date_mode="knowledge_date",
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
@@ -422,6 +621,113 @@ class TestEdgarClient(phunit.TestCase):
             phunit.convert_df_to_string(payload["information_table"])
         )
 
+    @pytest.mark.slow("About 20 seconds.")
+    def test_form13_get_payload_check_number1(self) -> None:
+        """
+        Get payload data for forms 13.
+
+        Check the number of the forms.
+        """
+        payload = self.client.get_form13_payload(
+            start_date="2018-01-01",
+            end_date="2018-01-15",
+            date_mode="publication_date",
+        )
+        self.assertIsInstance(payload, dict)
+        unique_uuids = payload["header_data"]["uuid"].unique()
+        self.assertEqual(len(unique_uuids), 233)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
+    @pytest.mark.slow("About 30 seconds.")
+    def test_form13_get_payload_check_number2(self) -> None:
+        """
+        Get payload data for forms 13.
+
+        Check the number of the forms.
+        """
+        payload = self.client.get_form13_payload(
+            start_date="2016-04-01",
+            end_date="2016-04-15",
+            date_mode="publication_date",
+        )
+        self.assertIsInstance(payload, dict)
+        unique_uuids = payload["header_data"]["uuid"].unique()
+        self.assertEqual(len(unique_uuids), 350)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
+    def test_form13_get_payload_check_number3(self) -> None:
+        """
+        Get payload data for forms 13.
+
+        Check the number of the forms in the December gap.
+        """
+        payload = self.client.get_form13_payload(
+            start_date="2020-12-01",
+            end_date="2021-01-01",
+            date_mode="publication_date",
+        )
+        self.assertIsInstance(payload, dict)
+        unique_uuids = payload["header_data"]["uuid"].unique()
+        self.assertEqual(len(unique_uuids), 35)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
+    def test_form13_get_payload_check_number4(self) -> None:
+        """
+        Get payload data for forms 13.
+
+        Check the number of the forms.
+        """
+        payload = self.client.get_form13_payload(
+            start_date="2020-10-01",
+            end_date="2020-10-05",
+            date_mode="knowledge_date",
+        )
+        self.assertIsInstance(payload, dict)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
+    def test_form13_get_payload_check_number5(self) -> None:
+        """
+        Get payload data for forms 13.
+
+        Check the number of the forms.
+        """
+        payload = self.client.get_form13_payload(
+            start_date="2021-01-15",
+            end_date="2021-01-16",
+            date_mode="knowledge_date",
+        )
+        self.assertIsInstance(payload, dict)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
+    def test_form13_get_payload_no_cusip_universe(self) -> None:
+        """
+        Get payload data for forms 13.
+
+        Check the number of the forms.
+        """
+        payload = self.client.get_form13_payload(
+            start_date="2017-06-29",
+            end_date="2017-06-30",
+            date_mode="publication_date",
+        )
+        unique_ciks = payload["header_data"]["cik"].unique()
+        self.assertIsInstance(payload, dict)
+        expected = [1591379, 1399770, 1559771, 1569638]
+        self.assertCountEqual(unique_ciks, expected)
+        self.check_string(
+            phunit.convert_df_to_string(payload["information_table"])
+        )
+
     def test_form_types(self) -> None:
         """
         Mapping between short form names and form types in the Edgar universe.
@@ -445,6 +751,23 @@ class TestEdgarClient(phunit.TestCase):
         self.assertFalse(payload.empty)
         self.check_string(phunit.convert_df_to_string(payload))
 
+    def test_headers_knowledge_date(self) -> None:
+        """
+        Get form headers metadata with the following parameters.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form_headers(
+            form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
+            cik=[320193],
+            start_date="2020-10-01",
+            end_date="2020-12-01",
+            date_mode="knowledge_date",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        self.check_string(phunit.convert_df_to_string(payload))
+
     def test_headers_multi_cik(self) -> None:
         """
         Get form headers metadata with the following parameters.
@@ -457,6 +780,23 @@ class TestEdgarClient(phunit.TestCase):
             start_date="2020-01-01",
             end_date="2020-01-03",
             date_mode="publication_date",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        self.check_string(phunit.convert_df_to_string(payload))
+
+    def test_headers_multi_cik_knowledge_date(self) -> None:
+        """
+        Get form headers metadata with the following parameters.
+
+        Check when `date_mode` is "knowledge_date".
+        """
+        payload = self.client.get_form_headers(
+            form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
+            cik=[320193, 732717],
+            start_date="2020-10-01",
+            end_date="2020-11-01",
+            date_mode="knowledge_date",
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)

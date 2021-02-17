@@ -1,0 +1,111 @@
+len(payload)=6
+payload.keys()=dict_keys(['metadata', 'derivative_table', 'footnotes', 'general_info', 'non_derivative_table', 'reporting_owner_info'])
+payload[metadata]=                                    uuid  ...                  created_at
+0   7211d852-702a-4fd0-b7ad-2391a191c506  ...  2021-01-04T17:05:54.740000
+1   509b1d6f-9df1-487d-87ac-7a3ec49f4b70  ...  2021-01-04T17:08:59.955000
+2   a43e919e-6438-474c-826b-cd252c443b4d  ...  2021-01-04T17:11:03.260000
+3   df809d7f-f36b-41d2-a3bd-0b6d388a6d35  ...  2021-01-04T17:11:06.983000
+4   b59cfdfb-9c42-4ad1-a4b1-9b338d9ea393  ...  2021-01-04T17:14:55.386000
+5   85b1965c-c88e-4ffb-afcc-ed48ffd11725  ...  2021-01-04T17:16:53.332000
+6   96e590db-d336-4978-ae27-4749cbbc27d3  ...  2021-01-04T17:17:01.014000
+7   f7dd58ff-48b6-49ca-86f1-f59c9c7fc1e8  ...  2021-01-04T22:53:59.360000
+8   a65756d2-8c65-4706-812a-93fd056d1057  ...  2021-01-05T23:32:54.405000
+9   f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...  2021-01-05T23:34:32.050000
+10  514b916e-4015-4fee-8f3f-2bdd17972863  ...  2021-01-06T15:20:52.638000
+11  757730fd-d42f-49a4-993e-c3b9bc2643df  ...  2021-01-06T15:35:12.503000
+12  ba4fec59-ad85-4890-8404-a1faae03ffcc  ...  2021-01-11T18:21:01.276000
+13  568bdca6-ad98-492e-905e-1ab05f03570a  ...  2021-01-11T18:23:35.750000
+14  e38fba09-710a-4555-b099-d1fc7cb65217  ...  2021-01-11T18:24:58.175000
+15  0ddebf08-a7ee-4c41-9659-e1d8b7f57a9f  ...  2021-01-11T18:27:32.712000
+
+[16 rows x 8 columns]
+payload[derivative_table]=                                   uuid  ...  transaction_shares
+0  514b916e-4015-4fee-8f3f-2bdd17972863  ...                 NaN
+1  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...               281.0
+
+[2 rows x 19 columns]
+payload[footnotes]=                                   uuid  ... footnote_id
+0  514b916e-4015-4fee-8f3f-2bdd17972863  ...          F1
+1  514b916e-4015-4fee-8f3f-2bdd17972863  ...          F2
+2  514b916e-4015-4fee-8f3f-2bdd17972863  ...          F3
+3  514b916e-4015-4fee-8f3f-2bdd17972863  ...          F4
+4  514b916e-4015-4fee-8f3f-2bdd17972863  ...          F5
+5  514b916e-4015-4fee-8f3f-2bdd17972863  ...          F6
+6  757730fd-d42f-49a4-993e-c3b9bc2643df  ...          F1
+7  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...          F1
+8  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...          F2
+9  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...          F3
+
+[10 rows x 3 columns]
+payload[general_info]=                                    uuid  ... not_subject_to_section_16
+0   0ddebf08-a7ee-4c41-9659-e1d8b7f57a9f  ...                       NaN
+1   509b1d6f-9df1-487d-87ac-7a3ec49f4b70  ...                       NaN
+2   514b916e-4015-4fee-8f3f-2bdd17972863  ...                       NaN
+3   568bdca6-ad98-492e-905e-1ab05f03570a  ...                       NaN
+4   7211d852-702a-4fd0-b7ad-2391a191c506  ...                       NaN
+5   757730fd-d42f-49a4-993e-c3b9bc2643df  ...                       NaN
+6   85b1965c-c88e-4ffb-afcc-ed48ffd11725  ...                       NaN
+7   96e590db-d336-4978-ae27-4749cbbc27d3  ...                       NaN
+8   a43e919e-6438-474c-826b-cd252c443b4d  ...                       NaN
+9   a65756d2-8c65-4706-812a-93fd056d1057  ...                       NaN
+10  b59cfdfb-9c42-4ad1-a4b1-9b338d9ea393  ...                       NaN
+11  ba4fec59-ad85-4890-8404-a1faae03ffcc  ...                       NaN
+12  df809d7f-f36b-41d2-a3bd-0b6d388a6d35  ...                       NaN
+13  e38fba09-710a-4555-b099-d1fc7cb65217  ...                       NaN
+14  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...                       0.0
+15  f7dd58ff-48b6-49ca-86f1-f59c9c7fc1e8  ...                       NaN
+
+[16 rows x 14 columns]
+payload[non_derivative_table]=                                    uuid  ...                           nature_of_ownership
+0   0ddebf08-a7ee-4c41-9659-e1d8b7f57a9f  ...                                           NaN
+1   509b1d6f-9df1-487d-87ac-7a3ec49f4b70  ...                                          None
+2   509b1d6f-9df1-487d-87ac-7a3ec49f4b70  ...                                          None
+3   509b1d6f-9df1-487d-87ac-7a3ec49f4b70  ...  Held In Trust Under Issuer's Retirement Plan
+4   514b916e-4015-4fee-8f3f-2bdd17972863  ...                                           NaN
+5   514b916e-4015-4fee-8f3f-2bdd17972863  ...                                           NaN
+6   514b916e-4015-4fee-8f3f-2bdd17972863  ...                                           NaN
+7   514b916e-4015-4fee-8f3f-2bdd17972863  ...                                           NaN
+8   514b916e-4015-4fee-8f3f-2bdd17972863  ...                                           NaN
+9   514b916e-4015-4fee-8f3f-2bdd17972863  ...                                           NaN
+10  568bdca6-ad98-492e-905e-1ab05f03570a  ...                                           NaN
+11  7211d852-702a-4fd0-b7ad-2391a191c506  ...                                           NaN
+12  7211d852-702a-4fd0-b7ad-2391a191c506  ...                                           NaN
+13  757730fd-d42f-49a4-993e-c3b9bc2643df  ...                                           NaN
+14  85b1965c-c88e-4ffb-afcc-ed48ffd11725  ...                                          None
+15  85b1965c-c88e-4ffb-afcc-ed48ffd11725  ...                                     By Spouse
+16  85b1965c-c88e-4ffb-afcc-ed48ffd11725  ...  Held in Trust Under Issuer's Retirement Plan
+17  96e590db-d336-4978-ae27-4749cbbc27d3  ...                                          None
+18  96e590db-d336-4978-ae27-4749cbbc27d3  ...                                          None
+19  96e590db-d336-4978-ae27-4749cbbc27d3  ...  Held In Trust Under Issuer's Retirement Plan
+20  a43e919e-6438-474c-826b-cd252c443b4d  ...                                           NaN
+21  a43e919e-6438-474c-826b-cd252c443b4d  ...                                           NaN
+22  a65756d2-8c65-4706-812a-93fd056d1057  ...                                           NaN
+23  b59cfdfb-9c42-4ad1-a4b1-9b338d9ea393  ...                                           NaN
+24  b59cfdfb-9c42-4ad1-a4b1-9b338d9ea393  ...                                           NaN
+25  ba4fec59-ad85-4890-8404-a1faae03ffcc  ...                                          None
+26  ba4fec59-ad85-4890-8404-a1faae03ffcc  ...                                       By Wife
+27  df809d7f-f36b-41d2-a3bd-0b6d388a6d35  ...                                           NaN
+28  df809d7f-f36b-41d2-a3bd-0b6d388a6d35  ...                                           NaN
+29  e38fba09-710a-4555-b099-d1fc7cb65217  ...                                           NaN
+30  f7dd58ff-48b6-49ca-86f1-f59c9c7fc1e8  ...                                           NaN
+
+[31 rows x 16 columns]
+payload[reporting_owner_info]=                                    uuid  ...  other_text
+0   0ddebf08-a7ee-4c41-9659-e1d8b7f57a9f  ...         NaN
+1   509b1d6f-9df1-487d-87ac-7a3ec49f4b70  ...         NaN
+2   514b916e-4015-4fee-8f3f-2bdd17972863  ...         NaN
+3   568bdca6-ad98-492e-905e-1ab05f03570a  ...         NaN
+4   7211d852-702a-4fd0-b7ad-2391a191c506  ...         NaN
+5   757730fd-d42f-49a4-993e-c3b9bc2643df  ...         NaN
+6   85b1965c-c88e-4ffb-afcc-ed48ffd11725  ...         NaN
+7   96e590db-d336-4978-ae27-4749cbbc27d3  ...         NaN
+8   a43e919e-6438-474c-826b-cd252c443b4d  ...         NaN
+9   a65756d2-8c65-4706-812a-93fd056d1057  ...         NaN
+10  b59cfdfb-9c42-4ad1-a4b1-9b338d9ea393  ...         NaN
+11  ba4fec59-ad85-4890-8404-a1faae03ffcc  ...         NaN
+12  df809d7f-f36b-41d2-a3bd-0b6d388a6d35  ...         NaN
+13  e38fba09-710a-4555-b099-d1fc7cb65217  ...         NaN
+14  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...         NaN
+15  f7dd58ff-48b6-49ca-86f1-f59c9c7fc1e8  ...         NaN
+
+[16 rows x 16 columns]

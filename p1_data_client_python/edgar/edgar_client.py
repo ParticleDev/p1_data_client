@@ -204,7 +204,8 @@ class EdgarClient(pabstr.AbstractClient):
         form_name = "form10"
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
-            params, start_date=start_date, end_date=end_date, date_mode=date_mode
+            params, start_date=start_date, end_date=end_date,
+            date_mode=date_mode
         )
         url = f'{self.base_url}{self._api_routes["PAYLOAD"]}/{form_name}'
         cik_list: List[Union[int, None]] = [None]
@@ -220,9 +221,10 @@ class EdgarClient(pabstr.AbstractClient):
                 )
                 self.spinner.stop()
                 data = response.json()["data"]
-                _LOG.info("%s: %s forms loaded", cik or "Total", len(data))
+                _LOG.info("%s: %s forms loaded",
+                          current_cik or "Total",
+                          len(data))
                 compound_data += response.json()["data"]
-
         return compound_data
 
     def get_form13_payload(

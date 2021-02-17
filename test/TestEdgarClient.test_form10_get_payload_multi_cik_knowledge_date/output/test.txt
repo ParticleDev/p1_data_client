@@ -1,0 +1,36 @@
+len(payload)=2
+payload[0].keys()=dict_keys(['meta', 'data'])
+payload[0]["meta"]=
+{'cik': {'0': 58492},
+ 'filing_date': {'0': '2020-11-05'},
+ 'filing_url': {'0': 'https://www.sec.gov/Archives/edgar/data/58492/000005849220000025/0000058492-20-000025-index.html'},
+ 'form_type': {'0': '10-Q'},
+ 'uuid': {'0': 'd6afa244-f685-45e6-82e2-139e7ff46387'}}
+{'calculation': {'calculationLinkbase': [['linkRole',
+                                          {'definition': '1001002 - Statement '
+                                                         '- CONSOLIDATED '
+                                                         'CONDENSED BALANCE '
+                                                         'SHEETS (Unaudited)',
+                                           'role': 'http://www.leggett.com/role/CONSOLIDATEDCONDENSEDBALANCESHEETSUnaudited'},
+                                          {},
+                                          ['concept',
+                                           {'label': 'Assets',
+                                            'name': 'us-gaap:Assets'},
+                                           {'balance': 'debit'},
+                                           ['concept',
+                                            {'label': '(+1) Assets, Current',
+                                             'name': 'us-gaap:AssetsCurrent'},
+                                            {'balance': 'debit',
+                                             'weight': '1 '},
+                                            ['concept',
+                                             {'label': '(+1) Receivables, Net, '
+                                                       'Current',
+                                              'name': 'us-gaap:ReceivablesNetCurrent'},
+                                             {'balance': 'debit',
+                                              'weight': '1 '},
+                                             ['concept',
+                                              {'label': '(+1) Accounts '
+                                                        'Receivable, after '
+                                                        'Allowance for Credit '
+                                                        'Loss, Current',
+                                               'name': 'us-gaap:AccountsReceivableNetCurr
