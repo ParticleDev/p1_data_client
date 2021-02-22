@@ -1,0 +1,86 @@
+len(payload)=6
+payload.keys()=dict_keys(['metadata', 'derivative_table', 'footnotes', 'general_info', 'non_derivative_table', 'reporting_owner_info'])
+payload[metadata]=                                    uuid  ...                  created_at
+0   358945fe-5979-4fe9-b3b0-d300698dd0a6  ...  2020-12-16T12:35:21.056000
+1   298d722f-914e-4f39-9ab7-b8d912ae67e2  ...  2020-12-16T13:30:44.326000
+2   587a7e1f-743f-46dc-9f87-d520172ebc8e  ...  2020-12-16T13:41:04.632000
+3   3be40f45-3c9e-4686-bfce-ba0e22a346d2  ...  2020-12-16T13:56:12.142000
+4   7e73e349-bfe0-4592-919b-e59e3c0c54b2  ...  2020-12-16T14:17:50.933000
+..                                   ...  ...                         ...
+95  5b9059c7-f6f6-45a5-9fb0-fa072619fa61  ...  2020-12-16T21:03:10.712000
+96  6ef695f5-0b75-412e-aa39-c2cc85a583de  ...  2020-12-16T21:04:39.017000
+97  771ee70c-df4a-4e1a-abfd-bc3b7e22d090  ...  2020-12-16T21:03:05.766000
+98  7b98e191-e187-4b1b-8d92-c8a9488989c4  ...  2020-12-16T21:01:45.041000
+99  830a177c-30c1-4bbf-a343-f0877dfc6197  ...  2020-12-16T21:04:44.306000
+
+[100 rows x 8 columns]
+payload[derivative_table]=                                    uuid  ...  transaction_coding
+0   03a85f48-7e47-4eee-b829-cfced9d1f3f2  ...                 NaN
+1   03a85f48-7e47-4eee-b829-cfced9d1f3f2  ...                 NaN
+2   040e11fa-5f1a-4590-9ae2-776b8331692f  ...                 NaN
+3   040e11fa-5f1a-4590-9ae2-776b8331692f  ...                 NaN
+4   08eafc7b-9085-48a3-bb65-dcfd418de11f  ...                 NaN
+..                                   ...  ...                 ...
+95  46d9f3b8-56bb-475d-a859-8fb0df1fd7cc  ...                 NaN
+96  46d9f3b8-56bb-475d-a859-8fb0df1fd7cc  ...                 NaN
+97  46d9f3b8-56bb-475d-a859-8fb0df1fd7cc  ...                 NaN
+98  46d9f3b8-56bb-475d-a859-8fb0df1fd7cc  ...                 NaN
+99  46d9f3b8-56bb-475d-a859-8fb0df1fd7cc  ...                 NaN
+
+[100 rows x 23 columns]
+payload[footnotes]=                                    uuid  ... footnote_id
+0   00b6a50f-272d-4b0c-9b7d-cb08c449fe78  ...          F1
+1   02829e5f-0a2c-45e6-9f41-7291e9c0743b  ...          F1
+2   03a85f48-7e47-4eee-b829-cfced9d1f3f2  ...          F1
+3   03a85f48-7e47-4eee-b829-cfced9d1f3f2  ...          F2
+4   03a85f48-7e47-4eee-b829-cfced9d1f3f2  ...          F3
+..                                   ...  ...         ...
+95  1eae258a-f9ba-44d3-a8ef-1569bb981302  ...          F2
+96  1eae258a-f9ba-44d3-a8ef-1569bb981302  ...          F3
+97  1ed13a8d-957c-4ac4-8090-46f891dd5d42  ...          F1
+98  20d844cd-d8c6-4278-bf3c-478cf385297f  ...          F1
+99  20d844cd-d8c6-4278-bf3c-478cf385297f  ...          F2
+
+[100 rows x 3 columns]
+payload[general_info]=                                    uuid  ... date_of_original_submission
+0   00b6a50f-272d-4b0c-9b7d-cb08c449fe78  ...                         NaN
+1   02829e5f-0a2c-45e6-9f41-7291e9c0743b  ...                         NaN
+2   03a85f48-7e47-4eee-b829-cfced9d1f3f2  ...                         NaN
+3   040e11fa-5f1a-4590-9ae2-776b8331692f  ...                         NaN
+4   07849067-be6c-433b-9774-f07bfc363b56  ...                         NaN
+..                                   ...  ...                         ...
+95  46d9f3b8-56bb-475d-a859-8fb0df1fd7cc  ...                         NaN
+96  47ffa097-f1db-4181-8be5-ff4f1196ec56  ...                         NaN
+97  49306ac9-b5c7-4eee-8e73-0879a6ca1289  ...                         NaN
+98  495de0b6-39a8-4765-954b-deedf014ede2  ...                         NaN
+99  49ffe94a-1b69-47b2-89a6-4ab67a49885a  ...                         NaN
+
+[100 rows x 17 columns]
+payload[non_derivative_table]=                                    uuid  ...  transaction_coding
+0   00b6a50f-272d-4b0c-9b7d-cb08c449fe78  ...                 NaN
+1   02829e5f-0a2c-45e6-9f41-7291e9c0743b  ...                 NaN
+2   03a85f48-7e47-4eee-b829-cfced9d1f3f2  ...                 NaN
+3   03a85f48-7e47-4eee-b829-cfced9d1f3f2  ...                 NaN
+4   07849067-be6c-433b-9774-f07bfc363b56  ...                 NaN
+..                                   ...  ...                 ...
+95  1ed13a8d-957c-4ac4-8090-46f891dd5d42  ...                 NaN
+96  1ed13a8d-957c-4ac4-8090-46f891dd5d42  ...                 NaN
+97  20d844cd-d8c6-4278-bf3c-478cf385297f  ...                 NaN
+98  20d844cd-d8c6-4278-bf3c-478cf385297f  ...                 NaN
+99  20d844cd-d8c6-4278-bf3c-478cf385297f  ...                 NaN
+
+[100 rows x 18 columns]
+payload[reporting_owner_info]=                                    uuid  ...               other_text
+0   00b6a50f-272d-4b0c-9b7d-cb08c449fe78  ...                      NaN
+1   02829e5f-0a2c-45e6-9f41-7291e9c0743b  ...                     None
+2   03a85f48-7e47-4eee-b829-cfced9d1f3f2  ...                      NaN
+3   040e11fa-5f1a-4590-9ae2-776b8331692f  ...                      NaN
+4   07849067-be6c-433b-9774-f07bfc363b56  ...                     None
+..                                   ...  ...                      ...
+95  4264ee40-ec58-42ed-8bb9-148bb624a241  ...                      NaN
+96  42a54832-360b-436f-af8f-4c586fad69bf  ...  CEO - subsidiary entity
+97  42ff2f9f-1059-4cbc-a68b-978686bea33c  ...                      NaN
+98  44642e81-f605-42b3-8321-7d49e37ce855  ...                      NaN
+99  4569f6ca-bbe7-46a5-b4f6-25126ea65635  ...                     None
+
+[100 rows x 16 columns]

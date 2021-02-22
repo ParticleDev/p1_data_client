@@ -1,0 +1,191 @@
+len(payload)=6
+payload.keys()=dict_keys(['metadata', 'derivative_table', 'footnotes', 'general_info', 'non_derivative_table', 'reporting_owner_info'])
+payload[metadata]=                                    uuid  ...                  created_at
+0   29b40481-1bf5-434b-a6ec-4fbc3a9f0233  ...  2021-02-03T19:44:17.992000
+1   44c883ee-1588-499a-88d2-f27f05c60e73  ...  2021-02-03T19:55:04.725000
+2   e8b1087f-0f63-4f4d-aa43-4d45400c5a52  ...  2021-02-03T20:01:20.247000
+3   63d86253-a24b-4f96-9bd4-7039c6509501  ...  2021-02-03T20:15:47.633000
+4   5b3e701e-dd4e-4ff5-b41b-e262affe4a79  ...  2021-02-03T20:20:11.183000
+5   e21f371e-1b02-42af-a470-e0c6b4ce9815  ...  2021-02-03T20:24:39.528000
+6   3066a5b3-7f02-4a06-a048-d6e0306bccbb  ...  2021-02-03T20:30:00.179000
+7   7fede8aa-13e1-4638-9490-05921164511e  ...  2021-02-03T20:33:12.964000
+8   c8e1266b-bab3-468b-ba00-50193bcc8d3c  ...  2021-02-03T20:52:32.788000
+9   8f3f2812-94b9-4c68-af79-fea7b6c98493  ...  2021-02-03T20:56:53.795000
+10  34884c82-9e1c-4ef8-bac8-8b0b13635333  ...  2021-02-03T21:00:07.954000
+11  e55011b5-8bfa-4838-a514-db59f0b188f6  ...  2021-02-03T21:18:40.586000
+12  c6657942-15b2-4f25-bc60-8663aa81bb23  ...  2021-02-03T21:29:06.699000
+13  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...  2021-02-03T21:50:53.389000
+14  23dc7bd5-8409-49a6-b684-64938efeadaa  ...  2021-02-03T21:53:52.809000
+15  e673dc87-ed1a-48a5-bc63-2f2a971f42e7  ...  2021-02-03T21:58:07.426000
+16  1d499af4-5cd0-472b-9bc8-3b56b02b3a63  ...  2021-02-03T22:01:37.035000
+17  479f5711-ce12-40e6-8f48-790f36b9a404  ...  2021-02-03T22:05:33.953000
+18  54943e6f-4a85-4aeb-a5c7-130f33aea285  ...  2021-02-03T22:07:18.943000
+19  28ad4aaf-a16d-4776-af12-e790000b9a4a  ...  2021-02-03T22:09:59.126000
+20  a63c3652-ce79-4b91-a878-9b0b047b77ca  ...  2021-02-03T22:14:01.747000
+21  eea8110a-daa5-4bb1-8320-42160533c766  ...  2021-02-03T22:18:14.592000
+22  37ca42d5-4ed8-4fa0-ba71-afb60c319a85  ...  2021-02-03T22:24:18.380000
+23  1b524dc7-7d68-4147-b706-31e37e0ea32c  ...  2021-02-03T22:27:49.288000
+24  17f81833-2431-4755-b85d-d4ba86b5ff02  ...  2021-02-03T22:30:37.269000
+25  77dcdd73-01c1-462e-8ddd-fddf06eea65f  ...  2021-02-03T22:31:52.147000
+26  287e645a-f0e5-4283-af4d-6372fc35cd9e  ...  2021-02-04T20:37:34.443000
+
+[27 rows x 8 columns]
+payload[derivative_table]=Empty DataFrame
+Columns: []
+Index: []
+payload[footnotes]=                                    uuid  ... footnote_id
+0   17f81833-2431-4755-b85d-d4ba86b5ff02  ...          F1
+1   1b524dc7-7d68-4147-b706-31e37e0ea32c  ...          F1
+2   1d499af4-5cd0-472b-9bc8-3b56b02b3a63  ...          F1
+3   23dc7bd5-8409-49a6-b684-64938efeadaa  ...          F1
+4   287e645a-f0e5-4283-af4d-6372fc35cd9e  ...          F1
+5   28ad4aaf-a16d-4776-af12-e790000b9a4a  ...          F1
+6   29b40481-1bf5-434b-a6ec-4fbc3a9f0233  ...          F1
+7   29b40481-1bf5-434b-a6ec-4fbc3a9f0233  ...          F2
+8   3066a5b3-7f02-4a06-a048-d6e0306bccbb  ...          F1
+9   3066a5b3-7f02-4a06-a048-d6e0306bccbb  ...          F2
+10  34884c82-9e1c-4ef8-bac8-8b0b13635333  ...          F1
+11  34884c82-9e1c-4ef8-bac8-8b0b13635333  ...          F2
+12  37ca42d5-4ed8-4fa0-ba71-afb60c319a85  ...          F1
+13  44c883ee-1588-499a-88d2-f27f05c60e73  ...          F1
+14  44c883ee-1588-499a-88d2-f27f05c60e73  ...          F2
+15  479f5711-ce12-40e6-8f48-790f36b9a404  ...          F1
+16  54943e6f-4a85-4aeb-a5c7-130f33aea285  ...          F1
+17  5b3e701e-dd4e-4ff5-b41b-e262affe4a79  ...          F1
+18  63d86253-a24b-4f96-9bd4-7039c6509501  ...          F1
+19  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...          F1
+20  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...          F2
+21  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...          F3
+22  77dcdd73-01c1-462e-8ddd-fddf06eea65f  ...          F1
+23  7fede8aa-13e1-4638-9490-05921164511e  ...          F1
+24  7fede8aa-13e1-4638-9490-05921164511e  ...          F2
+25  8f3f2812-94b9-4c68-af79-fea7b6c98493  ...          F1
+26  a63c3652-ce79-4b91-a878-9b0b047b77ca  ...          F1
+27  c6657942-15b2-4f25-bc60-8663aa81bb23  ...          F1
+28  c8e1266b-bab3-468b-ba00-50193bcc8d3c  ...          F1
+29  c8e1266b-bab3-468b-ba00-50193bcc8d3c  ...          F2
+30  e21f371e-1b02-42af-a470-e0c6b4ce9815  ...          F1
+31  e55011b5-8bfa-4838-a514-db59f0b188f6  ...          F1
+32  e55011b5-8bfa-4838-a514-db59f0b188f6  ...          F2
+33  e673dc87-ed1a-48a5-bc63-2f2a971f42e7  ...          F1
+34  e673dc87-ed1a-48a5-bc63-2f2a971f42e7  ...          F2
+35  e8b1087f-0f63-4f4d-aa43-4d45400c5a52  ...          F1
+36  e8b1087f-0f63-4f4d-aa43-4d45400c5a52  ...          F2
+37  eea8110a-daa5-4bb1-8320-42160533c766  ...          F1
+
+[38 rows x 3 columns]
+payload[general_info]=                                    uuid  ... footnote_ids
+0   17f81833-2431-4755-b85d-d4ba86b5ff02  ...           []
+1   1b524dc7-7d68-4147-b706-31e37e0ea32c  ...           []
+2   1d499af4-5cd0-472b-9bc8-3b56b02b3a63  ...           []
+3   23dc7bd5-8409-49a6-b684-64938efeadaa  ...           []
+4   287e645a-f0e5-4283-af4d-6372fc35cd9e  ...           []
+5   28ad4aaf-a16d-4776-af12-e790000b9a4a  ...           []
+6   29b40481-1bf5-434b-a6ec-4fbc3a9f0233  ...           []
+7   3066a5b3-7f02-4a06-a048-d6e0306bccbb  ...           []
+8   34884c82-9e1c-4ef8-bac8-8b0b13635333  ...           []
+9   37ca42d5-4ed8-4fa0-ba71-afb60c319a85  ...           []
+10  44c883ee-1588-499a-88d2-f27f05c60e73  ...           []
+11  479f5711-ce12-40e6-8f48-790f36b9a404  ...           []
+12  54943e6f-4a85-4aeb-a5c7-130f33aea285  ...           []
+13  5b3e701e-dd4e-4ff5-b41b-e262affe4a79  ...           []
+14  63d86253-a24b-4f96-9bd4-7039c6509501  ...           []
+15  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...           []
+16  77dcdd73-01c1-462e-8ddd-fddf06eea65f  ...           []
+17  7fede8aa-13e1-4638-9490-05921164511e  ...           []
+18  8f3f2812-94b9-4c68-af79-fea7b6c98493  ...           []
+19  a63c3652-ce79-4b91-a878-9b0b047b77ca  ...           []
+20  c6657942-15b2-4f25-bc60-8663aa81bb23  ...           []
+21  c8e1266b-bab3-468b-ba00-50193bcc8d3c  ...           []
+22  e21f371e-1b02-42af-a470-e0c6b4ce9815  ...           []
+23  e55011b5-8bfa-4838-a514-db59f0b188f6  ...           []
+24  e673dc87-ed1a-48a5-bc63-2f2a971f42e7  ...           []
+25  e8b1087f-0f63-4f4d-aa43-4d45400c5a52  ...           []
+26  eea8110a-daa5-4bb1-8320-42160533c766  ...           []
+
+[27 rows x 11 columns]
+payload[non_derivative_table]=                                    uuid  ...   nature_of_ownership
+0   17f81833-2431-4755-b85d-d4ba86b5ff02  ...                   NaN
+1   1b524dc7-7d68-4147-b706-31e37e0ea32c  ...                   NaN
+2   1d499af4-5cd0-472b-9bc8-3b56b02b3a63  ...                   NaN
+3   23dc7bd5-8409-49a6-b684-64938efeadaa  ...                   NaN
+4   287e645a-f0e5-4283-af4d-6372fc35cd9e  ...                   NaN
+5   28ad4aaf-a16d-4776-af12-e790000b9a4a  ...                   NaN
+6   29b40481-1bf5-434b-a6ec-4fbc3a9f0233  ...                  None
+7   29b40481-1bf5-434b-a6ec-4fbc3a9f0233  ...                  None
+8   29b40481-1bf5-434b-a6ec-4fbc3a9f0233  ...           401(k) Plan
+9   3066a5b3-7f02-4a06-a048-d6e0306bccbb  ...                  None
+10  3066a5b3-7f02-4a06-a048-d6e0306bccbb  ...                  None
+11  3066a5b3-7f02-4a06-a048-d6e0306bccbb  ...           401(k) Plan
+12  34884c82-9e1c-4ef8-bac8-8b0b13635333  ...                  None
+13  34884c82-9e1c-4ef8-bac8-8b0b13635333  ...                  None
+14  34884c82-9e1c-4ef8-bac8-8b0b13635333  ...              by Trust
+15  37ca42d5-4ed8-4fa0-ba71-afb60c319a85  ...                   NaN
+16  44c883ee-1588-499a-88d2-f27f05c60e73  ...                  None
+17  44c883ee-1588-499a-88d2-f27f05c60e73  ...                  None
+18  44c883ee-1588-499a-88d2-f27f05c60e73  ...              by Trust
+19  479f5711-ce12-40e6-8f48-790f36b9a404  ...                   NaN
+20  54943e6f-4a85-4aeb-a5c7-130f33aea285  ...                   NaN
+21  5b3e701e-dd4e-4ff5-b41b-e262affe4a79  ...                   NaN
+22  63d86253-a24b-4f96-9bd4-7039c6509501  ...                  None
+23  63d86253-a24b-4f96-9bd4-7039c6509501  ...           401(k) Plan
+24  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...                  None
+25  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...        By 401(k) Plan
+26  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...             By Spouse
+27  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...              By Trust
+28  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...              By Trust
+29  77dcdd73-01c1-462e-8ddd-fddf06eea65f  ...                   NaN
+30  7fede8aa-13e1-4638-9490-05921164511e  ...                  None
+31  7fede8aa-13e1-4638-9490-05921164511e  ...                  None
+32  7fede8aa-13e1-4638-9490-05921164511e  ...           401(k) Plan
+33  7fede8aa-13e1-4638-9490-05921164511e  ...             by Spouse
+34  8f3f2812-94b9-4c68-af79-fea7b6c98493  ...                   NaN
+35  a63c3652-ce79-4b91-a878-9b0b047b77ca  ...                  None
+36  a63c3652-ce79-4b91-a878-9b0b047b77ca  ...       by Spouse - IRA
+37  c6657942-15b2-4f25-bc60-8663aa81bb23  ...                  None
+38  c6657942-15b2-4f25-bc60-8663aa81bb23  ...  Employer 401(k) plan
+39  c8e1266b-bab3-468b-ba00-50193bcc8d3c  ...                   NaN
+40  c8e1266b-bab3-468b-ba00-50193bcc8d3c  ...                   NaN
+41  e21f371e-1b02-42af-a470-e0c6b4ce9815  ...                   NaN
+42  e55011b5-8bfa-4838-a514-db59f0b188f6  ...                   NaN
+43  e55011b5-8bfa-4838-a514-db59f0b188f6  ...                   NaN
+44  e673dc87-ed1a-48a5-bc63-2f2a971f42e7  ...                  None
+45  e673dc87-ed1a-48a5-bc63-2f2a971f42e7  ...        By Corporation
+46  e8b1087f-0f63-4f4d-aa43-4d45400c5a52  ...                  None
+47  e8b1087f-0f63-4f4d-aa43-4d45400c5a52  ...                  None
+48  e8b1087f-0f63-4f4d-aa43-4d45400c5a52  ...              by Trust
+49  e8b1087f-0f63-4f4d-aa43-4d45400c5a52  ...           401(k) Plan
+50  eea8110a-daa5-4bb1-8320-42160533c766  ...                  None
+51  eea8110a-daa5-4bb1-8320-42160533c766  ...                   IRA
+
+[52 rows x 17 columns]
+payload[reporting_owner_info]=                                    uuid  ...                 officer_title
+0   17f81833-2431-4755-b85d-d4ba86b5ff02  ...                           NaN
+1   1b524dc7-7d68-4147-b706-31e37e0ea32c  ...                           NaN
+2   1d499af4-5cd0-472b-9bc8-3b56b02b3a63  ...                           NaN
+3   23dc7bd5-8409-49a6-b684-64938efeadaa  ...                           NaN
+4   287e645a-f0e5-4283-af4d-6372fc35cd9e  ...      Executive Vice President
+5   28ad4aaf-a16d-4776-af12-e790000b9a4a  ...                           NaN
+6   29b40481-1bf5-434b-a6ec-4fbc3a9f0233  ...      Executive Vice President
+7   3066a5b3-7f02-4a06-a048-d6e0306bccbb  ...      Executive Vice President
+8   34884c82-9e1c-4ef8-bac8-8b0b13635333  ...       Chief Financial Officer
+9   37ca42d5-4ed8-4fa0-ba71-afb60c319a85  ...                           NaN
+10  44c883ee-1588-499a-88d2-f27f05c60e73  ...               President & CEO
+11  479f5711-ce12-40e6-8f48-790f36b9a404  ...                           NaN
+12  54943e6f-4a85-4aeb-a5c7-130f33aea285  ...                           NaN
+13  5b3e701e-dd4e-4ff5-b41b-e262affe4a79  ...      Executive Vice President
+14  63d86253-a24b-4f96-9bd4-7039c6509501  ...  Principal Accounting Officer
+15  6da6f7c9-ba81-44fb-8782-01ec315a43e6  ...                           NaN
+16  77dcdd73-01c1-462e-8ddd-fddf06eea65f  ...                           NaN
+17  7fede8aa-13e1-4638-9490-05921164511e  ...      Executive Vice President
+18  8f3f2812-94b9-4c68-af79-fea7b6c98493  ...      Executive Vice President
+19  a63c3652-ce79-4b91-a878-9b0b047b77ca  ...                           NaN
+20  c6657942-15b2-4f25-bc60-8663aa81bb23  ...      Executive Vice President
+21  c8e1266b-bab3-468b-ba00-50193bcc8d3c  ...      Executive Vice President
+22  e21f371e-1b02-42af-a470-e0c6b4ce9815  ...      Executive Vice President
+23  e55011b5-8bfa-4838-a514-db59f0b188f6  ...      Executive Vice President
+24  e673dc87-ed1a-48a5-bc63-2f2a971f42e7  ...                           NaN
+25  e8b1087f-0f63-4f4d-aa43-4d45400c5a52  ...      Executive Vice President
+26  eea8110a-daa5-4bb1-8320-42160533c766  ...                           NaN
+
+[27 rows x 13 columns]

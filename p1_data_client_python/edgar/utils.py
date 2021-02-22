@@ -6,6 +6,8 @@ Import as: import p1_data_client_python.edgar.utils as peutil
 import halo
 import contextlib as contex
 import logging
+import os
+import pathlib
 from typing import Any, Dict, Generator, Iterator, List, Optional, Union
 import urllib.parse as uparse
 
@@ -13,6 +15,14 @@ import p1_data_client_python.edgar.config as peconf
 import p1_data_client_python.helpers.dbg as phdbg  # type: ignore
 
 _LOG = logging.getLogger(__name__)
+
+
+def get_sp1500_cik_list() -> List[int]:
+    """Get list of cik from sp1500 universe from the file."""
+    sp1500_path = os.path.join(os.path.dirname(__file__),
+                               'resources',
+                               'sp1500_as_CIKs.txt')
+    return list(map(int, open(sp1500_path, 'r').readlines()))
 
 
 class Links:
@@ -63,28 +73,28 @@ def chop_list(
 
 
 def check_date_mode(
-    start_date: Optional[str] = None,
-    end_date: Optional[str] = None,
+    start_datetime: Optional[str] = None,
+    end_datetime: Optional[str] = None,
     date_mode: Optional[str] = None,
 ) -> None:
     """
     Validate the combination of dates and date_mode field.
 
-    :param start_date: Start date from the client class method.
-    :param end_date: Ending date from the client class method.
+    :param start_datetime: Start date from the client class method.
+    :param end_datetime: Ending date from the client class method.
     :param date_mode: Date mode from the client class method.
     :return:
     """
-    if date_mode and not any([start_date, end_date]):
+    if date_mode and not any([start_datetime, end_datetime]):
         phdbg.dfatal(
             "The date_mode parameter has to be used with "
-            "start_date and end_date."
+            "start_datetime and end_datetime."
         )
-    if any([start_date, end_date]):
+    if any([start_datetime, end_datetime]):
         if date_mode is None:
             phdbg.dfatal(
                 "You need to specify date_mode parameter "
-                "when you give start/end date."
+                "when you give start/end datetime."
             )
         if date_mode not in peconf.DATE_MODE:
             phdbg.dfatal(f"The date_mode parameter has to be " 

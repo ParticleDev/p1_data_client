@@ -1,0 +1,136 @@
+len(payload)=6
+payload.keys()=dict_keys(['metadata', 'derivative_table', 'footnotes', 'general_info', 'non_derivative_table', 'reporting_owner_info'])
+payload[metadata]=                                    uuid  ...                  created_at
+0   16b9d980-1c80-4e98-8c1b-9dcf0a3d4f2e  ...  2021-01-05T17:23:20.873000
+1   e0a3b041-b583-408a-99a8-31821e6449e9  ...  2021-01-05T17:23:22.552000
+2   1ff6ef7d-b300-43f3-920b-01c1b9345a7b  ...  2021-01-05T17:37:26.010000
+3   552fbcaf-b373-4d38-9b79-67246f69ee76  ...  2021-01-05T17:37:27.445000
+4   c9f70667-8865-46fe-b9b4-b7036a911c6e  ...  2021-01-05T18:04:50.794000
+5   b6252884-1195-4b5f-9245-73c052aa60e7  ...  2021-01-05T18:05:52.832000
+6   cd7a2afc-9269-43ec-93e2-9ccae54f4cfd  ...  2021-01-05T18:18:23.893000
+7   3f19097e-8c1c-4963-a061-275cdfded794  ...  2021-01-05T18:18:25.825000
+8   a65756d2-8c65-4706-812a-93fd056d1057  ...  2021-01-05T23:32:54.405000
+9   f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...  2021-01-05T23:34:32.050000
+10  9df1e423-a399-488c-a562-4afd3e22c5ca  ...  2021-01-29T16:00:33.308000
+11  0f8ed38b-7bf4-4450-a5ce-da86bd5ac63d  ...  2021-01-29T16:00:35.154000
+12  fc7374cb-4a88-47d4-b4c7-e205400742ca  ...  2021-01-29T16:26:04.812000
+13  d31d0a71-29d8-40ba-907a-af6c8dc28338  ...  2021-01-29T16:26:06.494000
+14  3b20bd2b-5bf8-4b1a-a08f-78f1fbc191d9  ...  2021-01-29T16:26:08.009000
+15  72b98c8d-a19e-4af2-af6f-68859413721c  ...  2021-01-29T16:26:09.872000
+16  933b843e-f7ef-4879-bc24-625a30a85189  ...  2021-01-29T16:26:11.620000
+
+[17 rows x 8 columns]
+payload[derivative_table]=                                    uuid  ...  footnote_ids
+0   0f8ed38b-7bf4-4450-a5ce-da86bd5ac63d  ...  [F1, F2, F3]
+1   16b9d980-1c80-4e98-8c1b-9dcf0a3d4f2e  ...  [F1, F2, F3]
+2   1ff6ef7d-b300-43f3-920b-01c1b9345a7b  ...  [F1, F2, F3]
+3   3b20bd2b-5bf8-4b1a-a08f-78f1fbc191d9  ...  [F1, F2, F3]
+4   3f19097e-8c1c-4963-a061-275cdfded794  ...  [F1, F2, F3]
+5   552fbcaf-b373-4d38-9b79-67246f69ee76  ...  [F1, F2, F3]
+6   72b98c8d-a19e-4af2-af6f-68859413721c  ...  [F1, F2, F3]
+7   933b843e-f7ef-4879-bc24-625a30a85189  ...  [F1, F2, F3]
+8   9df1e423-a399-488c-a562-4afd3e22c5ca  ...  [F1, F2, F3]
+9   b6252884-1195-4b5f-9245-73c052aa60e7  ...  [F1, F2, F3]
+10  c9f70667-8865-46fe-b9b4-b7036a911c6e  ...  [F1, F2, F3]
+11  cd7a2afc-9269-43ec-93e2-9ccae54f4cfd  ...  [F1, F2, F3]
+12  d31d0a71-29d8-40ba-907a-af6c8dc28338  ...  [F1, F2, F3]
+13  e0a3b041-b583-408a-99a8-31821e6449e9  ...  [F1, F2, F3]
+14  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...  [F1, F2, F3]
+15  fc7374cb-4a88-47d4-b4c7-e205400742ca  ...  [F1, F2, F3]
+
+[16 rows x 19 columns]
+payload[footnotes]=                                    uuid  ... footnote_id
+0   0f8ed38b-7bf4-4450-a5ce-da86bd5ac63d  ...          F1
+1   0f8ed38b-7bf4-4450-a5ce-da86bd5ac63d  ...          F2
+2   0f8ed38b-7bf4-4450-a5ce-da86bd5ac63d  ...          F3
+3   16b9d980-1c80-4e98-8c1b-9dcf0a3d4f2e  ...          F1
+4   16b9d980-1c80-4e98-8c1b-9dcf0a3d4f2e  ...          F2
+5   16b9d980-1c80-4e98-8c1b-9dcf0a3d4f2e  ...          F3
+6   1ff6ef7d-b300-43f3-920b-01c1b9345a7b  ...          F1
+7   1ff6ef7d-b300-43f3-920b-01c1b9345a7b  ...          F2
+8   1ff6ef7d-b300-43f3-920b-01c1b9345a7b  ...          F3
+9   3b20bd2b-5bf8-4b1a-a08f-78f1fbc191d9  ...          F1
+10  3b20bd2b-5bf8-4b1a-a08f-78f1fbc191d9  ...          F2
+11  3b20bd2b-5bf8-4b1a-a08f-78f1fbc191d9  ...          F3
+12  3f19097e-8c1c-4963-a061-275cdfded794  ...          F1
+13  3f19097e-8c1c-4963-a061-275cdfded794  ...          F2
+14  3f19097e-8c1c-4963-a061-275cdfded794  ...          F3
+15  552fbcaf-b373-4d38-9b79-67246f69ee76  ...          F1
+16  552fbcaf-b373-4d38-9b79-67246f69ee76  ...          F2
+17  552fbcaf-b373-4d38-9b79-67246f69ee76  ...          F3
+18  72b98c8d-a19e-4af2-af6f-68859413721c  ...          F1
+19  72b98c8d-a19e-4af2-af6f-68859413721c  ...          F2
+20  72b98c8d-a19e-4af2-af6f-68859413721c  ...          F3
+21  933b843e-f7ef-4879-bc24-625a30a85189  ...          F1
+22  933b843e-f7ef-4879-bc24-625a30a85189  ...          F2
+23  933b843e-f7ef-4879-bc24-625a30a85189  ...          F3
+24  9df1e423-a399-488c-a562-4afd3e22c5ca  ...          F1
+25  9df1e423-a399-488c-a562-4afd3e22c5ca  ...          F2
+26  9df1e423-a399-488c-a562-4afd3e22c5ca  ...          F3
+27  b6252884-1195-4b5f-9245-73c052aa60e7  ...          F1
+28  b6252884-1195-4b5f-9245-73c052aa60e7  ...          F2
+29  b6252884-1195-4b5f-9245-73c052aa60e7  ...          F3
+30  c9f70667-8865-46fe-b9b4-b7036a911c6e  ...          F1
+31  c9f70667-8865-46fe-b9b4-b7036a911c6e  ...          F2
+32  c9f70667-8865-46fe-b9b4-b7036a911c6e  ...          F3
+33  cd7a2afc-9269-43ec-93e2-9ccae54f4cfd  ...          F1
+34  cd7a2afc-9269-43ec-93e2-9ccae54f4cfd  ...          F2
+35  cd7a2afc-9269-43ec-93e2-9ccae54f4cfd  ...          F3
+36  d31d0a71-29d8-40ba-907a-af6c8dc28338  ...          F1
+37  d31d0a71-29d8-40ba-907a-af6c8dc28338  ...          F2
+38  d31d0a71-29d8-40ba-907a-af6c8dc28338  ...          F3
+39  e0a3b041-b583-408a-99a8-31821e6449e9  ...          F1
+40  e0a3b041-b583-408a-99a8-31821e6449e9  ...          F2
+41  e0a3b041-b583-408a-99a8-31821e6449e9  ...          F3
+42  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...          F1
+43  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...          F2
+44  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...          F3
+45  fc7374cb-4a88-47d4-b4c7-e205400742ca  ...          F1
+46  fc7374cb-4a88-47d4-b4c7-e205400742ca  ...          F2
+47  fc7374cb-4a88-47d4-b4c7-e205400742ca  ...          F3
+
+[48 rows x 3 columns]
+payload[general_info]=                                    uuid  ... not_subject_to_section_16
+0   0f8ed38b-7bf4-4450-a5ce-da86bd5ac63d  ...                       NaN
+1   16b9d980-1c80-4e98-8c1b-9dcf0a3d4f2e  ...                       NaN
+2   1ff6ef7d-b300-43f3-920b-01c1b9345a7b  ...                       NaN
+3   3b20bd2b-5bf8-4b1a-a08f-78f1fbc191d9  ...                       NaN
+4   3f19097e-8c1c-4963-a061-275cdfded794  ...                       NaN
+5   552fbcaf-b373-4d38-9b79-67246f69ee76  ...                       NaN
+6   72b98c8d-a19e-4af2-af6f-68859413721c  ...                       NaN
+7   933b843e-f7ef-4879-bc24-625a30a85189  ...                       NaN
+8   9df1e423-a399-488c-a562-4afd3e22c5ca  ...                       NaN
+9   a65756d2-8c65-4706-812a-93fd056d1057  ...                       NaN
+10  b6252884-1195-4b5f-9245-73c052aa60e7  ...                       NaN
+11  c9f70667-8865-46fe-b9b4-b7036a911c6e  ...                       NaN
+12  cd7a2afc-9269-43ec-93e2-9ccae54f4cfd  ...                       NaN
+13  d31d0a71-29d8-40ba-907a-af6c8dc28338  ...                       NaN
+14  e0a3b041-b583-408a-99a8-31821e6449e9  ...                       NaN
+15  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...                       0.0
+16  fc7374cb-4a88-47d4-b4c7-e205400742ca  ...                       NaN
+
+[17 rows x 14 columns]
+payload[non_derivative_table]=                                   uuid  ...  footnote_ids
+0  a65756d2-8c65-4706-812a-93fd056d1057  ...            []
+
+[1 rows x 7 columns]
+payload[reporting_owner_info]=                                    uuid  ...  other_text
+0   0f8ed38b-7bf4-4450-a5ce-da86bd5ac63d  ...         NaN
+1   16b9d980-1c80-4e98-8c1b-9dcf0a3d4f2e  ...         NaN
+2   1ff6ef7d-b300-43f3-920b-01c1b9345a7b  ...         NaN
+3   3b20bd2b-5bf8-4b1a-a08f-78f1fbc191d9  ...         NaN
+4   3f19097e-8c1c-4963-a061-275cdfded794  ...         NaN
+5   552fbcaf-b373-4d38-9b79-67246f69ee76  ...         NaN
+6   72b98c8d-a19e-4af2-af6f-68859413721c  ...         NaN
+7   933b843e-f7ef-4879-bc24-625a30a85189  ...         NaN
+8   9df1e423-a399-488c-a562-4afd3e22c5ca  ...         NaN
+9   a65756d2-8c65-4706-812a-93fd056d1057  ...         NaN
+10  b6252884-1195-4b5f-9245-73c052aa60e7  ...         NaN
+11  c9f70667-8865-46fe-b9b4-b7036a911c6e  ...         NaN
+12  cd7a2afc-9269-43ec-93e2-9ccae54f4cfd  ...         NaN
+13  d31d0a71-29d8-40ba-907a-af6c8dc28338  ...         NaN
+14  e0a3b041-b583-408a-99a8-31821e6449e9  ...         NaN
+15  f1d614fa-06dd-48a5-981e-f1ace9bd5ea9  ...         NaN
+16  fc7374cb-4a88-47d4-b4c7-e205400742ca  ...         NaN
+
+[17 rows x 16 columns]

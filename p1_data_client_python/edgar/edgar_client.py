@@ -56,8 +56,8 @@ class EdgarClient(pabstr.AbstractClient):
         self,
         form_type: Optional[Union[str, List[str]]] = None,
         cik: Optional[peconf.CIK_TYPE] = None,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
+        start_datetime: Optional[str] = None,
+        end_datetime: Optional[str] = None,
         date_mode: Optional[str] = None,
         output_type: Optional[str] = "dataframes",
     ) -> Union[List[peconf.SERVER_RESPONSE_TYPE], pd.DataFrame]:
@@ -68,23 +68,23 @@ class EdgarClient(pabstr.AbstractClient):
             Example: form_type=['13F-HR', '4']
         :param cik: Central Index Key as integer. It could be a list of P1_CIK
             or just one identifier. None means all CIKs.
-        :param start_date: Get data where filing date is >= start_date. Date
-            format is "YYYY-MM-DD". None means the entire available date range.
-        :param end_date: Get data where filing date is <= end_date. Date format
-            is "YYYY-MM-DD". None means the entire available date range.
+        :param start_datetime: Get data where filing date is >= start_date. Date
+            format is "YYYY-MM-DDTHH-MI-SS". None means the entire available date range.
+        :param end_datetime: Get data where filing date is <= end_date. Date format
+            is "YYYY-MM-DDTHH-MI-SS". None means the entire available date range.
         :param date_mode: Define whether dates are
             interpreted as publication dates or knowledge dates
         :param output_type: Output format: 'dict' or 'dataframes'.
         """
-        peutil.check_date_mode(start_date, end_date, date_mode)
+        peutil.check_date_mode(start_datetime, end_datetime, date_mode)
         peutil.check_form_type(form_type, self.form_types)
         cik = peutil.check_sorted_unique_param("cik", cik)
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
             params,
             form_type=form_type,
-            start_date=start_date,
-            end_date=end_date,
+            start_datetime=start_datetime,
+            end_datetime=end_datetime,
             date_mode=date_mode,
             cik=cik,
         )
@@ -108,19 +108,19 @@ class EdgarClient(pabstr.AbstractClient):
     def get_form4_payload(
         self,
         cik: Optional[peconf.CIK_TYPE] = None,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
+        start_datetime: Optional[str] = None,
+        end_datetime: Optional[str] = None,
         date_mode: Optional[str] = None,
         output_type: str = "dataframes",
     ) -> Dict[str, List[peconf.SERVER_RESPONSE_TYPE]]:
-        peutil.check_date_mode(start_date, end_date, date_mode)
+        peutil.check_date_mode(start_datetime, end_datetime, date_mode)
         cik = peutil.check_sorted_unique_param("cik", cik)
         form_type = "form4"
         result = self._get_form4_13_payload(
             form_type,
             cik=cik,
-            start_date=start_date,
-            end_date=end_date,
+            start_datetime=start_datetime,
+            end_datetime=end_datetime,
             date_mode=date_mode,
             output_type=output_type,
         )
@@ -129,8 +129,8 @@ class EdgarClient(pabstr.AbstractClient):
     def get_form8_payload(
         self,
         cik: Optional[peconf.CIK_TYPE] = None,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
+        start_datetime: Optional[str] = None,
+        end_datetime: Optional[str] = None,
         date_mode: Optional[str] = None,
         item: Optional[str] = None,
     ) -> pd.DataFrame:
@@ -139,23 +139,23 @@ class EdgarClient(pabstr.AbstractClient):
 
         :param cik: Central Index Key as integer. It could be a list of P1_CIK
             or just one identifier. None means all CIKs.
-        :param start_date: Get data where filing date is >= start_date. Date
-            format is "YYYY-MM-DD". None means the entire available date range.
-        :param end_date: Get data where filing date is <= end_date. Date format
-            is "YYYY-MM-DD". None means the entire available date range.
+        :param start_datetime: Get data where filing date is >= start_date. Date
+            format is "YYYY-MM-DDTHH-MI-SS". None means the entire available date range.
+        :param end_datetime: Get data where filing date is <= end_date. Date format
+            is "YYYY-MM-DDTHH-MI-SS". None means the entire available date range.
         :param date_mode: Define whether dates are
             interpreted as publication dates or knowledge dates
         :param item: Item to retrieve. None means all items.
         :return: Pandas dataframe with payload data.
         """
-        peutil.check_date_mode(start_date, end_date, date_mode)
+        peutil.check_date_mode(start_datetime, end_datetime, date_mode)
         cik = peutil.check_sorted_unique_param("cik", cik)
         form_name = "form8"
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
             params,
-            start_date=start_date,
-            end_date=end_date,
+            start_datetime=start_datetime,
+            end_datetime=end_datetime,
             item=item,
             cik=cik,
             date_mode=date_mode,
@@ -182,8 +182,8 @@ class EdgarClient(pabstr.AbstractClient):
     def get_form10_payload(
         self,
         cik: Optional[peconf.CIK_TYPE] = None,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
+        start_datetime: Optional[str] = None,
+        end_datetime: Optional[str] = None,
         date_mode: Optional[str] = None,
     ) -> List[peconf.SERVER_RESPONSE_TYPE]:
         """
@@ -191,20 +191,20 @@ class EdgarClient(pabstr.AbstractClient):
 
         :param cik: Central Index Key as integer. Could be list of P1_CIK or
             just one identifier.
-        :param start_date: Get data where filing date is >= start_date. Date
-            format is "YYYY-MM-DD". None means the entire available date range.
-        :param end_date: Get data where filing date is <= end_date. Date format
-            is "YYYY-MM-DD". None means the entire available date range.
+        :param start_datetime: Get data where filing date is >= start_date. Date
+            format is "YYYY-MM-DDTHH-MI-SS". None means the entire available date range.
+        :param end_datetime: Get data where filing date is <= end_date. Date format
+            is "YYYY-MM-DDTHH-MI-SS". None means the entire available date range.
         :param date_mode: Define whether dates are
             interpreted as publication dates or knowledge dates
         :return: List with payload data.
         """
-        peutil.check_date_mode(start_date, end_date, date_mode)
+        peutil.check_date_mode(start_datetime, end_datetime, date_mode)
         cik = peutil.check_sorted_unique_param("cik", cik)
         form_name = "form10"
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
-            params, start_date=start_date, end_date=end_date,
+            params, start_datetime=start_datetime, end_datetime=end_datetime,
             date_mode=date_mode
         )
         url = f'{self.base_url}{self._api_routes["PAYLOAD"]}/{form_name}'
@@ -231,12 +231,12 @@ class EdgarClient(pabstr.AbstractClient):
         self,
         cik: Optional[peconf.CIK_TYPE] = None,
         cusip: Optional[peconf.CUSIP_TYPE] = None,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
+        start_datetime: Optional[str] = None,
+        end_datetime: Optional[str] = None,
         date_mode: Optional[str] = None,
         output_type: str = "dataframes",
     ) -> Dict[str, List[peconf.SERVER_RESPONSE_TYPE]]:
-        peutil.check_date_mode(start_date, end_date, date_mode)
+        peutil.check_date_mode(start_datetime, end_datetime, date_mode)
         cik = peutil.check_sorted_unique_param("cik", cik)
         cusip = peutil.check_sorted_unique_param("cusip", cusip)
         form_type = "form13"
@@ -244,8 +244,8 @@ class EdgarClient(pabstr.AbstractClient):
             form_type,
             cik=cik,
             cusip=cusip,
-            start_date=start_date,
-            end_date=end_date,
+            start_datetime=start_datetime,
+            end_datetime=end_datetime,
             date_mode=date_mode,
             output_type=output_type,
         )
@@ -343,8 +343,8 @@ class EdgarClient(pabstr.AbstractClient):
         form_type: str,
         cik: Optional[peconf.CIK_TYPE] = None,
         cusip: Optional[peconf.CUSIP_TYPE] = None,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
+        start_datetime: Optional[str] = None,
+        end_datetime: Optional[str] = None,
         date_mode: Optional[str] = None,
         output_type: str = "dataframes",
     ) -> Dict[str, List[peconf.SERVER_RESPONSE_TYPE]]:
@@ -356,10 +356,10 @@ class EdgarClient(pabstr.AbstractClient):
             just one identifier.
         :param cusip: Committee on Uniform Securities Identification Procedures
             number. Could be list or just one identifier.
-        :param start_date: Get data where filing date is >= start_date. Date
-            format is "YYYY-MM-DD". None means the entire available date range.
-        :param end_date: Get data where filing date is <= end_date. Date format
-            is "YYYY-MM-DD". None means the entire available date range.
+        :param start_datetime: Get data where filing date is >= start_date. Date
+            format is "YYYY-MM-DDTHH-MI-SS". None means the entire available date range.
+        :param end_datetime: Get data where filing date is <= end_date. Date format
+            is "YYYY-MM-DDTHH-MI-SS". None means the entire available date range.
         :param date_mode: Define whether dates are
             interpreted as publication dates or knowledge dates
         :param output_type: Output format: 'dict' or 'dataframes'.
@@ -380,8 +380,8 @@ class EdgarClient(pabstr.AbstractClient):
         params: Dict[str, Any] = {}
         params = self._set_optional_params(
             params,
-            start_date=start_date,
-            end_date=end_date,
+            start_datetime=start_datetime,
+            end_datetime=end_datetime,
             cik=cik,
             cusip=cusip,
             date_mode=date_mode,

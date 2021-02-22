@@ -20,7 +20,7 @@ sys.path.insert(
 
 import version  # NOQA
 
-INSTALL_REQUIRES = ["pandas>=1.2.0",
+INSTALL_REQUIRES = ["pandas>=1.0.0",
                     "requests>=2.18.0",
                     "tqdm>=4.50.0",
                     "halo>=0.0.31"]
@@ -33,7 +33,7 @@ PACKAGES = [
 
 project_urls = {
     "Site": "https://particle.one/",
-    "API registration": "https://particle.one/api",
+    "API registration": "https://particle.one/api-access",
 }
 
 with open("README.md", "r") as fh:
@@ -59,7 +59,7 @@ setup(
     author_email="gp@particle.one, paul@particle.one",
     maintainer="",
     maintainer_email="",
-    url="https://github.com/ParticleDev/p1_data_client_python",
+    url="https://github.com/ParticleDev/p1_data_client",
     license="MIT",
     classifiers=[
         "Intended Audience :: Developers",

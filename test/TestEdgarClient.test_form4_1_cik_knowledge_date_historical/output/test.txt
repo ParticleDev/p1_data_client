@@ -1,0 +1,85 @@
+len(payload)=6
+payload.keys()=dict_keys(['metadata', 'derivative_table', 'footnotes', 'general_info', 'non_derivative_table', 'reporting_owner_info'])
+payload[metadata]=                                   uuid  ...         release_date
+0  450f0f7e-53b4-4ec3-a74d-4a2a65510424  ...  2020-04-02T00:00:00
+1  e864b2b7-0363-4b03-9bf2-a41bbdceb8cb  ...  2020-04-02T00:00:00
+2  c23dc610-3298-4b2a-8461-073f23b06f0b  ...  2020-04-02T00:00:00
+3  f2b91b84-f217-4594-a3ca-51aebd715456  ...  2020-04-02T00:00:00
+4  592a6eca-7a3b-4fb2-a0db-c94b1923efe7  ...  2020-04-02T00:00:00
+5  e7a48d20-25b5-47f0-a23a-af0d19432258  ...  2020-04-02T00:00:00
+6  93a76f17-5239-46b6-9216-9d31f4a15c3a  ...  2020-04-02T00:00:00
+7  23b0cd7e-2e83-4af0-9aef-bc30d5e9f6ab  ...  2020-04-02T00:00:00
+8  3c90425f-7b6c-402f-abc0-28082df361f0  ...  2020-04-02T00:00:00
+
+[9 rows x 8 columns]
+payload[derivative_table]=                                    uuid  ...  footnote_ids
+0   23b0cd7e-2e83-4af0-9aef-bc30d5e9f6ab  ...  [F1, F2, F3]
+1   3c90425f-7b6c-402f-abc0-28082df361f0  ...  [F1, F2, F3]
+2   3c90425f-7b6c-402f-abc0-28082df361f0  ...  [F1, F2, F3]
+3   450f0f7e-53b4-4ec3-a74d-4a2a65510424  ...  [F1, F2, F3]
+4   592a6eca-7a3b-4fb2-a0db-c94b1923efe7  ...  [F1, F2, F3]
+5   93a76f17-5239-46b6-9216-9d31f4a15c3a  ...  [F1, F2, F3]
+6   c23dc610-3298-4b2a-8461-073f23b06f0b  ...  [F1, F2, F3]
+7   e7a48d20-25b5-47f0-a23a-af0d19432258  ...  [F1, F2, F3]
+8   e864b2b7-0363-4b03-9bf2-a41bbdceb8cb  ...  [F1, F2, F3]
+9   f2b91b84-f217-4594-a3ca-51aebd715456  ...  [F1, F2, F3]
+10  f2b91b84-f217-4594-a3ca-51aebd715456  ...  [F1, F2, F3]
+
+[11 rows x 26 columns]
+payload[footnotes]=                                    uuid  ... footnote_id
+0   23b0cd7e-2e83-4af0-9aef-bc30d5e9f6ab  ...          F1
+1   23b0cd7e-2e83-4af0-9aef-bc30d5e9f6ab  ...          F2
+2   23b0cd7e-2e83-4af0-9aef-bc30d5e9f6ab  ...          F3
+3   3c90425f-7b6c-402f-abc0-28082df361f0  ...          F1
+4   3c90425f-7b6c-402f-abc0-28082df361f0  ...          F2
+5   3c90425f-7b6c-402f-abc0-28082df361f0  ...          F3
+6   450f0f7e-53b4-4ec3-a74d-4a2a65510424  ...          F1
+7   450f0f7e-53b4-4ec3-a74d-4a2a65510424  ...          F2
+8   450f0f7e-53b4-4ec3-a74d-4a2a65510424  ...          F3
+9   592a6eca-7a3b-4fb2-a0db-c94b1923efe7  ...          F1
+10  592a6eca-7a3b-4fb2-a0db-c94b1923efe7  ...          F2
+11  592a6eca-7a3b-4fb2-a0db-c94b1923efe7  ...          F3
+12  93a76f17-5239-46b6-9216-9d31f4a15c3a  ...          F1
+13  93a76f17-5239-46b6-9216-9d31f4a15c3a  ...          F2
+14  93a76f17-5239-46b6-9216-9d31f4a15c3a  ...          F3
+15  c23dc610-3298-4b2a-8461-073f23b06f0b  ...          F1
+16  c23dc610-3298-4b2a-8461-073f23b06f0b  ...          F2
+17  c23dc610-3298-4b2a-8461-073f23b06f0b  ...          F3
+18  e7a48d20-25b5-47f0-a23a-af0d19432258  ...          F1
+19  e7a48d20-25b5-47f0-a23a-af0d19432258  ...          F2
+20  e7a48d20-25b5-47f0-a23a-af0d19432258  ...          F3
+21  e864b2b7-0363-4b03-9bf2-a41bbdceb8cb  ...          F1
+22  e864b2b7-0363-4b03-9bf2-a41bbdceb8cb  ...          F2
+23  e864b2b7-0363-4b03-9bf2-a41bbdceb8cb  ...          F3
+24  f2b91b84-f217-4594-a3ca-51aebd715456  ...          F1
+25  f2b91b84-f217-4594-a3ca-51aebd715456  ...          F2
+26  f2b91b84-f217-4594-a3ca-51aebd715456  ...          F3
+
+[27 rows x 3 columns]
+payload[general_info]=                                   uuid  ... footnote_ids
+0  23b0cd7e-2e83-4af0-9aef-bc30d5e9f6ab  ...           []
+1  3c90425f-7b6c-402f-abc0-28082df361f0  ...           []
+2  450f0f7e-53b4-4ec3-a74d-4a2a65510424  ...           []
+3  592a6eca-7a3b-4fb2-a0db-c94b1923efe7  ...           []
+4  93a76f17-5239-46b6-9216-9d31f4a15c3a  ...           []
+5  c23dc610-3298-4b2a-8461-073f23b06f0b  ...           []
+6  e7a48d20-25b5-47f0-a23a-af0d19432258  ...           []
+7  e864b2b7-0363-4b03-9bf2-a41bbdceb8cb  ...           []
+8  f2b91b84-f217-4594-a3ca-51aebd715456  ...           []
+
+[9 rows x 17 columns]
+payload[non_derivative_table]=Empty DataFrame
+Columns: []
+Index: []
+payload[reporting_owner_info]=                                   uuid  ...  footnote_ids
+0  23b0cd7e-2e83-4af0-9aef-bc30d5e9f6ab  ...            []
+1  3c90425f-7b6c-402f-abc0-28082df361f0  ...            []
+2  450f0f7e-53b4-4ec3-a74d-4a2a65510424  ...            []
+3  592a6eca-7a3b-4fb2-a0db-c94b1923efe7  ...            []
+4  93a76f17-5239-46b6-9216-9d31f4a15c3a  ...            []
+5  c23dc610-3298-4b2a-8461-073f23b06f0b  ...            []
+6  e7a48d20-25b5-47f0-a23a-af0d19432258  ...            []
+7  e864b2b7-0363-4b03-9bf2-a41bbdceb8cb  ...            []
+8  f2b91b84-f217-4594-a3ca-51aebd715456  ...            []
+
+[9 rows x 16 columns]

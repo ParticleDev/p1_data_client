@@ -61,9 +61,10 @@ class AbstractClient:
         Validate string date.
         """
         try:
-            dt.datetime.strptime(date_text, "%Y-%m-%d")
+            dt.datetime.strptime(date_text, "%Y-%m-%dT%H:%M:%S")
         except ValueError:
-            raise ValueError("Incorrect data format, should be YYYY-MM-DD")
+            raise ValueError("Incorrect data format, "
+                             "should be YYYY-MM-DDTHH-MI-SS")
         return True
 
     @property
@@ -137,8 +138,9 @@ class AbstractClient:
         :param kwargs: All parameters should be implemented.
         :return: Params dict.
         """
-        for param, value in [(k, v) for k, v in kwargs.items() if v is not None]:
-            if param.endswith("date"):
+        for param, value in [(k, v) for k, v in kwargs.items()
+                             if v is not None]:
+            if param.endswith("datetime"):
                 self.validate_date(kwargs[param])
             params[param] = value
 

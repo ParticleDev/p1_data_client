@@ -34,7 +34,7 @@ FORM_NAMES_TYPES = {
     "form10": ["10-K", "10-K/A", "10-Q", "10-Q/A"],
     "form13": ["13F-HR", "13F-HR/A"],
 }
-P1_EDGAR_DATA_API_VERSION = os.environ.get("P1_EDGAR_DATA_API_VERSION", "5")
+P1_EDGAR_DATA_API_VERSION = os.environ.get("P1_EDGAR_DATA_API_VERSION", "6")
 # Number of payload in each request to the server.
 # This depends on the size of each form.
 # E.g., `headers` are typically small and fast to retrieved by the backend,

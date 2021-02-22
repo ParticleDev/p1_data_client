@@ -4,7 +4,7 @@ from typing import Any
 import pandas as pd
 
 import p1_data_client_python.helpers.unit_test as hut
-import p1_data_client_python.edgar.edgar_client as p1_edg
+import p1_data_client_python as p1cli
 import p1_data_client_python.exceptions as p1_exc
 
 SEARCH_ROW_EXAMPLE = {
@@ -85,7 +85,7 @@ class MessyResponseMock:
 
 class TestEdgarPythonClientMock(hut.TestCase):
     def setUp(self) -> None:
-        self.client = p1_edg.EdgarClient(token="goo token")
+        self.client = p1cli.EdgarClient(token="goo token")
         super().setUp()
 
     @mock.patch("requests.Session.request")
