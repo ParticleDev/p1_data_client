@@ -1,0 +1,104 @@
+original shape=(9, 9)
+Head:
+{
+"0":{
+"uuid":"3e223767-7517-4e0d-ad40-8c32dca37d29",
+"cik":320193,
+"filing_date":"2020-01-02T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/0000320193-20-000002.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-01-02T18:31:18-05:00",
+"period_of_report":"2019-12-27T00:00:00-05:00",
+"header_availability_timestamp":"2020-06-12T19:46:32.916897-04:00"
+},
+"1":{
+"uuid":"0e67e380-b87c-419c-a8fe-e086cbbb4adf",
+"cik":732717,
+"filing_date":"2020-01-03T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/732717\/0001127602-20-000577.txt",
+"company":"AT&T INC.",
+"acceptance_datetime":"2020-01-03T15:31:35-05:00",
+"period_of_report":"2019-12-31T00:00:00-05:00",
+"header_availability_timestamp":"2020-06-12T19:46:28.584799-04:00"
+},
+"2":{
+"uuid":"1f9387cb-7bda-401f-b333-01170faf5277",
+"cik":732717,
+"filing_date":"2020-01-03T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/732717\/0001127602-20-000555.txt",
+"company":"AT&T INC.",
+"acceptance_datetime":"2020-01-03T15:22:00-05:00",
+"period_of_report":"2019-12-31T00:00:00-05:00",
+"header_availability_timestamp":"2020-06-12T19:46:28.584799-04:00"
+},
+"3":{
+"uuid":"7020a8db-b792-4249-bd16-22e9949fde7b",
+"cik":732717,
+"filing_date":"2020-01-03T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/732717\/0001127602-20-000560.txt",
+"company":"AT&T INC.",
+"acceptance_datetime":"2020-01-03T15:23:45-05:00",
+"period_of_report":"2019-12-31T00:00:00-05:00",
+"header_availability_timestamp":"2020-06-12T19:46:28.584799-04:00"
+},
+"4":{
+"uuid":"8edf4f52-e560-4106-b146-0f51d23b3174",
+"cik":732717,
+"filing_date":"2020-01-03T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/732717\/0001127602-20-000574.txt",
+"company":"AT&T INC.",
+"acceptance_datetime":"2020-01-03T15:29:52-05:00",
+"period_of_report":"2019-12-31T00:00:00-05:00",
+"header_availability_timestamp":"2020-06-12T19:46:28.584799-04:00"
+},
+"5":{
+"uuid":"b5774166-b4c7-4829-a0c6-c763823838c3",
+"cik":732717,
+"filing_date":"2020-01-03T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/732717\/0001127602-20-000564.txt",
+"company":"AT&T INC.",
+"acceptance_datetime":"2020-01-03T15:25:44-05:00",
+"period_of_report":"2019-12-31T00:00:00-05:00",
+"header_availability_timestamp":"2020-06-12T19:46:28.584799-04:00"
+},
+"6":{
+"uuid":"cea734a6-0efc-4047-a2ae-0bb6e915c13e",
+"cik":732717,
+"filing_date":"2020-01-03T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/732717\/0001127602-20-000569.txt",
+"company":"AT&T INC.",
+"acceptance_datetime":"2020-01-03T15:27:03-05:00",
+"period_of_report":"2019-12-31T00:00:00-05:00",
+"header_availability_timestamp":"2020-06-12T19:46:28.584799-04:00"
+},
+"7":{
+"uuid":"d3679635-b9a5-48b2-af60-ac0ec0a98144",
+"cik":732717,
+"filing_date":"2020-01-03T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/732717\/0001127602-20-000572.txt",
+"company":"AT&T INC.",
+"acceptance_datetime":"2020-01-03T15:28:28-05:00",
+"period_of_report":"2019-12-31T00:00:00-05:00",
+"header_availability_timestamp":"2020-06-12T19:46:28.584799-04:00"
+},
+"8":{
+"uuid":"d8f28209-6fe1-4111-a6a1-2d9ad665562e",
+"cik":732717,
+"filing_date":"2020-01-03T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/732717\/0001127602-20-000578.txt",
+"company":"AT&T INC.",
+"acceptance_datetime":"2020-01-03T15:33:08-05:00",
+"period_of_report":"2019-12-31T00:00:00-05:00",
+"header_availability_timestamp":"2020-06-12T19:46:28.584799-04:00"
+}
+}
+Tail:

@@ -7,6 +7,8 @@ Import as: import p1_data_client_python.edgar.config as peconf
 import os
 from typing import Any, Dict, List, Union
 
+# Current Data API version that fit current p1 Python client.
+CURRENT_EDGAR_DATA_API_VERSION = "7"
 # Number of items (CIK, CUSIP) in each request to the server.
 # We chunk the items to avoid creating query URL that are too long.
 ITEM_BLOCK_SIZE = 500
@@ -34,7 +36,9 @@ FORM_NAMES_TYPES = {
     "form10": ["10-K", "10-K/A", "10-Q", "10-Q/A"],
     "form13": ["13F-HR", "13F-HR/A"],
 }
-P1_EDGAR_DATA_API_VERSION = os.environ.get("P1_EDGAR_DATA_API_VERSION", "6")
+# Edgar's data API constant passes to Python client class.
+P1_EDGAR_DATA_API_VERSION = os.environ.get("P1_EDGAR_DATA_API_VERSION",
+                                           CURRENT_EDGAR_DATA_API_VERSION)
 # Number of payload in each request to the server.
 # This depends on the size of each form.
 # E.g., `headers` are typically small and fast to retrieved by the backend,

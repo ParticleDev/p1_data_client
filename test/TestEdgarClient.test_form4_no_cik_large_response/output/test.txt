@@ -1,0 +1,80 @@
+len(payload)=6
+payload.keys()=dict_keys(['metadata', 'derivative_table', 'footnotes', 'general_info', 'non_derivative_table', 'reporting_owner_info'])
+payload[metadata]= uuid ... form_availability_timestamp
+0 f11af64a-5d11-4fbe-985c-255014d7db6e ... 2021-03-03T13:20:16.863000-05:00
+1 67d20a67-4a06-4929-b9bb-86a40ab0c465 ... 2021-03-03T13:20:16.863000-05:00
+2 e3138b58-8671-4e3d-94db-12cc32411308 ... 2021-03-03T13:20:16.863000-05:00
+3 3a1a6e90-8445-4ddf-9d17-acd0675f8551 ... 2021-03-03T13:20:16.863000-05:00
+4 390aa8a0-69f0-45c8-8284-fc7f0672d04a ... 2021-03-03T13:20:16.863000-05:00
+.. ... ... ...
+95 544f3a2d-449a-4b95-9c25-4306e2ac9612 ... 2021-03-03T13:20:16.863000-05:00
+96 3b90364a-61b9-47ec-bfb6-e04f862b55d8 ... 2021-03-03T13:20:16.863000-05:00
+97 e02c40bc-c0e8-44bd-9d1b-9b754e147d1c ... 2021-03-03T13:20:16.863000-05:00
+98 bda1f4e9-a6b4-41fb-88d5-938440db690a ... 2021-03-03T13:20:16.863000-05:00
+99 423b7ae6-5c50-4874-87af-82c4ab9af0b0 ... 2021-03-03T13:20:16.863000-05:00
+[100 rows x 7 columns]
+payload[derivative_table]= uuid ... footnote_ids
+0 03a85f48-7e47-4eee-b829-cfced9d1f3f2 ... [F3, F4, F5]
+1 03a85f48-7e47-4eee-b829-cfced9d1f3f2 ... [F6]
+2 040e11fa-5f1a-4590-9ae2-776b8331692f ... [F1, F2, F3]
+3 040e11fa-5f1a-4590-9ae2-776b8331692f ... [F1, F2, F3]
+4 08eafc7b-9085-48a3-bb65-dcfd418de11f ... [F4]
+.. ... ... ...
+95 46d9f3b8-56bb-475d-a859-8fb0df1fd7cc ... []
+96 46d9f3b8-56bb-475d-a859-8fb0df1fd7cc ... []
+97 46d9f3b8-56bb-475d-a859-8fb0df1fd7cc ... []
+98 46d9f3b8-56bb-475d-a859-8fb0df1fd7cc ... []
+99 46d9f3b8-56bb-475d-a859-8fb0df1fd7cc ... []
+[100 rows x 26 columns]
+payload[footnotes]= uuid ... footnote_id
+0 00b6a50f-272d-4b0c-9b7d-cb08c449fe78 ... F1
+1 02829e5f-0a2c-45e6-9f41-7291e9c0743b ... F1
+2 03a85f48-7e47-4eee-b829-cfced9d1f3f2 ... F1
+3 03a85f48-7e47-4eee-b829-cfced9d1f3f2 ... F2
+4 03a85f48-7e47-4eee-b829-cfced9d1f3f2 ... F3
+.. ... ... ...
+95 1eae258a-f9ba-44d3-a8ef-1569bb981302 ... F2
+96 1eae258a-f9ba-44d3-a8ef-1569bb981302 ... F3
+97 1ed13a8d-957c-4ac4-8090-46f891dd5d42 ... F1
+98 20d844cd-d8c6-4278-bf3c-478cf385297f ... F1
+99 20d844cd-d8c6-4278-bf3c-478cf385297f ... F2
+[100 rows x 3 columns]
+payload[general_info]= uuid ... footnote_ids
+0 00b6a50f-272d-4b0c-9b7d-cb08c449fe78 ... []
+1 02829e5f-0a2c-45e6-9f41-7291e9c0743b ... []
+2 03a85f48-7e47-4eee-b829-cfced9d1f3f2 ... []
+3 040e11fa-5f1a-4590-9ae2-776b8331692f ... []
+4 07849067-be6c-433b-9774-f07bfc363b56 ... []
+.. ... ... ...
+95 46d9f3b8-56bb-475d-a859-8fb0df1fd7cc ... []
+96 47ffa097-f1db-4181-8be5-ff4f1196ec56 ... []
+97 49306ac9-b5c7-4eee-8e73-0879a6ca1289 ... []
+98 495de0b6-39a8-4765-954b-deedf014ede2 ... []
+99 49ffe94a-1b69-47b2-89a6-4ab67a49885a ... []
+[100 rows x 17 columns]
+payload[non_derivative_table]= uuid ... footnote_ids
+0 00b6a50f-272d-4b0c-9b7d-cb08c449fe78 ... [F1]
+1 02829e5f-0a2c-45e6-9f41-7291e9c0743b ... [F1]
+2 03a85f48-7e47-4eee-b829-cfced9d1f3f2 ... [F1]
+3 03a85f48-7e47-4eee-b829-cfced9d1f3f2 ... [F2]
+4 07849067-be6c-433b-9774-f07bfc363b56 ... []
+.. ... ... ...
+95 1ed13a8d-957c-4ac4-8090-46f891dd5d42 ... []
+96 1ed13a8d-957c-4ac4-8090-46f891dd5d42 ... [F1]
+97 20d844cd-d8c6-4278-bf3c-478cf385297f ... []
+98 20d844cd-d8c6-4278-bf3c-478cf385297f ... [F1]
+99 20d844cd-d8c6-4278-bf3c-478cf385297f ... [F2, F3]
+[100 rows x 19 columns]
+payload[reporting_owner_info]= uuid ... footnote_ids
+0 00b6a50f-272d-4b0c-9b7d-cb08c449fe78 ... []
+1 02829e5f-0a2c-45e6-9f41-7291e9c0743b ... []
+2 03a85f48-7e47-4eee-b829-cfced9d1f3f2 ... []
+3 040e11fa-5f1a-4590-9ae2-776b8331692f ... []
+4 07849067-be6c-433b-9774-f07bfc363b56 ... []
+.. ... ... ...
+95 4264ee40-ec58-42ed-8bb9-148bb624a241 ... []
+96 42a54832-360b-436f-af8f-4c586fad69bf ... []
+97 42ff2f9f-1059-4cbc-a68b-978686bea33c ... []
+98 44642e81-f605-42b3-8321-7d49e37ce855 ... []
+99 4569f6ca-bbe7-46a5-b4f6-25126ea65635 ... []
+[100 rows x 16 columns]

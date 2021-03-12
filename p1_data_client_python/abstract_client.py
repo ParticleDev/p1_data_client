@@ -61,10 +61,11 @@ class AbstractClient:
         Validate string date.
         """
         try:
-            dt.datetime.strptime(date_text, "%Y-%m-%dT%H:%M:%S")
+            dt.datetime.strptime(date_text, "%Y-%m-%dT%H:%M:%S%z")
         except ValueError:
             raise ValueError("Incorrect data format, "
-                             "should be YYYY-MM-DDTHH-MI-SS")
+                             "should be YYYY-MM-DDTHH-MI-SSTZINFO."
+                             "Example: 2021-03-05T19:41:02-05:00.")
         return True
 
     @property

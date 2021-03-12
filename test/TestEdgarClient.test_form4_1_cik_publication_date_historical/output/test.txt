@@ -1,19 +1,19 @@
 len(payload)=6
 payload.keys()=dict_keys(['metadata', 'derivative_table', 'footnotes', 'general_info', 'non_derivative_table', 'reporting_owner_info'])
-payload[metadata]=                                    uuid  ...         release_date
-0   baf035f9-60fc-4c7f-bf7e-8a440812bdd8  ...  2016-01-26T00:00:00
-1   0d6ad0d8-7ec3-47e4-8ac4-bd8f6a1dfabe  ...  2016-01-26T00:00:00
-2   0000d6fd-1823-468a-8c7d-9d4f373df853  ...  2016-01-26T00:00:00
-3   b5384040-e84d-45b6-b637-f3da7afcef42  ...  2016-01-26T00:00:00
-4   d638f9ad-4e94-42dd-b6b5-779b06e10585  ...  2016-01-26T00:00:00
-5   bc328fe7-6bd2-4915-a214-f8a3bdcdaf98  ...  2016-01-26T00:00:00
-6   2b56a738-4b66-4c55-acf3-bd32a67a6900  ...  2016-01-26T00:00:00
-7   15f89b44-7b63-4854-ac0b-8bb775fbebe2  ...  2016-01-26T00:00:00
-8   946266dc-b02c-4ebc-bed6-b24c8e0ad5e1  ...  2016-01-26T00:00:00
-9   d4f78566-f306-4912-82fa-0cab2b1a27c8  ...  2016-01-26T00:00:00
-10  f3685aa3-ee7e-4757-b937-0678e1eebf47  ...  2016-01-26T00:00:00
+payload[metadata]=                                    uuid  ...       form_availability_timestamp
+0   0000d6fd-1823-468a-8c7d-9d4f373df853  ...  2021-03-03T13:20:16.863000-05:00
+1   0d6ad0d8-7ec3-47e4-8ac4-bd8f6a1dfabe  ...  2021-03-03T13:20:16.863000-05:00
+2   15f89b44-7b63-4854-ac0b-8bb775fbebe2  ...  2021-03-03T13:20:16.863000-05:00
+3   2b56a738-4b66-4c55-acf3-bd32a67a6900  ...  2021-03-03T13:20:16.863000-05:00
+4   946266dc-b02c-4ebc-bed6-b24c8e0ad5e1  ...  2021-03-03T13:20:16.863000-05:00
+5   b5384040-e84d-45b6-b637-f3da7afcef42  ...  2021-03-03T13:20:16.863000-05:00
+6   baf035f9-60fc-4c7f-bf7e-8a440812bdd8  ...  2021-03-03T13:20:16.863000-05:00
+7   bc328fe7-6bd2-4915-a214-f8a3bdcdaf98  ...  2021-03-03T13:20:16.863000-05:00
+8   d4f78566-f306-4912-82fa-0cab2b1a27c8  ...  2021-03-03T13:20:16.863000-05:00
+9   d638f9ad-4e94-42dd-b6b5-779b06e10585  ...  2021-03-03T13:20:16.863000-05:00
+10  f3685aa3-ee7e-4757-b937-0678e1eebf47  ...  2021-03-03T13:20:16.863000-05:00
 
-[11 rows x 8 columns]
+[11 rows x 7 columns]
 payload[derivative_table]=Empty DataFrame
 Columns: []
 Index: []

@@ -1,0 +1,36 @@
+len(payload)=2
+payload[0].keys()=dict_keys(['meta', 'data'])
+payload[0]["meta"]=
+{'cik': {'0': 1750},
+'filing_date': {'0': '2018-03-21T00:00:00-04:00'},
+'form_type': {'0': '10-Q'},
+'is_real_time': {'0': True},
+'uuid': {'0': 'd4e046f8-f892-423f-aaef-258abc5d117d'}}
+{'calculation': {'calculationLinkbase': [['linkRole',
+{'definition': '00100 - Statement - '
+'Condensed '
+'Consolidated Balance '
+'Sheets',
+'role': 'http://www.aarcorp.com/role/StatementCondensedConsolidatedBalanceSheets'},
+{},
+['concept',
+{'label': 'Assets',
+'name': 'us-gaap:Assets'},
+{'balance': 'debit'},
+['concept',
+{'label': '(+1) Assets, Current',
+'name': 'us-gaap:AssetsCurrent'},
+{'balance': 'debit',
+'weight': '1 '},
+['concept',
+{'label': '(+1) Cash and Cash '
+'Equivalents, at '
+'Carrying Value',
+'name': 'us-gaap:CashAndCashEquivalentsAtCarryingValue'},
+{'balance': 'debit',
+'weight': '1 '}],
+['concept',
+{'label': '(+1) Restricted Cash '
+'and Cash Equivalents, '
+'Current',
+'name': 'us-gaap:RestrictedCashAndCashEqui

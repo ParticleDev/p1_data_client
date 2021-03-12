@@ -1,0 +1,59 @@
+original shape=(3, 16)
+Head:
+{
+    "0":{
+        "form_uuid":"365b632c-de5f-4ced-a5b0-4ebf99e968ba",
+        "filing_url":"https:\/\/www.sec.gov\/Archives\/edgar\/data\/95552\/000119312521070328\/0001193125-21-070328-index.html",
+        "form_publication_timestamp":null,
+        "filing_date":"2021-03-05T00:00:00-05:00",
+        "is_real_time":true,
+        "rt_form_processing_timestamp":"2021-03-05T07:20:48.806000-05:00",
+        "cik":95552,
+        "ticker":"SUP",
+        "item_name":"ACT_QUARTER",
+        "form_table_row_name":"Current Assets",
+        "item_value":383.6,
+        "compustat_timestamp":null,
+        "period_of_report":"2020-12-31T00:00:00-05:00",
+        "compustat_coifnd_id":null,
+        "form_availability_timestamp":"2021-03-05T07:20:50.103000-05:00",
+        "gvk":10195
+    },
+    "1":{
+        "form_uuid":"e5a2ff38-ecf4-4f72-b203-443d4f57fb67",
+        "filing_url":"https:\/\/www.sec.gov\/Archives\/edgar\/data\/98222\/000143774921005039\/0001437749-21-005039-index.html",
+        "form_publication_timestamp":null,
+        "filing_date":"2021-03-05T00:00:00-05:00",
+        "is_real_time":true,
+        "rt_form_processing_timestamp":"2021-03-05T06:10:08.508000-05:00",
+        "cik":98222,
+        "ticker":"TDW",
+        "item_name":"ACT_QUARTER",
+        "form_table_row_name":"Total current assets",
+        "item_value":388.649,
+        "compustat_timestamp":null,
+        "period_of_report":"2020-12-31T00:00:00-05:00",
+        "compustat_coifnd_id":null,
+        "form_availability_timestamp":"2021-03-05T06:10:11-05:00",
+        "gvk":10565
+    },
+    "2":{
+        "form_uuid":"d5ae42d0-233f-4038-9286-fed774df2d91",
+        "filing_url":"https:\/\/www.sec.gov\/Archives\/edgar\/data\/1017480\/000101748021000018\/0001017480-21-000018-index.html",
+        "form_publication_timestamp":null,
+        "filing_date":"2021-03-05T00:00:00-05:00",
+        "is_real_time":true,
+        "rt_form_processing_timestamp":"2021-03-05T08:06:28.034000-05:00",
+        "cik":1017480,
+        "ticker":"HIBB",
+        "item_name":"ACT_QUARTER",
+        "form_table_row_name":"Total current assets",
+        "item_value":439.8,
+        "compustat_timestamp":null,
+        "period_of_report":"2021-01-31T00:00:00-05:00",
+        "compustat_coifnd_id":null,
+        "form_availability_timestamp":"2021-03-05T08:06:32.155000-05:00",
+        "gvk":63763
+    }
+}
+Tail:

@@ -1,0 +1,16 @@
+original shape=(1, 9)
+Head:
+{
+"0":{
+"uuid":"da15f8a0-2a47-4e4c-a7e9-b38f0fd63796",
+"cik":1404574,
+"filing_date":"2012-11-14T00:00:00-05:00",
+"form_type":"13F-HR",
+"edgar_path":"edgar\/data\/1404574\/0000919574-12-006180.txt",
+"company":"683 Capital Management, LLC",
+"acceptance_datetime":"2012-11-13T20:20:20-05:00",
+"period_of_report":"2012-09-30T00:00:00-04:00",
+"header_availability_timestamp":"2020-06-12T19:05:02.759003-04:00"
+}
+}
+Tail:

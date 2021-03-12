@@ -1,8 +1,33 @@
-        item                     description
- IVSTCH_YEAR Short-Term Investments - Change
- CHE_QUARTER Cash and Short-Term Investments
-ALTO_QUARTER          Other Long-term Assets
-IVLT_QUARTER     Total Long-term Investments
-DLTT_QUARTER          Long-Term Debt - Total
-   DLTR_YEAR      Long-Term Debt - Reduction
-  DLTIS_YEAR       Long-Term Debt - Issuance
+original shape=(7, 2)
+Head:
+{
+    "0":{
+        "item":"IVSTCH_YEAR",
+        "description":"Short-Term Investments - Change"
+    },
+    "1":{
+        "item":"CHE_QUARTER",
+        "description":"Cash and Short-Term Investments"
+    },
+    "2":{
+        "item":"ALTO_QUARTER",
+        "description":"Other Long-term Assets"
+    },
+    "3":{
+        "item":"IVLT_QUARTER",
+        "description":"Total Long-term Investments"
+    },
+    "4":{
+        "item":"DLTT_QUARTER",
+        "description":"Long-Term Debt - Total"
+    },
+    "5":{
+        "item":"DLTR_YEAR",
+        "description":"Long-Term Debt - Reduction"
+    },
+    "6":{
+        "item":"DLTIS_YEAR",
+        "description":"Long-Term Debt - Issuance"
+    }
+}
+Tail:

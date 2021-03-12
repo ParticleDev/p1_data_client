@@ -1,0 +1,170 @@
+original shape=(15, 9)
+Head:
+{
+"0":{
+"uuid":"17844b30-e93c-4016-8723-50e2b21a6b21",
+"cik":320193,
+"filing_date":"2020-04-03T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/0000320193-20-000039.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-04-03T18:31:43-04:00",
+"period_of_report":"2020-04-01T00:00:00-04:00",
+"header_availability_timestamp":"2020-12-01T12:11:56.879457-05:00"
+},
+"1":{
+"uuid":"1cdc4e9a-d75a-4b28-8b4a-344c9cdae2b0",
+"cik":320193,
+"filing_date":"2020-04-03T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/0000320193-20-000038.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-04-03T18:30:47-04:00",
+"period_of_report":"2020-04-01T00:00:00-04:00",
+"header_availability_timestamp":"2020-12-01T12:11:56.879457-05:00"
+},
+"2":{
+"uuid":"e77769f4-4b61-4b2a-a208-ab3c00df7be3",
+"cik":320193,
+"filing_date":"2020-04-09T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/0000320193-20-000041.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-04-09T18:30:47-04:00",
+"period_of_report":"2020-04-07T00:00:00-04:00",
+"header_availability_timestamp":"2020-12-01T12:11:56.879457-05:00"
+},
+"3":{
+"uuid":"0d326d10-93d4-4380-a942-6696a4a33aaf",
+"cik":320193,
+"filing_date":"2020-04-17T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/0000320193-20-000044.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-04-17T18:30:46-04:00",
+"period_of_report":"2020-04-15T00:00:00-04:00",
+"header_availability_timestamp":"2020-12-01T12:11:56.879457-05:00"
+},
+"4":{
+"uuid":"105f1674-749e-4999-a94f-c75f853f8352",
+"cik":320193,
+"filing_date":"2020-04-17T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/0000320193-20-000045.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-04-17T18:31:43-04:00",
+"period_of_report":"2020-04-15T00:00:00-04:00",
+"header_availability_timestamp":"2020-12-01T12:11:56.879457-05:00"
+},
+"5":{
+"uuid":"49315652-eb4f-4f7f-baa2-18c972592edf",
+"cik":320193,
+"filing_date":"2020-04-30T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/0000320193-20-000054.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-04-30T21:30:05-04:00",
+"period_of_report":"2020-04-28T00:00:00-04:00",
+"header_availability_timestamp":"2020-12-01T12:11:56.879457-05:00"
+},
+"6":{
+"uuid":"ca82b6d7-a7d9-4887-92d8-7071681d1a4e",
+"cik":320193,
+"filing_date":"2020-05-12T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/0000320193-20-000056.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-05-12T18:30:32-04:00",
+"period_of_report":"2020-05-08T00:00:00-04:00",
+"header_availability_timestamp":"2020-12-01T12:11:56.879457-05:00"
+},
+"7":{
+"uuid":"7a8e03ac-4a0f-4523-88db-46880a298088",
+"cik":320193,
+"filing_date":"2020-10-05T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/000032019320000084\/0000320193-20-000084.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-10-05T18:33:56-04:00",
+"period_of_report":"2020-10-01T00:00:00-04:00",
+"header_availability_timestamp":"2020-10-05T18:35:08.731785-04:00"
+},
+"8":{
+"uuid":"80cc1c3d-7ac3-4d0b-8680-d6cecbe7986c",
+"cik":320193,
+"filing_date":"2020-10-05T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/000032019320000082\/0000320193-20-000082.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-10-05T18:30:48-04:00",
+"period_of_report":"2020-10-01T00:00:00-04:00",
+"header_availability_timestamp":"2020-10-05T18:32:25.124394-04:00"
+},
+"9":{
+"uuid":"e96916e1-bec6-4e8b-acbf-192cf1424147",
+"cik":320193,
+"filing_date":"2020-10-05T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/000032019320000083\/0000320193-20-000083.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-10-05T18:32:48-04:00",
+"period_of_report":"2020-10-01T00:00:00-04:00",
+"header_availability_timestamp":"2020-10-05T18:33:45.081635-04:00"
+},
+"10":{
+"uuid":"37eb99ea-32e7-4027-a518-e8c8684b804e",
+"cik":320193,
+"filing_date":"2020-10-13T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/000032019320000086\/0000320193-20-000086.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-10-13T18:30:27-04:00",
+"period_of_report":"2020-10-09T00:00:00-04:00",
+"header_availability_timestamp":"2020-10-13T18:31:27.426453-04:00"
+},
+"11":{
+"uuid":"3aed8d22-af19-48ad-b2e2-5669c779b024",
+"cik":320193,
+"filing_date":"2020-10-19T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/000032019320000089\/0000320193-20-000089.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-10-19T18:30:33-04:00",
+"period_of_report":"2020-10-15T00:00:00-04:00",
+"header_availability_timestamp":"2020-10-19T18:32:37.829123-04:00"
+},
+"12":{
+"uuid":"d3b8d534-cc93-4aa1-87e2-deb2d358135d",
+"cik":320193,
+"filing_date":"2020-10-19T00:00:00-04:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/000032019320000090\/0000320193-20-000090.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-10-19T18:32:33-04:00",
+"period_of_report":"2020-10-15T00:00:00-04:00",
+"header_availability_timestamp":"2020-10-19T18:34:04.073264-04:00"
+},
+"13":{
+"uuid":"86ef48fc-d7dd-416b-ab02-8d02083f9991",
+"cik":320193,
+"filing_date":"2020-11-05T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/000032019320000099\/0000320193-20-000099.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-11-05T18:30:55-05:00",
+"period_of_report":"2020-11-03T00:00:00-05:00",
+"header_availability_timestamp":"2020-11-05T18:31:49.493014-05:00"
+},
+"14":{
+"uuid":"9a8a7d43-a0e9-445f-ac77-7826dad3a5a6",
+"cik":320193,
+"filing_date":"2020-11-17T00:00:00-05:00",
+"form_type":"4",
+"edgar_path":"edgar\/data\/320193\/000032019320000101\/0000320193-20-000101.txt",
+"company":"Apple Inc.",
+"acceptance_datetime":"2020-11-17T18:30:43-05:00",
+"period_of_report":"2020-11-13T00:00:00-05:00",
+"header_availability_timestamp":"2020-11-17T18:31:53.079431-05:00"
+}
+}
+Tail:

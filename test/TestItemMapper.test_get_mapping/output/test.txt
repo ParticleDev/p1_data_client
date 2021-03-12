@@ -1,173 +1,693 @@
-            item                                                               description
-   ACCHG_QUARTER                                    Accounting Changes / Cumulative Effect
- ACOMINC_QUARTER                             Accumulated Other Comprehensive Income (Loss)
-     ACO_QUARTER                                            Current Assets - Other - Total
-     ACT_QUARTER                                                    Current Assets - Total
-    ADRR_QUARTER                                                                 ADR Ratio
-    AJEX_QUARTER                       Adjustment Factor (Company) - Cumulative by Ex-Date
-     AJP_QUARTER                       Adjustment Factor (Company) - Cumulative byPay-Date
-    ALTO_QUARTER                                                    Other Long-term Assets
-     AOLOCH_YEAR                               Assets and Liabilities - Other (Net Change)
-      AO_QUARTER                                                    Assets - Other - Total
-     APALCH_YEAR            Accounts Payable and Accrued Liabilities - Increase (Decrease)
-      AP_QUARTER                                         Account Payable/Creditors - Trade
-     AQA_QUARTER                                              Acquisition/Merger After-Tax
-        AQC_YEAR                                                              Acquisitions
-     AQD_QUARTER                                     Acquisition/Merger Diluted EPS Effect
-   AQEPS_QUARTER                                       Acquisition/Merger Basic EPS Effect
-     AQP_QUARTER                                                 Acquisition/Merger Pretax
-      AT_QUARTER                                                            Assets - Total
-   CAPR1_QUARTER                                      Risk-Adjusted Capital Ratio - Tier 1
-   CAPRT_QUARTER                           Risk-Adjusted Capital Ratio / Total / Quarterly
-    CAPS_QUARTER                                     Capital Surplus/Share Premium Reserve
-       CAPX_YEAR                                                      Capital Expenditures
-     CEQ_QUARTER                                            Common/Ordinary Equity - Total
-      CHECH_YEAR                           Cash and Cash Equivalents - Increase (Decrease)
-     CHE_QUARTER                                           Cash and Short-Term Investments
-    COGS_QUARTER                                                        Cost of Goods Sold
-   CSH12_QUARTER     Common Shares Used to Calculate Earnings Per Share / 12 Months Moving
-   CSHFD_QUARTER                                                Com Shares for Diluted EPS
-    CSHI_QUARTER                                                      Common Shares Issued
-    CSHO_QUARTER                                                 Common Shares Outstanding
-   CSHPR_QUARTER                Common Shares Used to Calculate Earnings Per Share / Basic
-   CSHTR_QUARTER                                            Common Shares Traded / Quarter
-   CSTKE_QUARTER                                 Common Stock Equivalents / Dollar Savings
-    CSTK_QUARTER                                           Common/Ordinary Stock (Capital)
-  CURRTR_QUARTER                                                 Currency Translation Rate
-    DCOM_QUARTER                                                     Deferred Compensation
-   DILAD_QUARTER                                                       Dilution Adjustment
-   DILAV_QUARTER                        Dilution Available / Excluding Extraordinary Items
-      DLCCH_YEAR                                                   Changes in Current Debt
-     DLC_QUARTER                                               Debt in Current Liabilities
-      DLTIS_YEAR                                                 Long-Term Debt - Issuance
-       DLTR_YEAR                                                Long-Term Debt - Reduction
-    DLTT_QUARTER                                                    Long-Term Debt - Total
-      DO_QUARTER                                                   Discontinued Operations
-  DPACRE_QUARTER                                   Accumulated Depreciation of RE Property
-   DPACT_QUARTER                    Depreciation, Depletion and Amortization (Accumulated)
-        DPC_YEAR                   Depreciation and Amortization - Statement of Cash Flows
-      DP_QUARTER                                     Depreciation and Amortization - Total
-   DPRET_QUARTER                                                    Depr/Amort of Property
-     DVP_QUARTER                                          Dividends / Preferred/Preference
-   DVPSP_QUARTER                                  Dividends per Share / Pay Date / Quarter
-   DVPSX_QUARTER                                          Div per Share - Exdate - Quarter
-          DVRATE                                                   Dividend Rate / Monthly
-         DV_YEAR                                                            Cash Dividends
-   EPSFI_QUARTER              Earnings Per Share (Diluted) / Including Extraordinary Items
-   EPSFX_QUARTER              Earnings Per Share (Diluted) / Excluding Extraordinary items
-   EPSPI_QUARTER                Earnings Per Share (Basic) / Including Extraordinary Items
-   EPSPX_QUARTER                Earnings Per Share (Basic) / Excluding Extraordinary Items
-      ESUBC_YEAR                                         Equity in Net Loss/Earnings (C/F)
-       EXRE_YEAR                                                      Exchange Rate Effect
-     FCA_QUARTER                                            Foreign Exchange Income (Loss)
-       FIAO_YEAR                                              Financing Activities - Other
-      FINCF_YEAR                                      Financing Activities - Net Cash Flow
-       FOPO_YEAR                                             Funds from Operations - Other
-       FOPT_YEAR                                             Funds From Operations / Total
-      FSRCO_YEAR                                                  Sources of Funds - Other
-      FSRCT_YEAR                                                  Sources of Funds - Total
-      FUSEO_YEAR                                                     Uses of Funds - Other
-      FUSET_YEAR                                                     Uses of Funds - Total
-  GDWLAM_QUARTER                                                  Amortization of Goodwill
-  GDWLIA_QUARTER                                          Impairment of Goodwill After-tax
-  GDWLID_QUARTER                                 Impairment of Goodwill Diluted EPS Effect
-GDWLIEPS_QUARTER                                   Impairment of Goodwill Basic EPS Effect
-  GDWLIP_QUARTER                                             Impairment of Goodwill Pretax
-    GDWL_QUARTER                                                            Goodwill (net)
-     GLA_QUARTER                                                       Gain/Loss After-Tax
-     GLD_QUARTER                                              Gain/Loss Diluted EPS Effect
-   GLEPS_QUARTER                                                Gain/Loss Basic EPS Effect
-     GLP_QUARTER                                                          Gain/Loss Pretax
-   IBADJ_QUARTER Income Before Extraordinary Items / Adjusted for Common Stock Equivalents
-   IBCOM_QUARTER                  Income Before Extraordinary Items / Available for Common
-        IBC_YEAR               Income Before Extraordinary Items - Statement of Cash Flows
-      IB_QUARTER                                         Income Before Extraordinary Items
-   ICAPT_QUARTER                                      Invested Capital / Total / Quarterly
-  INTANO_QUARTER                                                         Other Intangibles
-      INTPN_YEAR                                                       Interest Paid - Net
-      INVCH_YEAR                                           Inventory - Decrease (Increase)
-    INVT_QUARTER                                                       Inventories - Total
-      IVACO_YEAR                                              Investing Activities - Other
-       IVCH_YEAR                                                   Increase in Investments
-    IVLT_QUARTER                                               Total Long-term Investments
-      IVNCF_YEAR                                      Investing Activities - Net Cash Flow
-     IVSTCH_YEAR                                           Short-Term Investments - Change
-     LCO_QUARTER                                       Current Liabilities - Other - Total
-     LCT_QUARTER                                               Current Liabilities - Total
-      LO_QUARTER                                                       Liabilities - Other
-      LT_QUARTER                                                       Liabilities - Total
-     MIB_QUARTER                                         Minority Interest - Balance Sheet
-     MII_QUARTER                                        Minority Interest - Income Account
-     NCO_QUARTER                                                           Net Charge-Offs
-    NIIT_QUARTER                                      Net Interest Income (Tax Equivalent)
-     NIM_QUARTER                                                       Net Interest Margin
-      NI_QUARTER                                                         Net Income (Loss)
-    NOPI_QUARTER                                    Non-Operating Income (Expense) - Total
-    NPAT_QUARTER                                              Nonperforming Assets / Total
-      OANCF_YEAR                                      Operating Activities - Net Cash Flow
-          OEPS12                     Earnings Per Share from Operations - 12 Months Moving
-   OEPSX_QUARTER                            Earnings Per Share / Diluted / from Operations
-   OIBDP_QUARTER                          Operating Income Before Depreciation - Quarterly
-   OPEPS_QUARTER                                        Earnings Per Share from Operations
-      PI_QUARTER                                                             Pretax Income
-     PLL_QUARTER                                           Provision for Loan/Asset Losses
-   PPEGT_QUARTER                 Property, Plant and Equipment / Total (Gross) / Quarterly
-   PPENT_QUARTER                                Property Plant and Equipment - Total (Net)
-           PRCCM                                                   Price / Close / Monthly
-           PRCHM                                                    Price / High / Monthly
-           PRCLM                                                     Price / Low / Monthly
-     PRSTKC_YEAR                                    Purchase of Common and Preferred Stock
-    PSTK_QUARTER                              Preferred/Preference Stock (Capital) - Total
-   PSTKR_QUARTER                                   Preferred/Preference Stock / Redeemable
-     RCA_QUARTER                                              Restructuring Cost After-tax
-     RCD_QUARTER                                     Restructuring Cost Diluted EPS Effect
-   RCEPS_QUARTER                                       Restructuring Cost Basic EPS Effect
-     RCP_QUARTER                                                 Restructuring Cost Pretax
-    RDIP_QUARTER                                                            In Process R&D
-      RECCH_YEAR                                 Accounts Receivable - Decrease (Increase)
-    RECT_QUARTER                                                       Receivables - Total
-      RE_QUARTER                                                         Retained Earnings
-     RET_QUARTER                                                         Total RE Property
-   REUNA_QUARTER                                              Unadjusted Retained Earnings
-     RLL_QUARTER                                             Reserve for Loan/Asset Losses
-    SALE_QUARTER                                                      Sales/Turnover (Net)
-    SEQO_QUARTER                                     Other Stockholders Equity Adjustments
-     SEQ_QUARTER                                              Shareholders' Equity - Total
-    SETA_QUARTER                               Settlement (Litigation/Insurance) After-tax
-    SETD_QUARTER                      Settlement (Litigation/Insurance) Diluted EPS Effect
-  SETEPS_QUARTER                        Settlement (Litigation/Insurance) Basic EPS Effect
-    SETP_QUARTER                                  Settlement (Litigation/Insurance) Pretax
-        SIV_YEAR                                                       Sale of Investments
-    SPID_QUARTER                                    Other Special Items Diluted EPS Effect
-  SPIEPS_QUARTER                                      Other Special Items Basic EPS Effect
-   SPIOA_QUARTER                                             Other Special Items After-tax
-   SPIOP_QUARTER                                                Other Special Items Pretax
-     SPI_QUARTER                                                             Special Items
-       SPPE_YEAR                                                          Sale of Property
-      SPPIV_YEAR                                Sale of PP&E and Investments - (Gain) Loss
-    SRET_QUARTER                                             Gain/Loss on Sale of Property
-       SSTK_YEAR                                        Sale of Common and Preferred Stock
-   STKCO_QUARTER                                                Stock Compensation Expense
-     TIE_QUARTER                             Interest Expense / Total (Financial Services)
-     TII_QUARTER                              Interest Income / Total (Financial Services)
-    TSTK_QUARTER                                      Treasury Stock - Total (All Capital)
-      TXACH_YEAR                              Income Taxes - Accrued - Increase (Decrease)
-     TXBCOF_YEAR                 Excess Tax Benefit of Stock Options - Cash Flow Financing
-       TXDC_YEAR                                  Deferred Taxes (Statement of Cash Flows)
-    TXDI_QUARTER                                                   Income Taxes / Deferred
-  TXDITC_QUARTER                                  Deferred Taxes and Investment Tax Credit
-       TXPD_YEAR                                                         Income Taxes Paid
-     TXP_QUARTER                                                      Income Taxes Payable
-     TXT_QUARTER                                                      Income Taxes - Total
-     WCAPCH_YEAR                                           Working Capital Changes - Total
-      WCAPC_YEAR                      Working Capital Change / Other / Increase/(Decrease)
-     WDA_QUARTER                                                      Writedowns After-tax
-     WDD_QUARTER                                             Writedowns Diluted EPS Effect
-   WDEPS_QUARTER                                               Writedowns Basic EPS Effect
-     WDP_QUARTER                                                         Writedowns Pretax
-      XIDOC_YEAR Extraordinary Items and Discontinued Operations (Statement of Cash Flows)
-    XIDO_QUARTER                           Extraordinary Items and Discontinued Operations
-    XINT_QUARTER                                       Interest and Related Expense- Total
-      XI_QUARTER                                                       Extraordinary Items
-     XRD_QUARTER                                          Research and Development Expense
-    XSGA_QUARTER                              Selling, General and Administrative Expenses
+original shape=(172, 2)
+Head:
+{
+"0":{
+"item":"ACCHG_QUARTER",
+"description":"Accounting Changes \/ Cumulative Effect"
+},
+"1":{
+"item":"ACOMINC_QUARTER",
+"description":"Accumulated Other Comprehensive Income (Loss)"
+},
+"2":{
+"item":"ACO_QUARTER",
+"description":"Current Assets - Other - Total"
+},
+"3":{
+"item":"ACT_QUARTER",
+"description":"Current Assets - Total"
+},
+"4":{
+"item":"ADRR_QUARTER",
+"description":"ADR Ratio"
+},
+"5":{
+"item":"AJEX_QUARTER",
+"description":"Adjustment Factor (Company) - Cumulative by Ex-Date"
+},
+"6":{
+"item":"AJP_QUARTER",
+"description":"Adjustment Factor (Company) - Cumulative byPay-Date"
+},
+"7":{
+"item":"ALTO_QUARTER",
+"description":"Other Long-term Assets"
+},
+"8":{
+"item":"AOLOCH_YEAR",
+"description":"Assets and Liabilities - Other (Net Change)"
+},
+"9":{
+"item":"AO_QUARTER",
+"description":"Assets - Other - Total"
+},
+"10":{
+"item":"APALCH_YEAR",
+"description":"Accounts Payable and Accrued Liabilities - Increase (Decrease)"
+},
+"11":{
+"item":"AP_QUARTER",
+"description":"Account Payable\/Creditors - Trade"
+},
+"12":{
+"item":"AQA_QUARTER",
+"description":"Acquisition\/Merger After-Tax"
+},
+"13":{
+"item":"AQC_YEAR",
+"description":"Acquisitions"
+},
+"14":{
+"item":"AQD_QUARTER",
+"description":"Acquisition\/Merger Diluted EPS Effect"
+},
+"15":{
+"item":"AQEPS_QUARTER",
+"description":"Acquisition\/Merger Basic EPS Effect"
+},
+"16":{
+"item":"AQP_QUARTER",
+"description":"Acquisition\/Merger Pretax"
+},
+"17":{
+"item":"AT_QUARTER",
+"description":"Assets - Total"
+},
+"18":{
+"item":"CAPR1_QUARTER",
+"description":"Risk-Adjusted Capital Ratio - Tier 1"
+},
+"19":{
+"item":"CAPRT_QUARTER",
+"description":"Risk-Adjusted Capital Ratio \/ Total \/ Quarterly"
+},
+"20":{
+"item":"CAPS_QUARTER",
+"description":"Capital Surplus\/Share Premium Reserve"
+},
+"21":{
+"item":"CAPX_YEAR",
+"description":"Capital Expenditures"
+},
+"22":{
+"item":"CE_QUARTER",
+"description":"Common\/Ordinary Equity - Total"
+},
+"23":{
+"item":"CHECH_YEAR",
+"description":"Cash and Cash Equivalents - Increase (Decrease)"
+},
+"24":{
+"item":"CHE_QUARTER",
+"description":"Cash and Short-Term Investments"
+},
+"25":{
+"item":"COGS_QUARTER",
+"description":"Cost of Goods Sold"
+},
+"26":{
+"item":"CSH12_QUARTER",
+"description":"Common Shares Used to Calculate Earnings Per Share \/ 12 Months Moving"
+},
+"27":{
+"item":"CSHFD_QUARTER",
+"description":"Com Shares for Diluted EPS"
+},
+"28":{
+"item":"CSHI_QUARTER",
+"description":"Common Shares Issued"
+},
+"29":{
+"item":"CSHO_QUARTER",
+"description":"Common Shares Outstanding"
+},
+"30":{
+"item":"CSHPR_QUARTER",
+"description":"Common Shares Used to Calculate Earnings Per Share \/ Basic"
+},
+"31":{
+"item":"CSHTR_QUARTER",
+"description":"Common Shares Traded \/ Quarter"
+},
+"32":{
+"item":"CSTKE_QUARTER",
+"description":"Common Stock Equivalents \/ Dollar Savings"
+},
+"33":{
+"item":"CSTK_QUARTER",
+"description":"Common\/Ordinary Stock (Capital)"
+},
+"34":{
+"item":"CURRTR_QUARTER",
+"description":"Currency Translation Rate"
+},
+"35":{
+"item":"DCOM_QUARTER",
+"description":"Deferred Compensation"
+},
+"36":{
+"item":"DILAD_QUARTER",
+"description":"Dilution Adjustment"
+},
+"37":{
+"item":"DILAV_QUARTER",
+"description":"Dilution Available \/ Excluding Extraordinary Items"
+},
+"38":{
+"item":"DLCCH_YEAR",
+"description":"Changes in Current Debt"
+},
+"39":{
+"item":"DLC_QUARTER",
+"description":"Debt in Current Liabilities"
+},
+"40":{
+"item":"DLTIS_YEAR",
+"description":"Long-Term Debt - Issuance"
+},
+"41":{
+"item":"DLTR_YEAR",
+"description":"Long-Term Debt - Reduction"
+},
+"42":{
+"item":"DLTT_QUARTER",
+"description":"Long-Term Debt - Total"
+},
+"43":{
+"item":"DO_QUARTER",
+"description":"Discontinued Operations"
+},
+"44":{
+"item":"DPACRE_QUARTER",
+"description":"Accumulated Depreciation of RE Property"
+},
+"45":{
+"item":"DPACT_QUARTER",
+"description":"Depreciation, Depletion and Amortization (Accumulated)"
+},
+"46":{
+"item":"DPC_YEAR",
+"description":"Depreciation and Amortization - Statement of Cash Flows"
+},
+"47":{
+"item":"DP_QUARTER",
+"description":"Depreciation and Amortization - Total"
+},
+"48":{
+"item":"DPRET_QUARTER",
+"description":"Depr\/Amort of Property"
+},
+"49":{
+"item":"DVP_QUARTER",
+"description":"Dividends \/ Preferred\/Preference"
+},
+"50":{
+"item":"DVPSP_QUARTER",
+"description":"Dividends per Share \/ Pay Date \/ Quarter"
+},
+"51":{
+"item":"DVPSX_QUARTER",
+"description":"Div per Share - Exdate - Quarter"
+},
+"52":{
+"item":"DVRATE",
+"description":"Dividend Rate \/ Monthly"
+},
+"53":{
+"item":"DV_YEAR",
+"description":"Cash Dividends"
+},
+"54":{
+"item":"EPSFI_QUARTER",
+"description":"Earnings Per Share (Diluted) \/ Including Extraordinary Items"
+},
+"55":{
+"item":"EPSFX_QUARTER",
+"description":"Earnings Per Share (Diluted) \/ Excluding Extraordinary items"
+},
+"56":{
+"item":"EPSPI_QUARTER",
+"description":"Earnings Per Share (Basic) \/ Including Extraordinary Items"
+},
+"57":{
+"item":"EPSPX_QUARTER",
+"description":"Earnings Per Share (Basic) \/ Excluding Extraordinary Items"
+},
+"58":{
+"item":"ESUBC_YEAR",
+"description":"Equity in Net Loss\/Earnings (C\/F)"
+},
+"59":{
+"item":"EXRE_YEAR",
+"description":"Exchange Rate Effect"
+},
+"60":{
+"item":"FCA_QUARTER",
+"description":"Foreign Exchange Income (Loss)"
+},
+"61":{
+"item":"FIAO_YEAR",
+"description":"Financing Activities - Other"
+},
+"62":{
+"item":"FINCF_YEAR",
+"description":"Financing Activities - Net Cash Flow"
+},
+"63":{
+"item":"FOPO_YEAR",
+"description":"Funds from Operations - Other"
+},
+"64":{
+"item":"FOPT_YEAR",
+"description":"Funds From Operations \/ Total"
+},
+"65":{
+"item":"FSRCO_YEAR",
+"description":"Sources of Funds - Other"
+},
+"66":{
+"item":"FSRCT_YEAR",
+"description":"Sources of Funds - Total"
+},
+"67":{
+"item":"FUSEO_YEAR",
+"description":"Uses of Funds - Other"
+},
+"68":{
+"item":"FUSET_YEAR",
+"description":"Uses of Funds - Total"
+},
+"69":{
+"item":"GDWLAM_QUARTER",
+"description":"Amortization of Goodwill"
+},
+"70":{
+"item":"GDWLIA_QUARTER",
+"description":"Impairment of Goodwill After-tax"
+},
+"71":{
+"item":"GDWLID_QUARTER",
+"description":"Impairment of Goodwill Diluted EPS Effect"
+},
+"72":{
+"item":"GDWLIEPS_QUARTER",
+"description":"Impairment of Goodwill Basic EPS Effect"
+},
+"73":{
+"item":"GDWLIP_QUARTER",
+"description":"Impairment of Goodwill Pretax"
+},
+"74":{
+"item":"GDWL_QUARTER",
+"description":"Goodwill (net)"
+},
+"75":{
+"item":"GLA_QUARTER",
+"description":"Gain\/Loss After-Tax"
+},
+"76":{
+"item":"GLD_QUARTER",
+"description":"Gain\/Loss Diluted EPS Effect"
+},
+"77":{
+"item":"GLEPS_QUARTER",
+"description":"Gain\/Loss Basic EPS Effect"
+},
+"78":{
+"item":"GLP_QUARTER",
+"description":"Gain\/Loss Pretax"
+},
+"79":{
+"item":"IBADJ_QUARTER",
+"description":"Income Before Extraordinary Items \/ Adjusted for Common Stock Equivalents"
+},
+"80":{
+"item":"IBCOM_QUARTER",
+"description":"Income Before Extraordinary Items \/ Available for Common"
+},
+"81":{
+"item":"IBC_YEAR",
+"description":"Income Before Extraordinary Items - Statement of Cash Flows"
+},
+"82":{
+"item":"IB_QUARTER",
+"description":"Income Before Extraordinary Items"
+},
+"83":{
+"item":"ICAPT_QUARTER",
+"description":"Invested Capital \/ Total \/ Quarterly"
+},
+"84":{
+"item":"INTANO_QUARTER",
+"description":"Other Intangibles"
+},
+"85":{
+"item":"INTPN_YEAR",
+"description":"Interest Paid - Net"
+},
+"86":{
+"item":"INVCH_YEAR",
+"description":"Inventory - Decrease (Increase)"
+},
+"87":{
+"item":"INVT_QUARTER",
+"description":"Inventories - Total"
+},
+"88":{
+"item":"IVACO_YEAR",
+"description":"Investing Activities - Other"
+},
+"89":{
+"item":"IVCH_YEAR",
+"description":"Increase in Investments"
+},
+"90":{
+"item":"IVLT_QUARTER",
+"description":"Total Long-term Investments"
+},
+"91":{
+"item":"IVNCF_YEAR",
+"description":"Investing Activities - Net Cash Flow"
+},
+"92":{
+"item":"IVSTCH_YEAR",
+"description":"Short-Term Investments - Change"
+},
+"93":{
+"item":"LCO_QUARTER",
+"description":"Current Liabilities - Other - Total"
+},
+"94":{
+"item":"LCT_QUARTER",
+"description":"Current Liabilities - Total"
+},
+"95":{
+"item":"LO_QUARTER",
+"description":"Liabilities - Other"
+},
+"96":{
+"item":"LT_QUARTER",
+"description":"Liabilities - Total"
+},
+"97":{
+"item":"MIB_QUARTER",
+"description":"Minority Interest - Balance Sheet"
+},
+"98":{
+"item":"MII_QUARTER",
+"description":"Minority Interest - Income Account"
+},
+"99":{
+"item":"NCO_QUARTER",
+"description":"Net Charge-Offs"
+},
+"100":{
+"item":"NIIT_QUARTER",
+"description":"Net Interest Income (Tax Equivalent)"
+},
+"101":{
+"item":"NIM_QUARTER",
+"description":"Net Interest Margin"
+},
+"102":{
+"item":"NI_QUARTER",
+"description":"Net Income (Loss)"
+},
+"103":{
+"item":"NOPI_QUARTER",
+"description":"Non-Operating Income (Expense) - Total"
+},
+"104":{
+"item":"NPAT_QUARTER",
+"description":"Nonperforming Assets \/ Total"
+},
+"105":{
+"item":"OANCF_YEAR",
+"description":"Operating Activities - Net Cash Flow"
+},
+"106":{
+"item":"OEPS12",
+"description":"Earnings Per Share from Operations - 12 Months Moving"
+},
+"107":{
+"item":"OEPSX_QUARTER",
+"description":"Earnings Per Share \/ Diluted \/ from Operations"
+},
+"108":{
+"item":"OIBDP_QUARTER",
+"description":"Operating Income Before Depreciation - Quarterly"
+},
+"109":{
+"item":"OPEPS_QUARTER",
+"description":"Earnings Per Share from Operations"
+},
+"110":{
+"item":"PI_QUARTER",
+"description":"Pretax Income"
+},
+"111":{
+"item":"PLL_QUARTER",
+"description":"Provision for Loan\/Asset Losses"
+},
+"112":{
+"item":"PPEGT_QUARTER",
+"description":"Property, Plant and Equipment \/ Total (Gross) \/ Quarterly"
+},
+"113":{
+"item":"PPENT_QUARTER",
+"description":"Property Plant and Equipment - Total (Net)"
+},
+"114":{
+"item":"PRCCM",
+"description":"Price \/ Close \/ Monthly"
+},
+"115":{
+"item":"PRCHM",
+"description":"Price \/ High \/ Monthly"
+},
+"116":{
+"item":"PRCLM",
+"description":"Price \/ Low \/ Monthly"
+},
+"117":{
+"item":"PRSTKC_YEAR",
+"description":"Purchase of Common and Preferred Stock"
+},
+"118":{
+"item":"PSTK_QUARTER",
+"description":"Preferred\/Preference Stock (Capital) - Total"
+},
+"119":{
+"item":"PSTKR_QUARTER",
+"description":"Preferred\/Preference Stock \/ Redeemable"
+},
+"120":{
+"item":"RCA_QUARTER",
+"description":"Restructuring Cost After-tax"
+},
+"121":{
+"item":"RCD_QUARTER",
+"description":"Restructuring Cost Diluted EPS Effect"
+},
+"122":{
+"item":"RCEPS_QUARTER",
+"description":"Restructuring Cost Basic EPS Effect"
+},
+"123":{
+"item":"RCP_QUARTER",
+"description":"Restructuring Cost Pretax"
+},
+"124":{
+"item":"RDIP_QUARTER",
+"description":"In Process R&D"
+},
+"125":{
+"item":"RECCH_YEAR",
+"description":"Accounts Receivable - Decrease (Increase)"
+},
+"126":{
+"item":"RECT_QUARTER",
+"description":"Receivables - Total"
+},
+"127":{
+"item":"RE_QUARTER",
+"description":"Retained Earnings"
+},
+"128":{
+"item":"RET_QUARTER",
+"description":"Total RE Property"
+},
+"129":{
+"item":"REUNA_QUARTER",
+"description":"Unadjusted Retained Earnings"
+},
+"130":{
+"item":"RLL_QUARTER",
+"description":"Reserve for Loan\/Asset Losses"
+},
+"131":{
+"item":"SALE_QUARTER",
+"description":"Sales\/Turnover (Net)"
+},
+"132":{
+"item":"SEQO_QUARTER",
+"description":"Other Stockholders Equity Adjustments"
+},
+"133":{
+"item":"SE_QUARTER",
+"description":"Shareholders' Equity - Total"
+},
+"134":{
+"item":"SETA_QUARTER",
+"description":"Settlement (Litigation\/Insurance) After-tax"
+},
+"135":{
+"item":"SETD_QUARTER",
+"description":"Settlement (Litigation\/Insurance) Diluted EPS Effect"
+},
+"136":{
+"item":"SETEPS_QUARTER",
+"description":"Settlement (Litigation\/Insurance) Basic EPS Effect"
+},
+"137":{
+"item":"SETP_QUARTER",
+"description":"Settlement (Litigation\/Insurance) Pretax"
+},
+"138":{
+"item":"SIV_YEAR",
+"description":"Sale of Investments"
+},
+"139":{
+"item":"SPID_QUARTER",
+"description":"Other Special Items Diluted EPS Effect"
+},
+"140":{
+"item":"SPIEPS_QUARTER",
+"description":"Other Special Items Basic EPS Effect"
+},
+"141":{
+"item":"SPIOA_QUARTER",
+"description":"Other Special Items After-tax"
+},
+"142":{
+"item":"SPIOP_QUARTER",
+"description":"Other Special Items Pretax"
+},
+"143":{
+"item":"SPI_QUARTER",
+"description":"Special Items"
+},
+"144":{
+"item":"SPPE_YEAR",
+"description":"Sale of Property"
+},
+"145":{
+"item":"SPPIV_YEAR",
+"description":"Sale of PP&E and Investments - (Gain) Loss"
+},
+"146":{
+"item":"SRET_QUARTER",
+"description":"Gain\/Loss on Sale of Property"
+},
+"147":{
+"item":"SSTK_YEAR",
+"description":"Sale of Common and Preferred Stock"
+},
+"148":{
+"item":"STKCO_QUARTER",
+"description":"Stock Compensation Expense"
+},
+"149":{
+"item":"TIE_QUARTER",
+"description":"Interest Expense \/ Total (Financial Services)"
+},
+"150":{
+"item":"TII_QUARTER",
+"description":"Interest Income \/ Total (Financial Services)"
+},
+"151":{
+"item":"TSTK_QUARTER",
+"description":"Treasury Stock - Total (All Capital)"
+},
+"152":{
+"item":"TXACH_YEAR",
+"description":"Income Taxes - Accrued - Increase (Decrease)"
+},
+"153":{
+"item":"TXBCOF_YEAR",
+"description":"Excess Tax Benefit of Stock Options - Cash Flow Financing"
+},
+"154":{
+"item":"TXDC_YEAR",
+"description":"Deferred Taxes (Statement of Cash Flows)"
+},
+"155":{
+"item":"TXDI_QUARTER",
+"description":"Income Taxes \/ Deferred"
+},
+"156":{
+"item":"TXDITC_QUARTER",
+"description":"Deferred Taxes and Investment Tax Credit"
+},
+"157":{
+"item":"TXPD_YEAR",
+"description":"Income Taxes Paid"
+},
+"158":{
+"item":"TXP_QUARTER",
+"description":"Income Taxes Payable"
+},
+"159":{
+"item":"TXT_QUARTER",
+"description":"Income Taxes - Total"
+},
+"160":{
+"item":"WCAPCH_YEAR",
+"description":"Working Capital Changes - Total"
+},
+"161":{
+"item":"WCAPC_YEAR",
+"description":"Working Capital Change \/ Other \/ Increase\/(Decrease)"
+},
+"162":{
+"item":"WDA_QUARTER",
+"description":"Writedowns After-tax"
+},
+"163":{
+"item":"WDD_QUARTER",
+"description":"Writedowns Diluted EPS Effect"
+},
+"164":{
+"item":"WDEPS_QUARTER",
+"description":"Writedowns Basic EPS Effect"
+},
+"165":{
+"item":"WDP_QUARTER",
+"description":"Writedowns Pretax"
+},
+"166":{
+"item":"XIDOC_YEAR",
+"description":"Extraordinary Items and Discontinued Operations (Statement of Cash Flows)"
+},
+"167":{
+"item":"XIDO_QUARTER",
+"description":"Extraordinary Items and Discontinued Operations"
+},
+"168":{
+"item":"XINT_QUARTER",
+"description":"Interest and Related Expense- Total"
+},
+"169":{
+"item":"XI_QUARTER",
+"description":"Extraordinary Items"
+},
+"170":{
+"item":"XRD_QUARTER",
+"description":"Research and Development Expense"
+},
+"171":{
+"item":"XSGA_QUARTER",
+"description":"Selling, General and Administrative Expenses"
+}
+}
+Tail:

@@ -18,6 +18,7 @@ class TestGvkCikMapper(phunit.TestCase):
         self.gvk_mapper = p1cli.GvkCikMapper(token=P1_API_TOKEN)
         super().setUp()
 
+    @pytest.mark.mappings
     def test_get_gvk_from_cik(self) -> None:
         """
         Get GVK by the cik and date.
@@ -26,8 +27,12 @@ class TestGvkCikMapper(phunit.TestCase):
                                                as_of_date="2007-01-01T00:00:00")
         self.assertIsInstance(gvk, pd.DataFrame)
         self.assertFalse(gvk.empty)
-        self.check_string(phunit.convert_df_to_string(gvk))
+        self.check_string(phunit.convert_df_to_json_string(gvk,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
+    @pytest.mark.mappings
     def test_get_cik_from_gvk(self) -> None:
         """
         Get Cik by GVK and date.
@@ -36,7 +41,10 @@ class TestGvkCikMapper(phunit.TestCase):
                                                as_of_date="2007-03-14T00:00:00")
         self.assertIsInstance(cik, pd.DataFrame)
         self.assertFalse(cik.empty)
-        self.check_string(phunit.convert_df_to_string(cik))
+        self.check_string(phunit.convert_df_to_json_string(cik,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
 
 class TestItemMapper(phunit.TestCase):
@@ -44,6 +52,7 @@ class TestItemMapper(phunit.TestCase):
         self.item_mapper = p1cli.ItemMapper(token=P1_API_TOKEN)
         super().setUp()
 
+    @pytest.mark.mappings
     def test_get_item(self) -> None:
         """
         Obtain an item by keywords.
@@ -53,8 +62,12 @@ class TestItemMapper(phunit.TestCase):
         )
         self.assertIsInstance(item, pd.DataFrame)
         self.assertFalse(item.empty)
-        self.check_string(phunit.convert_df_to_string(item))
+        self.check_string(phunit.convert_df_to_json_string(item,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          )
 
+    @pytest.mark.mappings
     def test_get_mapping(self) -> None:
         """
         Get all mapping for items.
@@ -62,7 +75,10 @@ class TestItemMapper(phunit.TestCase):
         mapping = self.item_mapper.get_mapping()
         self.assertIsInstance(mapping, pd.DataFrame)
         self.assertFalse(mapping.empty)
-        self.check_string(phunit.convert_df_to_string(mapping))
+        self.check_string(phunit.convert_df_to_json_string(mapping,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
 
 class TestEdgarClient(phunit.TestCase):
@@ -72,7 +88,7 @@ class TestEdgarClient(phunit.TestCase):
 
     def _assert_date_columns_format(self, df: pd.DataFrame) -> None:
         """
-        Assert that "created_at" and "release_date" column values are timestamps.
+        Assert that all values of date columns are timestamps.
 
         :param df: input payload dataframe
         :return:
@@ -102,19 +118,19 @@ class TestEdgarClient(phunit.TestCase):
         :param max_release_date: expected max "release_date"
         :return:
         """
-        self.assertEqual(min_created_at, df["created_at"].min())
-        self.assertEqual(max_created_at, df["created_at"].max())
-        self.assertEqual(min_release_date, df["release_date"].min())
-        self.assertEqual(max_release_date, df["release_date"].max())
+        self.assertEqual(min_created_at, df["form_availability_timestamp"].min())
+        self.assertEqual(max_created_at, df["form_availability_timestamp"].max())
+        self.assertEqual(min_release_date, df["filing_date"].min())
+        self.assertEqual(max_release_date, df["filing_date"].max())
 
     @pytest.mark.form4
     def test_form4_no_date_mode(self):
         """
-        Check that an error is raised if `date_mode` is not specified.
+        Check that an error is raised if date mode is not specified.
         """
         with self.assertRaises(AssertionError):
             self.client.get_form4_payload(
-                cik=58492, start_datetime="2016-01-26T00:00:00",
+                cik=58492, start_datetime="2016-01-26T00:00:00-00:00",
                 end_datetime="2016-01-26T23:59:59",
             )
 
@@ -125,8 +141,8 @@ class TestEdgarClient(phunit.TestCase):
         """
         payload = self.client.get_form4_payload(
             cik=58492,
-            start_datetime="2016-01-26T00:00:00",
-            end_datetime="2016-01-27T00:00:00",
+            start_datetime="2016-01-26T00:00:00-00:00",
+            end_datetime="2016-01-27T00:00:00-00:00",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, dict)
@@ -135,10 +151,10 @@ class TestEdgarClient(phunit.TestCase):
         self._assert_date_columns_format(payload["metadata"])
         self._assert_corner_date_values(
             df=payload["metadata"],
-            min_created_at="2020-06-12T00:00:00",
-            max_created_at="2020-06-12T00:00:00",
-            min_release_date="2016-01-26T00:00:00",
-            max_release_date="2016-01-26T00:00:00",
+            min_created_at="2021-03-03T13:20:16.863000-05:00",
+            max_created_at="2021-03-03T13:20:16.863000-05:00",
+            min_release_date="2016-01-26T00:00:00-05:00",
+            max_release_date="2016-01-26T00:00:00-05:00",
         )
         actual = []
         actual.append(("len(payload)=%s" % len(payload)))
@@ -163,8 +179,8 @@ class TestEdgarClient(phunit.TestCase):
         """
         payload = self.client.get_form4_payload(
             cik=58492,
-            start_datetime="2021-02-01T00:00:00",
-            end_datetime="2021-02-11T00:00:00",
+            start_datetime="2021-02-01T00:00:00-00:00",
+            end_datetime="2021-02-11T00:00:00-00:00",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, dict)
@@ -186,21 +202,21 @@ class TestEdgarClient(phunit.TestCase):
         Check payload for 1 CIK with knowledge date mode, historical.
         """
         payload = self.client.get_form4_payload(
-            cik=2969,
-            start_datetime="2020-12-01T00:00:00",
-            end_datetime="2020-12-01T23:59:59",
+            cik=785786,
+            start_datetime="2021-03-05T20:02:48-00:00",
+            end_datetime="2021-03-05T20:08:08-00:00",
             date_mode="knowledge_date"
         )
         self.assertIsInstance(payload, dict)
         self.assertEqual(6, len(payload))
-        self.assertEqual(9, len(payload["metadata"]))
+        self.assertEqual(1, len(payload["metadata"]))
         self._assert_date_columns_format(payload["metadata"])
         self._assert_corner_date_values(
             df=payload["metadata"],
-            min_created_at="2020-12-01T00:00:00",
-            max_created_at="2020-12-01T00:00:00",
-            min_release_date="2020-04-02T00:00:00",
-            max_release_date="2020-04-02T00:00:00",
+            min_created_at="2021-03-05T15:05:00.381000-05:00",
+            max_created_at="2021-03-05T15:05:00.381000-05:00",
+            min_release_date="2021-03-04T00:00:00-05:00",
+            max_release_date="2021-03-04T00:00:00-05:00",
         )
         actual = []
         actual.append(("len(payload)=%s" % len(payload)))
@@ -225,13 +241,13 @@ class TestEdgarClient(phunit.TestCase):
         """
         payload = self.client.get_form4_payload(
             cik=58492,
-            start_datetime="2021-02-01T00:00:00",
-            end_datetime="2021-02-11T23:59:59",
+            start_datetime="2021-03-04T00:00:00-00:00",
+            end_datetime="2021-03-08T23:59:59-00:00",
             date_mode="knowledge_date"
         )
         self.assertIsInstance(payload, dict)
         self.assertEqual(6, len(payload))
-        self.assertEqual(8, len(payload["metadata"]))
+        self.assertEqual(15, len(payload["metadata"]))
         actual = []
         actual.append(("len(payload)=%s" % len(payload)))
         actual.append(("payload.keys()=%s" % payload.keys()))
@@ -249,8 +265,8 @@ class TestEdgarClient(phunit.TestCase):
         """
         payload = self.client.get_form4_payload(
             cik=[880266, 918160, 7789],
-            start_datetime="2016-01-26T00:00:00",
-            end_datetime="2016-01-27T00:00:00",
+            start_datetime="2016-01-26T00:00:00-00:00",
+            end_datetime="2016-01-27T00:00:00-00:00",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, dict)
@@ -259,10 +275,10 @@ class TestEdgarClient(phunit.TestCase):
         self._assert_date_columns_format(payload["metadata"])
         self._assert_corner_date_values(
             df=payload["metadata"],
-            min_created_at="2020-06-12T00:00:00",
-            max_created_at="2020-06-12T00:00:00",
-            min_release_date="2016-01-26T00:00:00",
-            max_release_date="2016-01-26T00:00:00",
+            min_created_at="2021-03-03T13:20:16.863000-05:00",
+            max_created_at="2021-03-03T13:20:16.863000-05:00",
+            min_release_date="2016-01-26T00:00:00-05:00",
+            max_release_date="2016-01-26T00:00:00-05:00",
         )
         actual = []
         actual.append(("len(payload)=%s" % len(payload)))
@@ -280,21 +296,21 @@ class TestEdgarClient(phunit.TestCase):
         Check payload for multiple CIKs with publication date mode, real time.
         """
         payload = self.client.get_form4_payload(
-            cik=[880266, 918160, 7789],
-            start_datetime="2021-02-01T00:00:00",
-            end_datetime="2021-02-05T00:00:00",
+            cik=[10456, 9092, 76334],
+            start_datetime="2021-03-05T00:00:00-00:00",
+            end_datetime="2021-03-08T00:00:00-00:00",
             date_mode="knowledge_date",
         )
         self.assertIsInstance(payload, dict)
         self.assertEqual(6, len(payload))
-        self.assertEqual(27, len(payload["metadata"]))
+        self.assertEqual(17, len(payload["metadata"]))
         self._assert_date_columns_format(payload["metadata"])
         self._assert_corner_date_values(
             df=payload["metadata"],
-            min_created_at="2021-02-03T19:44:17.992000",
-            max_created_at="2021-02-04T20:37:34.443000",
-            min_release_date="2021-02-03T00:00:00",
-            max_release_date="2021-02-04T00:00:00",
+            min_created_at="2021-03-05T14:33:56.028000-05:00",
+            max_created_at="2021-03-05T16:25:52.181000-05:00",
+            min_release_date="2021-03-03T00:00:00-05:00",
+            max_release_date="2021-03-05T00:00:00-05:00",
         )
         actual = []
         actual.append(("len(payload)=%s" % len(payload)))
@@ -312,21 +328,21 @@ class TestEdgarClient(phunit.TestCase):
         Check payload for multiple CIKs with knowledge date mode, historical.
         """
         payload = self.client.get_form4_payload(
-            cik=[320193, 2969],
-            start_datetime="2020-12-01T00:00:00",
-            end_datetime="2020-12-02T00:00:00",
+            cik=[1110803, 1418135, 8818, 2488],
+            start_datetime="2021-03-05T20:02:48-00:00",
+            end_datetime="2021-03-05T20:08:08-00:00",
             date_mode="knowledge_date"
         )
         self.assertIsInstance(payload, dict)
         self.assertEqual(6, len(payload))
-        self.assertEqual(16, len(payload["metadata"]))
+        self.assertEqual(5, len(payload["metadata"]))
         self._assert_date_columns_format(payload["metadata"])
         self._assert_corner_date_values(
             df=payload["metadata"],
-            min_created_at="2020-12-01T00:00:00",
-            max_created_at="2020-12-01T00:00:00",
-            min_release_date="2020-04-02T00:00:00",
-            max_release_date="2020-05-12T00:00:00",
+            min_created_at="2021-03-05T15:04:00.955000-05:00",
+            max_created_at="2021-03-05T15:08:05.670000-05:00",
+            min_release_date="2021-03-04T00:00:00-05:00",
+            max_release_date="2021-03-04T00:00:00-05:00",
         )
         actual = []
         actual.append(("len(payload)=%s" % len(payload)))
@@ -348,12 +364,11 @@ class TestEdgarClient(phunit.TestCase):
         `self._assert_date_columns_format(payload["metadata"])` and
         `self._assert_corner_date_values()` with recomputed expected
         corner values of "created_at" and "release_date" in the code.
-        ```
         """
         payload = self.client.get_form4_payload(
-            cik=[320193, 2969],
-            start_datetime="2021-01-05T00:00:00",
-            end_datetime="2021-01-30T23:59:59",
+            cik=[1030469, 72333, 1335258],
+            start_datetime="2021-03-06T00:00:00-00:00",
+            end_datetime="2021-03-07T00:00:00-00:00",
             date_mode="knowledge_date"
         )
         self.assertIsInstance(payload, dict)
@@ -380,9 +395,9 @@ class TestEdgarClient(phunit.TestCase):
     # TODO(*): update after https://github.com/ParticleDev/commodity_research/issues/7488.
     @pytest.mark.form4
     @pytest.mark.slow
-    def test_form4_large_response(self) -> None:
+    def test_form4_no_cik_large_response(self) -> None:
         """
-        Check payload with big amount of data.
+        Check large payload when `cik` argument is not specified.
 
         After API v1.7 behaviour is fixed, put
         `self._assert_date_columns_format(payload["metadata"])` and
@@ -390,8 +405,8 @@ class TestEdgarClient(phunit.TestCase):
         corner values of "created_at" and "release_date" in the code.
         """
         payload = self.client.get_form4_payload(
-            start_datetime="2020-12-16T00:00:00",
-            end_datetime="2020-12-17T23:59:59",
+            start_datetime="2020-12-16T00:00:00-00:00",
+            end_datetime="2020-12-17T23:59:59-00:00",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, dict)
@@ -410,103 +425,105 @@ class TestEdgarClient(phunit.TestCase):
     @pytest.mark.form4
     def test_form4_invalid_dates(self) -> None:
         """
-        Check that an error is raised if datetime arguments have invalid values.
+        Check that an error is raised if start datetime is later than end datetime.
         """
         with self.assertRaises(pexcep.ParseResponseException):
             self.client.get_form4_payload(
-                start_datetime="2020-10-10T00:00:00",
-                end_datetime="2020-09-09T23:59:59",
+                start_datetime="2020-10-10T00:00:00-00:00",
+                end_datetime="2020-09-09T23:59:59-00:00",
                 date_mode="publication_date"
             )
 
     @pytest.mark.form4
     def test_form4_exclusion_right_boundary(self) -> None:
         """
-        Test that the end_datetime value is excluded in Forms 3-4-5.
+        Check that end datetime data is excluded in Forms 3-4-5.
 
-        With date_mode=="publication_date" we should not receive any data
-        filed on the end date, no matter the specified time info.
+        With publication date mode we should not receive any data
+        filed on the end datetime, no matter the specified time info.
         """
         # Specified time info is 00:00:00.
         df = self.client.get_form4_payload(
-            start_datetime="2018-07-17T00:00:00",
-            end_datetime="2018-07-18T00:00:00",
+            start_datetime="2018-07-17T00:00:00-00:00",
+            end_datetime="2018-07-18T00:00:00-00:00",
             date_mode="publication_date",
         )["metadata"]
-        self.assertEqual(len(df["release_date"].unique()), 1)
-        self.assertEqual(df.iloc[0]["release_date"], "2018-07-17T00:00:00")
+        self.assertEqual(len(df["filing_date"].unique()), 1)
+        self.assertEqual(df.iloc[0]["filing_date"], "2018-07-17T00:00:00-04:00")
         self.assertEqual(df.shape[0], 303)
         # Specified time info is not 00:00:00.
         df2 = self.client.get_form4_payload(
-            start_datetime="2018-07-17T12:00:00",
-            end_datetime="2018-07-18T22:00:00",
+            start_datetime="2018-07-17T12:00:00-00:00",
+            end_datetime="2018-07-18T22:00:00-00:00",
             date_mode="publication_date",
         )["metadata"]
-        self.assertEqual(len(df2["release_date"].unique()), 1)
-        self.assertEqual(df2.iloc[0]["release_date"], "2018-07-17T00:00:00")
+        self.assertEqual(len(df2["filing_date"].unique()), 1)
+        self.assertEqual(df2.iloc[0]["filing_date"], "2018-07-17T00:00:00-04:00")
         self.assertEqual(df2.shape[0], 303)
         self.assertTrue(df.equals(df2))
 
     @pytest.mark.form8
-    def test_form8_get_payload_precise_sampling(self) -> None:
+    def test_form8_1_cik_1_item_publication_date_historical(self) -> None:
         """
-        Get payload data for forms 4 with all parameters.
+        Check payload for 1 CIK & 1 item with publication date mode, historical.
         """
         payload = self.client.get_form8_payload(
             cik=18498,
-            start_datetime="2020-01-04T00:00:00",
-            end_datetime="2020-12-05T00:00:00",
+            start_datetime="2020-01-04T00:00:00-00:00",
+            end_datetime="2020-12-05T00:00:00-00:00",
             item="ACT_QUARTER",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.form8
-    def test_form8_get_payload_knowledge_date(self) -> None:
+    def test_form8_1_cik_1_item_knowledge_date_historical(self) -> None:
         """
-        Get payload data for forms 4 with all parameters.
-
-        Check when `date_mode` is "knowledge_date".
+        Check payload for 1 CIK & 1 item with knowledge date mode, historical.
         """
         payload = self.client.get_form8_payload(
-            cik=320193,
-            start_datetime="2020-07-01T00:00:00",
-            end_datetime="2020-11-02T00:00:00",
+            cik=277135,
+            start_datetime="2021-03-03T00:00:00-00:00",
+            end_datetime="2021-03-05T00:00:00-00:00",
             item="ACT_QUARTER",
             date_mode="knowledge_date"
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.form8
-    def test_form8_get_payload_without_cik(self) -> None:
+    def test_form8_no_cik_1_item(self) -> None:
         """
-        Get payload data for forms 4.
-
-        Specify all the parameters excluding CIK.
+        Check payload for 1 item and no specified CIK.
         """
         payload = self.client.get_form8_payload(
-            start_datetime="2020-10-04T00:00:00",
-            end_datetime="2020-12-05T00:00:00",
+            start_datetime="2021-03-05T00:00:00-00:00",
+            end_datetime="2021-03-07T00:00:00-00:00",
             date_mode="publication_date",
             item="ACT_QUARTER",
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None))
 
     @pytest.mark.form8
-    def test_form8_get_payload_pagination(self) -> None:
+    def test_form8_only_1_cik(self) -> None:
         """
-        Get payload data for forms 4.
-
-        Specify only CIK.
+        Check payload when only `cik` argument is specified with 1 value.
         """
         payload = self.client.get_form8_payload(
             cik=18498,
@@ -514,117 +531,124 @@ class TestEdgarClient(phunit.TestCase):
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.form8
-    def test_form8_get_payload_multi_cik(self) -> None:
+    def test_form8_only_multi_cik(self) -> None:
         """
-        Get payload data for forms 4.
-
-        Specify multiple CIKs.
+        Check payload when only `cik` argument is specified with multiple values.
         """
         payload = self.client.get_form8_payload(cik=[18498, 319201, 5768])
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.form8
-    def test_form8_get_payload_multi_cik_knowledge_date(self) -> None:
+    def test_form8_multi_cik_1_item_knowledge_date_historical(self) -> None:
         """
-        Get payload data for forms 4 with multiple CIKs.
-
-        Check when `date_mode` is "knowledge_date".
+        Check payload for multiple CIKs & 1 item with knowledge date mode, historical.
         """
         payload = self.client.get_form8_payload(
-            cik=[880266, 58492, 320193],
-            start_datetime="2020-07-01T00:00:00",
-            end_datetime="2020-11-02T00:00:00",
+            cik=[277135, 1166691],
+            start_datetime="2021-03-03T00:00:00-00:00",
+            end_datetime="2021-03-05T00:00:00-00:00",
             item="ACT_QUARTER",
             date_mode="knowledge_date"
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
-    def test_form8_get_payload_empty(self) -> None:
+    @pytest.mark.form8
+    def test_form8_invalid_cik(self) -> None:
         """
-        Get payload data for forms 8.
-
-        Check for an empty response.
+        Check for an empty response when the passed CIK is non-existent.
         """
         payload = self.client.get_form8_payload(
             cik=1212,
-            start_datetime="2020-01-04T00:00:00",
-            end_datetime="2020-12-05T00:00:00",
+            start_datetime="2020-01-04T00:00:00-00:00",
+            end_datetime="2020-12-05T00:00:00-00:00",
             date_mode="publication_date",
             item="QWE_QUARTER",
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertTrue(payload.empty)
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.form8
     def test_form8_publication_date_filtering(self) -> None:
         """
-        Test filtering by `filing_date`, i.e. `date_mode=publication_date`.
+        Check filtering by form filing date with publication date mode.
 
-        Note: filtered payload contains data for the period [start_datetime, end_datetime).
+        Note: filtered payload contains data for the period [start datetime, end datetime).
         """
         payload = self.client.get_form8_payload(
-            start_datetime="2021-02-16T00:00:00",
-            end_datetime="2021-02-18T20:00:00",
+            start_datetime="2021-02-16T00:00:00-00:00",
+            end_datetime="2021-02-18T20:00:00-00:00",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
-        self.assertEqual(payload.shape[0], 868)
+        self.assertEqual(payload.shape[0], 822)
         self.assertGreaterEqual(
             pd.to_datetime(payload["filing_date"].min()),
-            pd.to_datetime("2021-02-16T00:00:00")
+            pd.to_datetime("2021-02-16T00:00:00-05:00")
         )
         self.assertLess(
             pd.to_datetime(payload["filing_date"].max()),
-            pd.to_datetime("2021-02-18T20:00:00")
+            pd.to_datetime("2021-02-18T20:00:00-05:00")
         )
 
     @pytest.mark.form8
     def test_form8_knowledge_date_filtering(self) -> None:
         """
-        Test filtering by `creation_timestamp`, i.e. `date_mode=knowledge_date`.
+        Check filtering by form creation timestamp with knowledge date mode.
 
-        Note: filtered payload contains data for the period [start_datetime, end_datetime).
+        Note: filtered payload contains data for the period [start datetime, end datetime).
         """
         payload = self.client.get_form8_payload(
-            start_datetime="2021-02-17T14:00:00",
-            end_datetime="2021-02-17T21:57:38",
+            start_datetime="2021-03-05T00:00:00-00:00",
+            end_datetime="2021-03-05T12:10:11-00:00",
             date_mode="knowledge_date"
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
-        self.assertEqual(payload.shape[0], 235)
+        self.assertEqual(payload.shape[0], 10)
         self.assertGreaterEqual(
-            pd.to_datetime(payload["creation_timestamp"].min()),
-            pd.to_datetime("2021-02-17T14:00:00")
+            pd.to_datetime(payload["form_availability_timestamp"].min()),
+            pd.to_datetime("2021-03-05 06:10:11-05:00")
         )
         self.assertLess(
-            pd.to_datetime(payload["creation_timestamp"].max()),
-            pd.to_datetime("2021-02-17T21:57:38")
+            pd.to_datetime(payload["form_availability_timestamp"].max()),
+            pd.to_datetime('2021-03-05T12:10:11-05:00')
         )
 
     @pytest.mark.form8
     def test_form8_missing_form_publication_timestamps(self) -> None:
         """
-        Test missing values for the `form_publication_timestamp`.
+        Check for missing form publication timestamp values.
 
-        The ideal behaviour is no missing values in this column.
+        The ideal behaviour is no missing values in the corresponding column.
         """
         payload = self.client.get_form8_payload(
-            start_datetime="2021-02-01T00:00:00",
-            end_datetime="2021-02-22T00:00:00",
+            start_datetime="2021-03-05T00:00:00-00:00",
+            end_datetime="2021-03-07T00:00:00-00:00",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, pd.DataFrame)
@@ -633,67 +657,72 @@ class TestEdgarClient(phunit.TestCase):
         missing_mask = payload["form_publication_timestamp"].isna()
         n_missing_publication_ts = payload[missing_mask].shape[0]
         # TODO(*): fix the behaviour in the #7524.
-        self.assertEqual(n_missing_publication_ts, 307)
+        self.assertEqual(n_missing_publication_ts, 28)
 
     @pytest.mark.form8
-    def test_form8_duplicates(self) -> None:
+    def test_form8_no_duplicates(self) -> None:
         """
-        Test whether there are duplicates per gvk, item, period of report.
+        Check whether there are duplicates per gvk, item, period of report.
 
         The ideal behavior is no such duplicates.
         """
         payload = self.client.get_form8_payload(
-            start_datetime="2021-02-18T00:00:00",
-            end_datetime="2021-02-22T00:00:00",
+            start_datetime="2021-02-25T00:00:00-00:00",
+            end_datetime="2021-02-28T00:00:00-00:00",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
-        dups_mask = payload.duplicated(subset=["gvk", "item_name", "period_of_report"], keep=False)
+        dups_mask = payload.duplicated(subset=["gvk",
+                                               "item_name",
+                                               "period_of_report"],
+                                       keep=False)
         # TODO(*): fix the behaviour in the #6279.
         self.assertFalse(payload[dups_mask].empty)
 
     @pytest.mark.form8
     def test_form8_exclusion_right_boundary(self) -> None:
         """
-        Test that the end_datetime value is excluded in Forms 8.
+        Check that end datetime data is excluded in Forms 8.
 
-        With date_mode=="publication_date" we should not receive any data
-        filed on the end date, no matter the specified time info.
+        With publication date mode we should not receive any data
+        filed on the end datetime, no matter the specified time info.
         """
         # Specified time info is 00:00:00.
         df = self.client.get_form8_payload(
-            start_datetime="2021-02-03T00:00:00",
-            end_datetime="2021-02-04T00:00:00",
+            start_datetime="2021-02-03T00:00:00-00:00",
+            end_datetime="2021-02-04T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertEqual(len(df["filing_date"].unique()), 1)
-        self.assertEqual(df.iloc[0]["filing_date"], "2021-02-03T00:00:00")
-        self.assertEqual(df.shape[0], 572)
+        self.assertEqual(df.iloc[0]["filing_date"], "2021-02-03T00:00:00-05:00")
+        self.assertEqual(df.shape[0], 566)
         # Specified time info is not 00:00:00.
         df2 = self.client.get_form8_payload(
-            start_datetime="2021-02-03T12:00:00",
-            end_datetime="2021-02-04T22:00:00",
+            start_datetime="2021-02-03T12:00:00-00:00",
+            end_datetime="2021-02-04T22:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertEqual(len(df2["filing_date"].unique()), 1)
-        self.assertEqual(df2.iloc[0]["filing_date"], "2021-02-03T00:00:00")
-        self.assertEqual(df2.shape[0], 572)
+        self.assertEqual(df2.iloc[0]["filing_date"], "2021-02-03T00:00:00-05:00")
+        self.assertEqual(df2.shape[0], 566)
         self.assertTrue(df.equals(df2))
 
     @pytest.mark.form10
-    @pytest.mark.superslow("About 1 minute.")
-    def test_form10_get_payload(self) -> None:
+    @pytest.mark.slow
+    def test_form10_1_cik_publication_date(self) -> None:
         """
-        Get payload data for forms 10.
+        Check payload for 1 CIK with publication date mode.
         """
         payload = self.client.get_form10_payload(
             cik=320193,
-            start_datetime="2017-11-02T00:00:00",
-            end_datetime="2017-11-05T00:00:00",
+            start_datetime="2017-11-02T00:00:00-00:00",
+            end_datetime="2017-11-05T00:00:00-00:00",
             date_mode="publication_date"
         )
+        for item in payload:
+            del item['meta']['rt_form_processing_timestamp']
         self.assertIsInstance(payload, list)
         self.assertEqual(len(payload), 1)
         actual = []
@@ -707,43 +736,19 @@ class TestEdgarClient(phunit.TestCase):
         self.check_string(actual, fuzzy_match=True)
 
     @pytest.mark.form10
-    @pytest.mark.superslow("About 1 minute.")
-    def test_form10_get_payload_knowledge_date(self) -> None:
+    @pytest.mark.slow
+    def test_form10_multi_cik_publication_date(self) -> None:
         """
-        Get payload data for forms 10.
-
-        Check when `date_mode` is "knowledge_date".
-        """
-        payload = self.client.get_form10_payload(
-            cik=320193,
-            start_datetime="2020-10-01T00:00:00",
-            end_datetime="2020-11-02T00:00:00",
-            date_mode="publication_date"
-        )
-        self.assertIsInstance(payload, list)
-        self.assertEqual(len(payload), 1)
-        actual = []
-        actual.append(("len(payload)=%s" % len(payload)))
-        actual.append(("payload[0].keys()=%s" % payload[0].keys()))
-        actual.append(
-            ('payload[0]["meta"]=\n%s' % pprint.pformat(payload[0]["meta"]))
-        )
-        actual.append(pprint.pformat(payload[0]["data"])[:2000])
-        actual = "\n".join(actual)
-        self.check_string(actual, fuzzy_match=True)
-
-    @pytest.mark.form10
-    @pytest.mark.superslow("About 4 minutes.")
-    def test_form10_get_payload_multi_cik(self) -> None:
-        """
-        Get the payload for form10 and a few cik.
+        Check payload for multiple CIKs with publication date mode.
         """
         payload = self.client.get_form10_payload(
             cik=[1750, 732717],
-            start_datetime="2018-01-01T00:00:00",
-            end_datetime="2018-07-16T00:00:00",
+            start_datetime="2018-01-01T00:00:00-00:00",
+            end_datetime="2018-04-01T00:00:00-00:00",
             date_mode="publication_date"
         )
+        for item in payload:
+            del item['meta']['rt_form_processing_timestamp']
         self.assertIsInstance(payload, list)
         actual = []
         actual.append(("len(payload)=%s" % len(payload)))
@@ -756,614 +761,560 @@ class TestEdgarClient(phunit.TestCase):
         self.check_string(actual, fuzzy_match=True)
 
     @pytest.mark.form10
-    @pytest.mark.superslow("About 4 minutes.")
-    def test_form10_get_payload_multi_cik_knowledge_date(self) -> None:
+    @pytest.mark.slow
+    def test_form10_empty_payload(self) -> None:
         """
-        Get the payload for form10 and a few cik.
-
-        Check when `date_mode` is "knowledge_date".
-        """
-        payload = self.client.get_form10_payload(
-            cik=[58492, 320193],
-            start_datetime="2020-10-01T00:00:00",
-            end_datetime="2020-12-02T00:00:00",
-            date_mode="publication_date"
-        )
-        self.assertIsInstance(payload, list)
-        actual = []
-        actual.append(("len(payload)=%s" % len(payload)))
-        actual.append(("payload[0].keys()=%s" % payload[0].keys()))
-        actual.append(
-            ('payload[0]["meta"]=\n%s' % pprint.pformat(payload[0]["meta"]))
-        )
-        actual.append(pprint.pformat(payload[0]["data"])[:2000])
-        actual = "\n".join(actual)
-        self.check_string(actual, fuzzy_match=True)
-
-    @pytest.mark.form10
-    @pytest.mark.superslow("About 1 minute.")
-    def test_form10_get_payload_empty(self) -> None:
-        """
-        Verify that nothing is returned for an interval without Form 10*.
+        Check for an empty response when datetime interval has no Form 10 filings.
 
         https://www.sec.gov/cgi-bin/browse-edgar?CIK=1002910&owner=exclude
         """
         payload = self.client.get_form10_payload(
             cik=1002910,
-            start_datetime="2020-05-12T00:00:00",
-            end_datetime="2020-05-14T00:00:00",
+            start_datetime="2020-05-12T00:00:00-00:00",
+            end_datetime="2020-05-14T00:00:00-00:00",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, list)
         self.assertEqual(len(payload), 0)
 
     @pytest.mark.form13
-    def test_form13_get_payload(self) -> None:
+    def test_form13_1_cik_publication_date_historical(self) -> None:
         """
-        Get payload data for forms 13.
+        Check payload for 1 CIK with publication date mode, historical.
         """
         payload = self.client.get_form13_payload(
             cik=1259313,
-            start_datetime="2015-11-16T00:00:00",
-            end_datetime="2015-11-17T00:00:00",
+            start_datetime="2015-11-16T00:00:00-00:00",
+            end_datetime="2015-11-17T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                        n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_knowledge_date(self) -> None:
+    def test_form13_1_cik_knowledge_date_historical(self) -> None:
         """
-        Get payload data for forms 13.
-
-        Check when `date_mode` is "knowledge_date".
+        Check payload for 1 CIK with knowledge date mode, historical.
         """
         payload = self.client.get_form13_payload(
             cik=1259313,
-            start_datetime="2020-11-01T00:00:00",
-            end_datetime="2020-12-31T23:59:59",
+            start_datetime="2021-03-03T00:00:00-00:00",
+            end_datetime="2021-03-05T23:59:59-00:00",
             date_mode="knowledge_date",
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_multi_cik(self) -> None:
+    def test_form13_multi_cik_publication_date_historical(self) -> None:
         """
-        Get payload data for forms 13.
-
-        Check with a few cik as parameter.
+        Check payload for multiple CIKs with publication date mode, historical.
         """
         payload = self.client.get_form13_payload(
             cik=[836372, 859804],
-            start_datetime="2015-11-16T00:00:00",
-            end_datetime="2015-11-17T00:00:00",
+            start_datetime="2015-11-16T00:00:00-00:00",
+            end_datetime="2015-11-17T00:00:00-00:00",
             date_mode='publication_date'
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None,
+                                             n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_multi_cik_knowledge_date(self) -> None:
+    def test_form13_multi_cik_knowledge_date_historical(self) -> None:
         """
-        Get payload data for forms 13 for multiple CIKs.
-
-        Check when `date_mode` is "knowledge_date".
+        Check payload for multiple CIKs with knowledge date mode, historical.
         """
         payload = self.client.get_form13_payload(
-            cik=[836372, 859804],
-            start_datetime="2020-11-01T00:00:00",
-            end_datetime="2021-01-01T00:00:00",
+            cik=[1054587, 1105863, 1424367],
+            start_datetime="2021-03-05T00:00:00-00:00",
+            end_datetime="2021-03-06T00:00:00-00:00",
             date_mode='knowledge_date'
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_cik_cusip(self) -> None:
+    def test_form13_cik_cusip_error(self) -> None:
         """
-        Get payload data for forms 13.
-
-        Check for cik and cusip with the same time.
+        Check that an error is raised if `cik` and `cusip` arguments are both specified.
         """
         with self.assertRaises(AssertionError):
             self.client.get_form13_payload(cik=123, cusip="qwe")
 
     @pytest.mark.form13
-    def test_form13_get_payload_with_cusip(self) -> None:
+    def test_form13_1_cusip_publication_date_historical(self) -> None:
         """
-        Get payload data for forms 13.
-
-        Check the cusip filter.
+        Check payload for 1 CUSIP with publication date mode, historical.
         """
         payload = self.client.get_form13_payload(
             cusip="01449J204",
-            start_datetime="2015-11-16T00:00:00",
-            end_datetime="2015-11-17T00:00:00",
+            start_datetime="2015-11-16T00:00:00-00:00",
+            end_datetime="2015-11-17T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None,
+                                             n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_with_cusip_knowledge_date(self) -> None:
+    def test_form13_1_cusip_knowledge_date_historical(self) -> None:
         """
-        Get payload data for forms 13.
-
-        Check when `date_mode` is "knowledge_date".
+        Check payload for 1 CUSIP with knowledge date mode, historical.
         """
         payload = self.client.get_form13_payload(
             cusip="002824100",
-            start_datetime="2020-12-30T00:00:00",
-            end_datetime="2020-12-31T00:00:00",
+            start_datetime="2021-03-07T00:00:00-00:00",
+            end_datetime="2021-03-09T00:00:00-00:00",
             date_mode="knowledge_date",
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_with_multi_cusip(self) -> None:
+    def test_form13_multi_cusip_publication_date_historical(self) -> None:
         """
-        Get payload data for forms 13 for multiple CUSIPs.
+        Check payload for multiple CUSIPs with publication date mode, historical.
         """
         payload = self.client.get_form13_payload(
-            cusip=["002824100", "01449J204"],
-            start_datetime="2016-11-15T00:00:00",
-            end_datetime="2016-11-16T00:00:00",
+            cusip=["002824100", "00287Y109"],
+            start_datetime="2016-11-15T00:00:00-00:00",
+            end_datetime="2016-11-16T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_with_multi_cusip_knowledge_date(self) -> None:
+    def test_form13_multi_cusip_knowledge_date_real_time(self) -> None:
         """
-        Get payload data for forms 13 for multiple CUSIPs.
-
-        Check when `date_mode` is "knowledge_date".
+        Check payload for multiple CUSIPs with knowledge date mode, real time.
         """
         payload = self.client.get_form13_payload(
             cusip=["002824100", "928563402"],
-            start_datetime="2021-01-01T00:00:00",
-            end_datetime="2021-01-06T00:00:00",
+            start_datetime="2021-03-10T00:00:00-00:00",
+            end_datetime="2021-03-10T12:50:35-00:00",
             date_mode="knowledge_date",
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    @pytest.mark.slow("Slow Form13 test")
-    def test_form13_get_payload_large_response(self) -> None:
+    def test_form13_invalid_cusip(self) -> None:
         """
-        Get payload data for forms 13.
-
-        Check the cusip filter with multiple values.
-        """
-        payload = self.client.get_form13_payload(
-            start_datetime="2020-12-10T00:00:00",
-            end_datetime="2020-12-18T00:00:00",
-            date_mode="publication_date",
-        )
-        self.assertIsInstance(payload, dict)
-        self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
-        )
-
-    @pytest.mark.form13
-    def test_form13_get_payload_small_response_no_cusip(self) -> None:
-        """
-        Get payload data for forms 13.
-
-        Test without filtration.
-        """
-        payload = self.client.get_form13_payload(
-            start_datetime="2020-09-09T00:00:00",
-            end_datetime="2020-09-11T00:00:00",
-            date_mode="publication_date"
-        )
-        self.assertIsInstance(payload, dict)
-        unique_uuids = payload["information_table"]["uuid"].unique()
-        self.assertEqual(len(unique_uuids), 7)
-        self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
-        )
-
-    @pytest.mark.form13
-    def test_form13_get_payload_irrelevant_cusip(self) -> None:
-        """
-        Get payload data for forms 13.
-
-        Check for irrelevant cusip.
+        Check for an empty response when the passed CUSIP is non-existent.
         """
         payload = self.client.get_form13_payload(
             cusip="ffffffffff",
-            start_datetime="2015-11-16T00:00:00",
-            end_datetime="2015-11-17T00:00:00",
+            start_datetime="2015-11-16T00:00:00-00:00",
+            end_datetime="2015-11-17T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, dict)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_check_number1(self) -> None:
+    def test_form13_no_cik_cusip_publication_date_historical(self) -> None:
         """
-        Get payload data for forms 13.
-
-        Check the number of the forms.
+        Check payload for all CIKs and CUSIPs with publication date mode, historical.
         """
         payload = self.client.get_form13_payload(
-            start_datetime="2018-01-01T00:00:00",
-            end_datetime="2018-01-03T00:00:00",
+            start_datetime="2018-01-01T00:00:00-00:00",
+            end_datetime="2018-01-03T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, dict)
         unique_uuids = payload["header_data"]["uuid"].unique()
         self.assertEqual(len(unique_uuids), 10)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_check_number2(self) -> None:
+    def test_form13_no_cik_cusip_publication_date_real_time(self) -> None:
         """
-        Get payload data for forms 13.
-
-        Check the number of the forms.
+        Check payload for all CIKs and CUSIPs with publication date mode, real time.
         """
         payload = self.client.get_form13_payload(
-            start_datetime="2016-04-01T00:00:00",
-            end_datetime="2016-04-04T00:00:00",
+            start_datetime="2021-01-01T00:00:00-00:00",
+            end_datetime="2021-01-06T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, dict)
         unique_uuids = payload["header_data"]["uuid"].unique()
-        self.assertEqual(len(unique_uuids), 19)
+        self.assertEqual(len(unique_uuids), 26)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_check_number3(self) -> None:
+    def test_form13_no_cik_cusip_knowledge_date_historical(self) -> None:
         """
-        Get payload data for forms 13.
+        Check payload for all CIKs and CUSIPs with knowledge date mode, historical.
+        """
+        payload = self.client.get_form13_payload(
+            start_datetime="2021-03-08T16:50:21-00:00",
+            end_datetime="2021-03-08T19:35:22-00:00",
+            date_mode="knowledge_date",
+        )
+        self.assertIsInstance(payload, dict)
+        self.check_string(
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
+        )
 
+    @pytest.mark.form13
+    def test_form13_no_cik_cusip_knowledge_date_real_time(self) -> None:
+        """
+        Check payload for all CIKs and CUSIPs with knowledge date mode, real time.
+        """
+        payload = self.client.get_form13_payload(
+            start_datetime="2021-03-08T16:50:32-00:00",
+            end_datetime="2021-03-09T14:40:22-00:00",
+            date_mode="knowledge_date",
+        )
+        self.assertIsInstance(payload, dict)
+        self.check_string(
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
+        )
+
+    @pytest.mark.form13
+    def test_form13_check_payload_december_gap(self) -> None:
+        """
         Check the number of the forms in the December gap.
+
+        In 2020-12-20 - 2020-12-26 the numbers of loaded forms by API and by
+        `MetadataProcessor` are not equal.
         """
         payload = self.client.get_form13_payload(
-            start_datetime="2020-12-20T00:00:00",
-            end_datetime="2020-12-26T00:00:00",
+            start_datetime="2020-12-20T00:00:00-00:00",
+            end_datetime="2020-12-26T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, dict)
-        unique_uuids = payload["header_data"]["uuid"].unique()
-        self.assertEqual(len(unique_uuids), 27)
+        # Specify the number of filings that were loaded by `MetadataProcessor`
+        # using the same query and assert that the number of loaded filings
+        # by API is lower.
+        n_unique_uuids_metadata_processor = 29
+        n_unique_uuids_api = len(payload["header_data"]["uuid"].unique())
+        self.assertEqual(
+            n_unique_uuids_metadata_processor, n_unique_uuids_api + 1
+        )
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
-    def test_form13_get_payload_check_number4(self) -> None:
+    def test_form13_no_cik_cusip_check_ciks(self) -> None:
         """
-        Get payload data for forms 13.
+        Check CIKs that the data has been loaded for.
 
-        Check the number of the forms.
+        All CIKs and CUSIPs with publication date mode, historical.
         """
         payload = self.client.get_form13_payload(
-            start_datetime="2020-10-01T00:00:00",
-            end_datetime="2020-10-04T00:00:00",
-            date_mode="knowledge_date",
-        )
-        self.assertIsInstance(payload, dict)
-        self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
-        )
-
-    @pytest.mark.form13
-    def test_form13_get_payload_check_number5(self) -> None:
-        """
-        Get payload data for forms 13.
-
-        Check the number of the forms.
-        """
-        payload = self.client.get_form13_payload(
-            start_datetime="2021-01-15T00:00:00",
-            end_datetime="2021-01-16T00:00:00",
-            date_mode="knowledge_date",
-        )
-        self.assertIsInstance(payload, dict)
-        self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
-        )
-
-    @pytest.mark.form13
-    def test_form13_get_payload_no_cusip_universe(self) -> None:
-        """
-        Get payload data for forms 13.
-
-        Check the number of the forms.
-        """
-        payload = self.client.get_form13_payload(
-            start_datetime="2017-06-29T00:00:00",
-            end_datetime="2017-07-01T00:00:00",
+            start_datetime="2021-03-05T00:00:00-00:00",
+            end_datetime="2021-03-09T00:00:00-00:00",
             date_mode="publication_date",
         )
         unique_ciks = payload["header_data"]["cik"].unique()
         self.assertIsInstance(payload, dict)
-        expected = [1591379, 1399770, 1559771, 1569638]
+        expected = [1742647, 1600035, 1768887, 1803227,
+                    1054587, 1846544, 1105863, 1821549,
+                    1294571, 1831263, 1819919, 1831187,
+                    354204, 1831193, 1513227, 1424367,
+                    714142, 1812178, 1767905, 1830922,
+                    1800556, 1455530, 1841768, 1828929]
         self.assertCountEqual(unique_ciks, expected)
         self.check_string(
-            phunit.convert_df_to_string(payload["information_table"])
+            phunit.convert_df_to_json_string(payload["information_table"],
+                                             n_head=None, n_tail=None),
+            fuzzy_match=True
         )
 
     @pytest.mark.form13
     def test_form13_exclusion_right_boundary(self) -> None:
         """
-        Test that the end_datetime value is excluded in Forms 13.
+        Check that end datetime data is excluded in Forms 13.
 
-        With date_mode=="publication_date" we should not receive any data
-        filed on the end date, no matter the specified time info.
+        With publication date mode we should not receive any data
+        filed on the end datetime, no matter the specified time info.
         """
         # Specified time info is 00:00:00.
         df = self.client.get_form13_payload(
-            start_datetime="2015-12-15T00:00:00",
-            end_datetime="2015-12-16T00:00:00",
+            start_datetime="2015-12-15T00:00:00-00:00",
+            end_datetime="2015-12-16T00:00:00-00:00",
             date_mode="publication_date",
         )["metadata"]
-        self.assertEqual(len(df["release_date"].unique()), 1)
-        self.assertEqual(df.iloc[0]["release_date"], "2015-12-15T00:00:00")
+        self.assertEqual(len(df["filing_date"].unique()), 1)
+        self.assertEqual(df.iloc[0]["filing_date"], "2015-12-15T00:00:00-05:00")
         self.assertEqual(df.shape[0], 5)
         # Specified time info is not 00:00:00.
         df2 = self.client.get_form13_payload(
-            start_datetime="2015-12-15T12:00:00",
-            end_datetime="2015-12-16T22:00:00",
+            start_datetime="2015-12-15T12:00:00-00:00",
+            end_datetime="2015-12-16T22:00:00-00:00",
             date_mode="publication_date",
         )["metadata"]
-        self.assertEqual(len(df2["release_date"].unique()), 1)
-        self.assertEqual(df2.iloc[0]["release_date"], "2015-12-15T00:00:00")
+        self.assertEqual(len(df2["filing_date"].unique()), 1)
+        self.assertEqual(df2.iloc[0]["filing_date"], "2015-12-15T00:00:00-05:00")
         self.assertEqual(df2.shape[0], 5)
         self.assertTrue(df.equals(df2))
 
     @pytest.mark.form13
     def test_form13_check_datetime_filter1(self) -> None:
         """
-        Get payload data for forms 13.
+        Check the time filtering.
 
-        Check the time filtering for the historical forms with the specific CUSIPs.
+        Multiple CUSIPs with publication date mode, historical.
         """
         payload = self.client.get_form13_payload(
             cusip=["75574U101", "64828T201", "89677Y100"],
-            start_datetime="2020-08-06T00:00:00",
-            end_datetime="2020-08-12T00:00:00",
+            start_datetime="2020-08-06T00:00:00-00:00",
+            end_datetime="2020-08-12T00:00:00-00:00",
             date_mode="publication_date",
         )
-        actual = sorted(payload["metadata"]["release_date"].unique())
+        actual = sorted(payload["metadata"]["filing_date"].unique())
         expected = [
-            "2020-08-06T00:00:00",
-            "2020-08-07T00:00:00",
-            "2020-08-10T00:00:00",
-            "2020-08-11T00:00:00",
+            "2020-08-06T00:00:00-04:00",
+            "2020-08-07T00:00:00-04:00",
+            "2020-08-10T00:00:00-04:00",
+            "2020-08-11T00:00:00-04:00",
         ]
         self.assertListEqual(actual, expected)
 
     @pytest.mark.form13
     def test_form13_check_datetime_filter2(self) -> None:
         """
-        Get payload data for forms 13.
+        Check the time filtering.
 
-        Check the time filtering for the historical forms.
+        All CIKs and CUSIPs with publication date mode, historical.
         """
         payload = self.client.get_form13_payload(
-            start_datetime="2020-07-20T00:00:00",
-            end_datetime="2020-07-26T00:00:00",
+            start_datetime="2020-07-20T00:00:00-00:00",
+            end_datetime="2020-07-26T00:00:00-00:00",
             date_mode="publication_date",
         )
-        actual = sorted(payload["metadata"]["release_date"].unique())
+        actual = sorted(payload["metadata"]["filing_date"].unique())
         expected = [
-            "2020-07-20T00:00:00",
-            "2020-07-21T00:00:00",
-            "2020-07-22T00:00:00",
-            "2020-07-23T00:00:00",
-            "2020-07-24T00:00:00",
+            "2020-07-20T00:00:00-04:00",
+            "2020-07-21T00:00:00-04:00",
+            "2020-07-22T00:00:00-04:00",
+            "2020-07-23T00:00:00-04:00",
+            "2020-07-24T00:00:00-04:00",
         ]
         self.assertListEqual(actual, expected)
 
     @pytest.mark.form13
-    @pytest.mark.superslow("over 7 minutes.")
+    @pytest.mark.slow
     def test_form13_check_datetime_filter3(self) -> None:
         """
-        Get payload data for forms 13.
+        Check the time filtering.
 
-        Check the time filtering for the real-time data.
+        All CIKs and CUSIPs with publication date mode, real time.
         """
         payload = self.client.get_form13_payload(
-            start_datetime="2021-02-16T00:00:00",
-            end_datetime="2021-02-19T00:00:00",
+            start_datetime="2021-03-06T00:00:00-00:00",
+            end_datetime="2021-03-11T00:00:00-00:00",
             date_mode="publication_date",
         )
-        actual = sorted(payload["metadata"]["release_date"].unique())
+        actual = sorted(payload["metadata"]["filing_date"].unique())
         expected = [
-            "2021-02-16T00:00:00",
-            "2021-02-17T00:00:00",
-            "2021-02-18T00:00:00",
+            "2021-03-08T00:00:00-05:00",
+            "2021-03-09T00:00:00-05:00",
+            "2021-03-10T00:00:00-05:00",
         ]
         self.assertListEqual(actual, expected)
 
     @pytest.mark.form13
     def test_form13_check_datetime_filter4(self) -> None:
         """
-        Get payload data for forms 13.
+        Check the time filtering.
 
-        Check the time filtering by knowledge date.
+        All CIKs and CUSIPs with knowledge date mode, historical.
         """
         payload = self.client.get_form13_payload(
-            start_datetime="2020-10-17T15:54:00",
-            end_datetime="2020-10-19T17:45:53",
+            start_datetime="2021-03-09T21:11:20-00:00",
+            end_datetime="2021-03-10T13:45:19-00:00",
             date_mode="knowledge_date",
         )
-        actual_min = payload["metadata"]["created_at"].min()
-        expected_min = "2020-10-19T10:01:55.894000"
-        actual_max = payload["metadata"]["created_at"].max()
-        expected_max = "2020-10-19T17:26:58.571000"
+        actual_min = payload["metadata"]["form_availability_timestamp"].min()
+        expected_min = "2021-03-09T16:11:20.487000-05:00"
+        actual_max = payload["metadata"]["form_availability_timestamp"].max()
+        expected_max = "2021-03-10T08:30:52.694000-05:00"
         self.assertEqual(actual_min, expected_min)
         self.assertEqual(actual_max, expected_max)
 
     def test_form_types(self) -> None:
         """
-        Mapping between short form names and form types in the Edgar universe.
+        Check the mapping between short form names and form types in the Edgar universe.
         """
         form_types = self.client.form_types
         actual = "\n".join(form_types)
         self.check_string(actual, fuzzy_match=True)
 
     @pytest.mark.headers
-    def test_headers(self) -> None:
+    def test_headers_1_cik_publication_date_historical(self) -> None:
         """
-        Get form headers metadata with the following parameters.
-        """
-        payload = self.client.get_form_headers(
-            form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
-            cik=[320193],
-            start_datetime="2000-01-01T00:00:00",
-            end_datetime="2020-02-02T00:00:00",
-            date_mode="publication_date",
-        )
-        self.assertIsInstance(payload, pd.DataFrame)
-        self.assertFalse(payload.empty)
-        self.check_string(phunit.convert_df_to_string(payload))
-
-    @pytest.mark.headers
-    def test_headers_knowledge_date(self) -> None:
-        """
-        Get form headers metadata with the following parameters.
-
-        Check when `date_mode` is "knowledge_date".
+        Check payload for 1 CIK with publication date mode, historical.
         """
         payload = self.client.get_form_headers(
             form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
             cik=[320193],
-            start_datetime="2020-10-01T00:00:00",
-            end_datetime="2020-12-01T23:59:59",
-            date_mode="knowledge_date",
-        )
-        self.assertIsInstance(payload, pd.DataFrame)
-        self.assertFalse(payload.empty)
-        self.check_string(phunit.convert_df_to_string(payload))
-
-    @pytest.mark.headers
-    def test_headers_multi_cik(self) -> None:
-        """
-        Get form headers metadata with the following parameters.
-
-        Test with multiple CIKs.
-        """
-        payload = self.client.get_form_headers(
-            form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
-            cik=[320193, 732717],
-            start_datetime="2020-01-01T00:00:00",
-            end_datetime="2020-01-04T00:00:00",
+            start_datetime="2000-01-01T00:00:00-00:00",
+            end_datetime="2020-02-02T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.headers
-    def test_headers_multi_cik_knowledge_date(self) -> None:
+    def test_headers_1_cik_knowledge_date_historical(self) -> None:
         """
-        Get form headers metadata with the following parameters.
-
-        Check when `date_mode` is "knowledge_date".
+        Check payload for 1 CIK with knowledge date mode, historical.
         """
         payload = self.client.get_form_headers(
             form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
-            cik=[320193, 732717],
-            start_datetime="2020-10-01T00:00:00",
-            end_datetime="2020-11-02T00:00:00",
+            cik=[320193],
+            start_datetime="2020-10-01T00:00:00-00:00",
+            end_datetime="2020-12-01T23:59:59-00:00",
             date_mode="knowledge_date",
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.headers
-    def test_headers_without_cik(self) -> None:
+    def test_headers_multi_cik_publication_date_historical(self) -> None:
         """
-        Get form headers metadata.
+        Check payload for multiple CIKs with publication date mode, historical.
+        """
+        payload = self.client.get_form_headers(
+            form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
+            cik=[320193, 732717],
+            start_datetime="2020-01-01T00:00:00-00:00",
+            end_datetime="2020-01-04T00:00:00-00:00",
+            date_mode="publication_date",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
-        Test without cik parameter.
+    @pytest.mark.headers
+    def test_headers_multi_cik_knowledge_date_historical(self) -> None:
+        """
+        Check payload for multiple CIKs with knowledge date mode, historical.
+        """
+        payload = self.client.get_form_headers(
+            form_type=["3", "3/A", "4", "4/A", "5", "5/A"],
+            cik=[320193, 732717],
+            start_datetime="2020-10-01T00:00:00-00:00",
+            end_datetime="2020-11-02T00:00:00-00:00",
+            date_mode="knowledge_date",
+        )
+        self.assertIsInstance(payload, pd.DataFrame)
+        self.assertFalse(payload.empty)
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
+
+    @pytest.mark.headers
+    def test_headers_no_cik(self) -> None:
+        """
+        Check payload when all arguments except `cik` are specified.
         """
         payload = self.client.get_form_headers(
             form_type="13F-HR",
-            start_datetime="2020-03-01T00:00:00",
-            end_datetime="2020-10-11T00:00:00",
+            start_datetime="2020-03-01T00:00:00-00:00",
+            end_datetime="2020-10-11T00:00:00-00:00",
             date_mode="publication_date"
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         payload.sort_values(['form_type', 'filing_date', 'cik', 'uuid'],
                             inplace=True)
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.headers
-    def test_headers_one_form(self) -> None:
+    def test_headers_1_form(self) -> None:
         """
-        Get form headers metadata.
-
-        Test with one form.
+        Check payload with 1 form.
         """
         payload = self.client.get_form_headers(
             form_type="13F-HR",
             cik=1404574,
-            start_datetime="2012-11-14T00:00:00",
-            end_datetime="2012-11-15T00:00:00",
+            start_datetime="2012-11-14T00:00:00-00:00",
+            end_datetime="2012-11-15T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, pd.DataFrame)
-        self.assertFalse(payload.empty)
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.assertEqual(payload.shape[0], 1)
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.headers
-    def test_headers_one_cik(self) -> None:
+    def test_headers_invalid_form_types(self) -> None:
         """
-        Get form headers metadata.
-
-        Test with one cik.
-        """
-        payload = self.client.get_form_headers(
-            form_type="13F-HR",
-            cik=1404574,
-            start_datetime="2012-11-14T00:00:00",
-            end_datetime="2012-11-15T00:00:00",
-            date_mode="publication_date",
-        )
-        self.assertIsInstance(payload, pd.DataFrame)
-        self.assertFalse(payload.empty)
-        self.check_string(phunit.convert_df_to_string(payload))
-
-    @pytest.mark.headers
-    def test_headers_bad_form_types(self) -> None:
-        """
-        Get form headers with bad form types.
-
-        Test with one cik.
+        Check that an error is raised when some of the form types are non-existent.
         """
         with self.assertRaises(AssertionError):
             self.client.get_form_headers(
@@ -1372,30 +1323,30 @@ class TestEdgarClient(phunit.TestCase):
             )
 
     @pytest.mark.headers
-    def test_headers_without_form_type(self) -> None:
+    def test_headers_no_form_type(self) -> None:
         """
-        Get form headers metadata.
-
-        Test with one cik.
+        Check payload when all arguments except `form_type` are specified.
         """
         payload = self.client.get_form_headers(
             cik=1404574,
-            start_datetime="2012-11-14T00:00:00",
-            end_datetime="2012-11-15T00:00:00",
+            start_datetime="2012-11-14T00:00:00-00:00",
+            end_datetime="2012-11-15T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
-        self.check_string(phunit.convert_df_to_string(payload))
+        self.check_string(phunit.convert_df_to_json_string(payload,
+                                                           n_head=None,
+                                                           n_tail=None),
+                          fuzzy_match=True)
 
     @pytest.mark.headers
     def test_headers_length(self):
         """
-        Compares output length with list of cik and
-        without cik (filtered later)
+        Check that output lengths with list of CIKs and without it are equal.
         """
-        from_dttm = '2019-11-01T00:00:00'
-        to_dttm = '2019-12-01T00:00:00'
+        from_dttm = '2019-11-01T00:00:00-05:00'
+        to_dttm = '2019-12-01T00:00:00-05:00'
         # Get sp1500 cik list from the file.
         sp1500_cik_list = peutil.get_sp1500_cik_list()
         # Get headers for the given period.
@@ -1424,28 +1375,28 @@ class TestEdgarClient(phunit.TestCase):
     @pytest.mark.headers
     def test_headers_exclusion_right_boundary(self) -> None:
         """
-        Test that the end_datetime value is excluded in Headers.
+        Check that end datetime data is excluded in Headers.
 
-        With date_mode=="publication_date" we should not receive any data
-        filed on the end date, no matter the specified time info.
+        With publication date mode we should not receive any data
+        filed on the end datetime, no matter the specified time info.
         """
         # Specified time info is 00:00:00.
         df = self.client.get_form_headers(
-            start_datetime="2020-08-10T00:00:00",
-            end_datetime="2020-08-11T00:00:00",
+            start_datetime="2020-08-10T00:00:00-00:00",
+            end_datetime="2020-08-11T00:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertEqual(len(df["filing_date"].unique()), 1)
-        self.assertEqual(df.iloc[0]["filing_date"], "2020-08-10")
+        self.assertEqual(df.iloc[0]["filing_date"], "2020-08-10T00:00:00-04:00")
         self.assertEqual(df.shape[0], 2968)
         # Specified time info is not 00:00:00.
         df2 = self.client.get_form_headers(
-            start_datetime="2020-08-10T12:00:00",
-            end_datetime="2020-08-11T22:00:00",
+            start_datetime="2020-08-10T12:00:00-00:00",
+            end_datetime="2020-08-11T22:00:00-00:00",
             date_mode="publication_date",
         )
         self.assertEqual(len(df2["filing_date"].unique()), 1)
-        self.assertEqual(df2.iloc[0]["filing_date"], "2020-08-10")
+        self.assertEqual(df2.iloc[0]["filing_date"], "2020-08-10T00:00:00-04:00")
         self.assertEqual(df2.shape[0], 2968)
         self.assertTrue(df.equals(df2))
 
