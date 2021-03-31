@@ -17,6 +17,7 @@ from typing import Any, Dict, List
 import pandas as pd
 import requests
 
+import helpers.datetime_ as hdatet
 import p1_data_client_python.abstract_client as p1_abs
 import p1_data_client_python.exceptions as p1_exc
 
@@ -181,7 +182,9 @@ class Client(p1_abs.AbstractClient):
     def _parse_payload(response: requests.Response) -> pd.DataFrame:
         """Parse payload response and return pandas Dataframe."""
         payload_response = response.json()
-        return pd.DataFrame(payload_response["payload_data"])
+        payload = pd.DataFrame(payload_response["payload_data"])
+        payload["period"] = hdatet.to_datetime(payload["original_period"])
+        return payload
 
     @staticmethod
     def _parse_metadata_type(
