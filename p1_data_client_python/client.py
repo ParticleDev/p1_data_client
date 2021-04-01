@@ -17,9 +17,9 @@ from typing import Any, Dict, List
 import pandas as pd
 import requests
 
-import helpers.datetime_ as hdatet
 import p1_data_client_python.abstract_client as p1_abs
 import p1_data_client_python.exceptions as p1_exc
+import p1_data_client_python.helpers.datetime_ as hdatet
 
 P1_DATA_API_VERSION = os.environ.get("P1_DATA_API_VERSION", "1")
 

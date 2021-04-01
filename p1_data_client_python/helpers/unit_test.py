@@ -17,11 +17,11 @@ from typing import Any, List, Mapping, NoReturn, Optional, Union
 import numpy as np
 import pandas as pd
 
-import helpers.dbg as dbg
-import helpers.git as git
-import helpers.io_ as io_
-import helpers.printing as prnt
-import helpers.system_interaction as si
+import p1_data_client_python.helpers.dbg as dbg
+import p1_data_client_python.helpers.git as git
+import p1_data_client_python.helpers.io_ as io_
+import p1_data_client_python.helpers.printing as prnt
+import p1_data_client_python.helpers.system_interaction as si
 
 _LOG = logging.getLogger(__name__)
 

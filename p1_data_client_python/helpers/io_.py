@@ -16,8 +16,8 @@ from typing import Any, List, Optional
 
 import pandas as pd
 
-import helpers.dbg as dbg
-import helpers.system_interaction as si
+import p1_data_client_python.helpers.dbg as dbg
+import p1_data_client_python.helpers.system_interaction as si
 
 _LOG = logging.getLogger(__name__)
 

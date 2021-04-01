@@ -16,9 +16,9 @@ import sys
 import time
 from typing import Any, Callable, List, Optional, Tuple, Union
 
-import helpers.dbg as dbg
-import helpers.io_ as io_
-import helpers.printing as prnt
+import p1_data_client_python.helpers.dbg as dbg
+import p1_data_client_python.helpers.io_ as io_
+import p1_data_client_python.helpers.printing as prnt
 
 _LOG = logging.getLogger(__name__)
 

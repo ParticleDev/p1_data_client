@@ -13,7 +13,9 @@ from typing import Callable, Iterable, Optional, Tuple, Union
 import dateutil.parser as dparse
 import pandas as pd
 
-import helpers.dbg as dbg
+import p1_data_client_python.helpers.dbg as dbg
+
+_LOG = logging.getLogger(__name__)
 
 _LOG = logging.getLogger(__name__)
 
