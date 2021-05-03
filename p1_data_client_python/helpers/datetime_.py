@@ -17,8 +17,6 @@ import p1_data_client_python.helpers.dbg as dbg
 
 _LOG = logging.getLogger(__name__)
 
-_LOG = logging.getLogger(__name__)
-
 DATETIME_TYPE = Union[pd.Timestamp, datetime.datetime]
 
 
