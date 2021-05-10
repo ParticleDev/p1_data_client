@@ -1,4 +1,4 @@
-original shape=(18, 14)
+original shape=(18, 13)
 Head:
 {
 "0":{
@@ -14,8 +14,7 @@ Head:
 "value":"349.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"1091.0",
-"cik":"1259313.0"
+"voting_authority_sole":"1091.0"
 },
 "1":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -30,8 +29,7 @@ Head:
 "value":"36092.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"1771000.0",
-"cik":"1259313.0"
+"voting_authority_sole":"1771000.0"
 },
 "2":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -46,8 +44,7 @@ Head:
 "value":"70677.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"1875708.0",
-"cik":"1259313.0"
+"voting_authority_sole":"1875708.0"
 },
 "3":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -62,8 +59,7 @@ Head:
 "value":"1139.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"1150000.0",
-"cik":"1259313.0"
+"voting_authority_sole":"1150000.0"
 },
 "4":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -78,8 +74,7 @@ Head:
 "value":"5689.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"222000.0",
-"cik":"1259313.0"
+"voting_authority_sole":"222000.0"
 },
 "5":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -94,8 +89,7 @@ Head:
 "value":"7965.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"11317782.0",
-"cik":"1259313.0"
+"voting_authority_sole":"11317782.0"
 },
 "6":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -110,8 +104,7 @@ Head:
 "value":"968.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"56000.0",
-"cik":"1259313.0"
+"voting_authority_sole":"56000.0"
 },
 "7":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -126,8 +119,7 @@ Head:
 "value":"3296.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"162311.0",
-"cik":"1259313.0"
+"voting_authority_sole":"162311.0"
 },
 "8":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -142,8 +134,7 @@ Head:
 "value":"4995.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"58825.0",
-"cik":"1259313.0"
+"voting_authority_sole":"58825.0"
 },
 "9":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -158,8 +149,7 @@ Head:
 "value":"27871.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"460077.0",
-"cik":"1259313.0"
+"voting_authority_sole":"460077.0"
 },
 "10":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -174,8 +164,7 @@ Head:
 "value":"20471.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"1463319.0",
-"cik":"1259313.0"
+"voting_authority_sole":"1463319.0"
 },
 "11":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -190,8 +179,7 @@ Head:
 "value":"393664.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"6218041.0",
-"cik":"1259313.0"
+"voting_authority_sole":"6218041.0"
 },
 "12":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -206,8 +194,7 @@ Head:
 "value":"1425.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"47987.0",
-"cik":"1259313.0"
+"voting_authority_sole":"47987.0"
 },
 "13":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -222,8 +209,7 @@ Head:
 "value":"25.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"11405.0",
-"cik":"1259313.0"
+"voting_authority_sole":"11405.0"
 },
 "14":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -238,8 +224,7 @@ Head:
 "value":"4992.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"140000.0",
-"cik":"1259313.0"
+"voting_authority_sole":"140000.0"
 },
 "15":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -254,8 +239,7 @@ Head:
 "value":"6344.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"280000.0",
-"cik":"1259313.0"
+"voting_authority_sole":"280000.0"
 },
 "16":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -270,8 +254,7 @@ Head:
 "value":"694676.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"44218762.0",
-"cik":"1259313.0"
+"voting_authority_sole":"44218762.0"
 },
 "17":{
 "uuid":"00024613-c236-4f49-bf40-b110f49155f6",
@@ -286,8 +269,7 @@ Head:
 "value":"17344.0",
 "voting_authority_none":"0.0",
 "voting_authority_shared":"0.0",
-"voting_authority_sole":"1312000.0",
-"cik":"1259313.0"
+"voting_authority_sole":"1312000.0"
 }
 }
 Tail:
