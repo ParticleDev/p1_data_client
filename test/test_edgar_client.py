@@ -525,9 +525,7 @@ class TestEdgarClient(phunit.TestCase):
         """
         Check payload when only `cik` argument is specified with 1 value.
         """
-        payload = self.client.get_form8_payload(
-            cik=18498,
-        )
+        payload = self.client.get_form8_payload(cik=18498).head(586)
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
@@ -541,7 +539,7 @@ class TestEdgarClient(phunit.TestCase):
         """
         Check payload when only `cik` argument is specified with multiple values.
         """
-        payload = self.client.get_form8_payload(cik=[18498, 319201, 5768])
+        payload = self.client.get_form8_payload(cik=[18498, 319201, 5768]).head(1442)
         self.assertIsInstance(payload, pd.DataFrame)
         self.assertFalse(payload.empty)
         _LOG.debug("info=\n%s", self._get_df_info(payload))
