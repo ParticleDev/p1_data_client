@@ -227,6 +227,30 @@ class EdgarClient(pabstr.AbstractClient):
                 compound_data += response.json()["data"]
         return compound_data
 
+    def get_form10_uuid_payload(
+        self,
+        uuid: str = None,
+    ) -> peconf.SERVER_RESPONSE_TYPE:
+        """
+        Get payload data for a form10, using uuid.
+
+        :param uuid: Unique form id.
+        :return: Form payload data.
+        """
+        form_name = "form10"
+        params: Dict[str, Any] = {"uuid": uuid}
+        url = f'{self.base_url}{self._api_routes["PAYLOAD"]}/{form_name}/uuid'
+        self.spinner.start()
+        with peutil.spinner_exception_handling(self.spinner):
+            response = self._make_request(
+                "GET", url, headers=self.headers, params=params
+            )
+            self.spinner.stop()
+            data = response.json()["data"]
+            _LOG.info("Payload for '%s' uuid loaded", uuid)
+        return data
+
+
     def get_form13_payload(
         self,
         cik: Optional[peconf.CIK_TYPE] = None,
